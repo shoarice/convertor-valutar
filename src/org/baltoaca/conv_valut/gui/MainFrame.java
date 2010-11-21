@@ -6,6 +6,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.Locale;
 
 import javax.swing.BorderFactory;
@@ -72,6 +73,7 @@ public class MainFrame extends JFrame implements ModelListener {
 	NumberFormat numberFormat = NumberFormat.getInstance(new Locale("en"));
 	NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
 	private static final String PREFERRED_LOOK_AND_FEEL = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+
 	public MainFrame() {
 		numberFormat.setMaximumFractionDigits(NR_OF_FRACTION_DIGITS);
 		numberFormat.setMinimumFractionDigits(0);
@@ -81,24 +83,42 @@ public class MainFrame extends JFrame implements ModelListener {
 
 	private void initComponents() {
 		setLayout(new GroupLayout());
-		add(getJScrollPane1(), new Constraints(new Leading(273, 234, 6, 6), new Leading(73, 174, 6, 6)));
-		add(getJScrollPane0(), new Constraints(new Leading(30, 234, 10, 10), new Leading(73, 174, 6, 6)));
-		add(getLbDateName(), new Constraints(new Leading(231, 10, 10), new Leading(19, 10, 10)));
-		add(getLbDate(), new Constraints(new Leading(222, 10, 10), new Leading(39, 6, 6)));
-		add(getBtSwitch(), new Constraints(new Leading(217, 100, 6, 6), new Leading(263, 10, 10)));
-		add(getLbConvRateName1(), new Constraints(new Leading(581, 10, 10), new Leading(73, 6, 6)));
-		add(getLbConvRateName2(), new Constraints(new Leading(641, 10, 10), new Leading(93, 6, 6)));
-		add(getLbSumName(), new Constraints(new Leading(647, 10, 10), new Leading(49, 6, 6)));
-		add(getTfSum(), new Constraints(new Leading(710, 112, 10, 10), new Leading(39, 6, 6)));
-		add(getTfConvRate(), new Constraints(new Leading(710, 112, 10, 10), new Leading(80, 6, 6)));
-		add(getLbVatName(), new Constraints(new Leading(623, 10, 10), new Leading(183, 10, 10)));
-		add(getLbResultAndVatName(), new Constraints(new Leading(602, 10, 10), new Leading(205, 10, 10)));
-		add(getLbResultName(), new Constraints(new Leading(636, 10, 10), new Leading(247, 10, 10)));
-		add(getLbVat(), new Constraints(new Leading(716, 116, 10, 10), new Leading(183, 10, 10)));
-		add(getLbResultAndVat(), new Constraints(new Leading(716, 116, 10, 10), new Leading(207, 6, 6)));
-		add(getLbToCurrency(), new Constraints(new Leading(847, 10, 10), new Leading(247, 10, 10)));
-		add(getLbResult(), new Constraints(new Leading(715, 116, 10, 10), new Leading(243, 6, 6)));
-		add(getLbFromCurrency(), new Constraints(new Leading(843, 6, 6), new Leading(43, 6, 6)));
+		add(getJScrollPane1(), new Constraints(new Leading(273, 234, 6, 6),
+				new Leading(73, 174, 6, 6)));
+		add(getJScrollPane0(), new Constraints(new Leading(30, 234, 10, 10),
+				new Leading(73, 174, 6, 6)));
+		add(getLbDateName(), new Constraints(new Leading(231, 10, 10),
+				new Leading(19, 10, 10)));
+		add(getLbDate(), new Constraints(new Leading(222, 10, 10), new Leading(
+				39, 6, 6)));
+		add(getBtSwitch(), new Constraints(new Leading(217, 100, 6, 6),
+				new Leading(263, 10, 10)));
+		add(getLbConvRateName1(), new Constraints(new Leading(581, 10, 10),
+				new Leading(73, 6, 6)));
+		add(getLbConvRateName2(), new Constraints(new Leading(641, 10, 10),
+				new Leading(93, 6, 6)));
+		add(getLbSumName(), new Constraints(new Leading(647, 10, 10),
+				new Leading(49, 6, 6)));
+		add(getTfSum(), new Constraints(new Leading(710, 112, 10, 10),
+				new Leading(39, 6, 6)));
+		add(getTfConvRate(), new Constraints(new Leading(710, 112, 10, 10),
+				new Leading(80, 6, 6)));
+		add(getLbVatName(), new Constraints(new Leading(623, 10, 10),
+				new Leading(183, 10, 10)));
+		add(getLbResultAndVatName(), new Constraints(new Leading(602, 10, 10),
+				new Leading(205, 10, 10)));
+		add(getLbResultName(), new Constraints(new Leading(636, 10, 10),
+				new Leading(247, 10, 10)));
+		add(getLbVat(), new Constraints(new Leading(716, 116, 10, 10),
+				new Leading(183, 10, 10)));
+		add(getLbResultAndVat(), new Constraints(new Leading(716, 116, 10, 10),
+				new Leading(207, 6, 6)));
+		add(getLbToCurrency(), new Constraints(new Leading(847, 10, 10),
+				new Leading(247, 10, 10)));
+		add(getLbResult(), new Constraints(new Leading(715, 116, 10, 10),
+				new Leading(243, 6, 6)));
+		add(getLbFromCurrency(), new Constraints(new Leading(843, 6, 6),
+				new Leading(43, 6, 6)));
 		setJMenuBar(getJMenuBar0());
 		setSize(908, 328);
 	}
@@ -410,50 +430,67 @@ public class MainFrame extends JFrame implements ModelListener {
 
 	@Override
 	public void update(Model m, final Object obj) {
-		
 
-		// implementation
 		final ConvValutarModel myModel = (ConvValutarModel) m;
+		final HashMap<String, String> labelsTextMap;
+
 		final Currency[] currenciesArray = myModel.getXmlInfo().getCurrencies()
 				.toArray(new Currency[0]);
 		final String lbDateText = myModel.getXmlInfo().getDateString();
-		final String lbResultText = String.valueOf(numberFormat.format(myModel
-				.getResult()));
-		final String lbVatText = String.valueOf(numberFormat.format(myModel
-				.getVat()));
-		final String lbResultAndVatText = String.valueOf(numberFormat
-				.format(myModel.getResultAndVat()));
-		final String lbFromCurrencyText = myModel.getFromCurrencyLabel();
-		final String lbToCurrencyText = myModel.getToCurrencyLabel();
+		
+		labelsTextMap = generateLabelsTextMapFromModel(myModel);
 
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
-				// JLists
+				updateJLists(currenciesArray);
+
+				updateDate(lbDateText);
+
+				updateResultLabels(labelsTextMap);
+			}
+
+			private void updateJLists(final Currency[] currenciesArray) {
 				if (!areListsUpdated) {
 					lsFrom.setListData(currenciesArray);
 					lsTo.setListData(currenciesArray);
 					areListsUpdated = true;
 				}
-
-				// Date
-				lbDate.setText(lbDateText);
-
-				// JFormattedTextField
-				// tfSum.setValue(new Double(myModel.getSum()));
-				// tfConvRate.setValue(new Double(myModel.getConvRate()));
-
-				// Result related labels
-				lbResult.setText(lbResultText);
-				lbVat.setText(lbVatText);
-				lbResultAndVat.setText(lbResultAndVatText);
-				lbFromCurrency.setText(lbFromCurrencyText);
-				lbToCurrency.setText(lbToCurrencyText);
-
 			}
+
+			private void updateDate(final String lbDateText) {
+				lbDate.setText(lbDateText);
+			}
+
+			private void updateResultLabels(HashMap<String, String> labelsText) {
+				lbResult.setText(labelsText.get("lbResultText").toString());
+				lbVat.setText(labelsText.get("lbVatText").toString());
+				lbResultAndVat.setText(labelsText.get("lbResultAndVatText")
+						.toString());
+				lbFromCurrency.setText(labelsText.get("lbFromCurrencyText")
+						.toString());
+				lbToCurrency.setText(labelsText.get("lbToCurrencyText")
+						.toString());
+			}
+
 		});
 
+	}
+
+	private HashMap<String, String> generateLabelsTextMapFromModel(final ConvValutarModel myModel) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("lbResultText",
+				String.valueOf(numberFormat.format(myModel.getResult())));
+		map.put("lbVatText",
+				String.valueOf(numberFormat.format(myModel.getVat())));
+		map.put("lbResultAndVatText",
+				String.valueOf(numberFormat.format(myModel.getResultAndVat())));
+		map.put("lbFromCurrencyText", myModel.getFromCurrencyLabel());
+		map.put("lbToCurrencyText", myModel.getToCurrencyLabel());
+		
+		return map;
 	}
 
 	/**

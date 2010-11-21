@@ -11,8 +11,8 @@ public class ConvValutarModel extends Model {
 	private double vat;
 	private double result;
 	private double resultAndVat;
-	private String fromCurrencyLabel;
-	private String toCurrencyLabel;
+	private String fromCurrencyLabel="";
+	private String toCurrencyLabel="";
 
 	public ConvValutarModel(XmlInformation xmlInfo) {
 		this.xmlInfo = xmlInfo;
