@@ -4,7 +4,7 @@ import static org.junit.Assert.fail;
 
 public class TestUtils {
 
-	protected static void failBecauseOfUnexpectedExeption(Exception e) {
+	public static void failBecauseOfUnexpectedExeption(Exception e) {
 		fail("Unexpected exeption"+e);
 	}
 
