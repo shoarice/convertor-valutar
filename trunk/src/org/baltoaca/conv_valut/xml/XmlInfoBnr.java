@@ -60,7 +60,7 @@ public class XmlInfoBnr extends XmlInformation {
 	
 				Currency parsedCurrency = parseCurrencyFromElement(e);				
 				currencies.add(parsedCurrency);
-				System.out.println();
+				
 			}
 		} catch (ParserConfigurationException e1) {
 			// TODO Auto-generated catch block
