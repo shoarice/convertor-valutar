@@ -493,6 +493,21 @@ public class MainFrame extends JFrame implements ModelListener {
 		return map;
 	}
 
+	
+	public void selectCurrencyInFromList(String currencyShortName){
+		selectCurrencyInListAndScroll(currencyShortName,lsFrom);
+	}
+	
+	public void selectCurrencyInToList(String currencyShortName){
+		selectCurrencyInListAndScroll(currencyShortName,lsTo);
+	}
+	
+	private void selectCurrencyInListAndScroll(String currencyShortName,JList list){
+		boolean shouldScroll = true;
+		list.setSelectedValue(new Currency(currencyShortName), shouldScroll);
+	}
+	
+	
 	/**
 	 * Used to call <code>selectAll()</code> on the
 	 * <code>JFormattedTextField</code>'s when they acquire keyboard focus

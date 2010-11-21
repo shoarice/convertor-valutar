@@ -58,18 +58,26 @@ public class Main {
 
 					MainFrame frame = (MainFrame) view;
 
-					//TODO modify this in order to use objects and not indexes
-					frame.getLsFrom().setSelectedIndex(1);
-					frame.getLsTo().setSelectedIndex(0);
-					
+					selectDefaultsInJLists(frame);
+					setFrameDefaults(frame);
+
+				}
+
+				private void selectDefaultsInJLists(MainFrame frame) {
+					frame.selectCurrencyInFromList("EUR");
+					frame.selectCurrencyInToList("RON");
+				}
+				
+				private void setFrameDefaults(MainFrame frame) {
 					frame.setDefaultCloseOperation(MainFrame.EXIT_ON_CLOSE);
 					frame.setTitle("Convertor Valutar");
 					frame.getContentPane().setPreferredSize(frame.getSize());
 					frame.pack();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
-
 				}
+
+
 			});
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
