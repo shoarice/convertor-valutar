@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root version="1.1">
+	<c_list>
+		<currency>
+			<iso4217>RON</iso4217>
+			<fullName>Leul românesc</fullName></currency>
+		<currency>
+			<iso4217>EUR</iso4217>
+			<fullName>Euro</fullName></currency>
+		<currency>
+			<iso4217>USD</iso4217>
+			<fullName>Dolarul SUA</fullName></currency>
+		<currency>
+			<iso4217>XAU</iso4217>
+			<fullName>Gramul de aur</fullName></currency>
+		<currency>
+			<iso4217>AUD</iso4217>
+			<fullName>Dolarul australian</fullName></currency>
+		<currency>
+			<iso4217>CAD</iso4217>
+			<fullName>Dolarul canadian</fullName></currency>
+		<currency>
+			<iso4217>CHF</iso4217>
+			<fullName>Francul elvețian</fullName></currency>
+		<currency>
+			<iso4217>CZK</iso4217>
+			<fullName>Coroana cehă</fullName></currency>
+		<currency>
+			<iso4217>DKK</iso4217>
+			<fullName>Coroana daneză</fullName></currency>
+		<currency>
+			<iso4217>EGP</iso4217>
+			<fullName>Lira egipteană</fullName></currency>
+		<currency>
+			<iso4217>GBP</iso4217>
+			<fullName>Lira sterlină</fullName></currency>
+		<currency>
+			<iso4217>HUF</iso4217>
+			<fullName>Forinți maghiari</fullName></currency>
+		<currency>
+			<iso4217>JPY</iso4217>
+			<fullName>Yeni japonezi</fullName></currency>
+		<currency>
+			<iso4217>MDL</iso4217>
+			<fullName>Leul moldovenesc</fullName></currency>
+		<currency>
+			<iso4217>NOK</iso4217>
+			<fullName>Coroana norvegiană</fullName></currency>
+		<currency>
+			<iso4217>PLN</iso4217>
+			<fullName>Zlotul polonez</fullName></currency>
+		<currency>
+			<iso4217>SEK</iso4217>
+			<fullName>Coroana suedeză</fullName></currency>
+		<currency>
+			<iso4217>TRY</iso4217>
+			<fullName>Noua liră turcească</fullName></currency>
+		<currency>
+			<iso4217>XDR</iso4217>
+			<fullName>DST</fullName></currency>
+		<currency>
+			<iso4217>RUB</iso4217>
+			<fullName>Rubla rusească</fullName></currency>
+		<currency>
+			<iso4217>BGN</iso4217>
+			<fullName>Leva bulgărească</fullName></currency>
+		<currency>
+			<iso4217>ZAR</iso4217>
+			<fullName>Randul sud-african</fullName></currency>
+		<currency>
+			<iso4217>BRL</iso4217>
+			<fullName>Realul brazilian</fullName></currency>
+		<currency>
+			<iso4217>CNY</iso4217>
+			<fullName>Renminbi-ul chinezesc</fullName></currency>
+		<currency>
+			<iso4217>INR</iso4217>
+			<fullName>Rupia indiană</fullName></currency>
+		<currency>
+			<iso4217>KRW</iso4217>
+			<fullName>Woni sud-coreeni</fullName></currency>
+		<currency>
+			<iso4217>MXN</iso4217>
+			<fullName>Peso-ul mexican</fullName></currency>
+		<currency>
+			<iso4217>NZD</iso4217>
+			<fullName>Dolarul neo-zeelandez</fullName></currency>
+		<currency>
+			<iso4217>RSD</iso4217>
+			<fullName>Dinarul sarbesc</fullName></currency>
+		<currency>
+			<iso4217>UAH</iso4217>
+			<fullName>Hryvna ucraineană</fullName></currency>
+		<currency>
+			<iso4217>AED</iso4217>
+			<fullName>Dirhamul Emiratelor Arabe</fullName></currency>
+	</c_list>
+</root>
