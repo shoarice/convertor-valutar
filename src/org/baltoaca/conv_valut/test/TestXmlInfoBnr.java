@@ -2,10 +2,13 @@ package org.baltoaca.conv_valut.test;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.baltoaca.conv_valut.computer.Currency;
 import org.baltoaca.conv_valut.xml.XmlInfoBnr;
 import org.baltoaca.conv_valut.xml.XmlInformation;

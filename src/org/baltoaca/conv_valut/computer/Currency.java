@@ -2,7 +2,7 @@ package org.baltoaca.conv_valut.computer;
 
 public class Currency {
 
-	private String iso4271;
+	private String iso4271Name;
 	private String fullName;
 	private double rate;
 	private boolean hasMultiplier;
@@ -18,7 +18,7 @@ public class Currency {
 	 */
 	public Currency(String name, String fullName, Double rate) {
 		this.rate = rate;
-		this.iso4271 = name;
+		this.iso4271Name = name;
 		hasMultiplier = false;
 		multiplier = 1;
 		this.fullName = fullName;
@@ -57,7 +57,7 @@ public class Currency {
 	public boolean equals(Object obj) {
 		if (obj instanceof Currency) {
 			if (rate == ((Currency) obj).rate
-					&& iso4271.equals(((Currency) obj).iso4271)) {
+					&& iso4271Name.equals(((Currency) obj).iso4271Name)) {
 				return true;
 			}
 		}
@@ -69,7 +69,7 @@ public class Currency {
 		String str = "";
 		if (hasMultiplier)
 			str += (int) multiplier;
-		str += iso4271;
+		str += iso4271Name;
 		if(fullName!=null)
 			str+=" - "+fullName;
 		return str;
@@ -79,8 +79,8 @@ public class Currency {
 		return hasMultiplier;
 	}
 
-	public String getName() {
-		return iso4271;
+	public String getShortName() {
+		return iso4271Name;
 	}
 	public String getFullName(){
 		return fullName;

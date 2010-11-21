@@ -2,7 +2,6 @@ package org.baltoaca.conv_valut.xml;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -112,11 +111,11 @@ public abstract class XmlInformation {
 			currencies.add(0,ron);
 		}
 		for (Currency c : currencies) {
-			if(c.getName().equals("EUR")){
+			if(c.getShortName().equals("EUR")){
 				eur = c;
 				pass = true;
 			}
-			if(pass == false && c.getName().equals("USD")){
+			if(pass == false && c.getShortName().equals("USD")){
 				usd = c;
 			}
 			pass = false;
