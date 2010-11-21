@@ -2,7 +2,7 @@ package org.baltoaca.conv_valut.xml;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.List;
+import java.util.SortedSet;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -18,12 +18,11 @@ import org.xml.sax.SAXException;
 public abstract class XmlInformation {
 
 	protected Calendar date;
-	protected List<Currency> currencies;
+	protected SortedSet<Currency> currencies;
 	protected XmlSource origin;
 
 	public XmlInformation(XmlSource origin) {
 		this.origin = origin;
-
 	}
 
 	/**
@@ -33,11 +32,10 @@ public abstract class XmlInformation {
 	 * @throws SAXException
 	 * @throws ParserConfigurationException
 	 */
-	public void refreshData() throws ParserConfigurationException,
-			SAXException, IOException {
-	}
+	public abstract void refreshData() throws ParserConfigurationException,
+			SAXException, IOException;
 
-	public List<Currency> getCurrencies() {
+	public SortedSet<Currency> getCurrencies() {
 		return currencies;
 	}
 
@@ -102,14 +100,15 @@ public abstract class XmlInformation {
 	/**
 	 * Arranges the Currencies list in a more user friendly way
 	 */
-	protected void arrangeCurrencies(){
+	protected void addBaseCurrency(){
 		Currency ron = new Currency("RON","Leul românesc", 1.0);
-		Currency eur = null,usd = null;
-		boolean pass = false;
+		
 		//adds RON on top of the list
 		if(!currencies.contains(ron)){
-			currencies.add(0,ron);
+			currencies.add(ron);
 		}
+		
+		/*
 		for (Currency c : currencies) {
 			if(c.getShortName().equals("EUR")){
 				eur = c;
@@ -125,6 +124,7 @@ public abstract class XmlInformation {
 		currencies.remove(usd);
 		currencies.add(1, eur);
 		currencies.add(2, usd);
+		*/
 	}
 
 }
