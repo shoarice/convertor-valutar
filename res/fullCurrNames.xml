@@ -21,7 +21,7 @@
 			<fullName>Dolarul canadian</fullName></currency>
 		<currency>
 			<iso4217>CHF</iso4217>
-			<fullName>Francul elvețian</fullName></currency>
+			<fullName>Francul elveţian</fullName></currency>
 		<currency>
 			<iso4217>CZK</iso4217>
 			<fullName>Coroana cehă</fullName></currency>
@@ -36,7 +36,7 @@
 			<fullName>Lira sterlină</fullName></currency>
 		<currency>
 			<iso4217>HUF</iso4217>
-			<fullName>Forinți maghiari</fullName></currency>
+			<fullName>Forinţi maghiari</fullName></currency>
 		<currency>
 			<iso4217>JPY</iso4217>
 			<fullName>Yeni japonezi</fullName></currency>
