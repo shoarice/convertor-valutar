@@ -2,16 +2,10 @@ package org.baltoaca.conv_valut.gui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -19,362 +13,347 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.text.NumberFormatter;
 
-import org.baltoaca.conv_valut.computer.Currency;
-import org.baltoaca.conv_valut.mvc.ConvValutarModel;
-import org.baltoaca.conv_valut.mvc.Model;
-import org.baltoaca.conv_valut.mvc.ModelListener;
-import org.baltoaca.conv_valut.xml.XmlInformation;
 import org.dyno.visual.swing.layouts.Constraints;
 import org.dyno.visual.swing.layouts.GroupLayout;
 import org.dyno.visual.swing.layouts.Leading;
 
 //VS4E -- DO NOT REMOVE THIS LINE!
-public class MainFrame extends JFrame implements ModelListener {
+public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JLabel lbDateName;
-	private JLabel lbDate;
-	private JList lsFrom;
+	private JLabel jLabel0;
+	private JLabel jLabel1;
+	private JList jList0;
 	private JScrollPane jScrollPane0;
-	private JList lsTo;
+	private JList jList1;
 	private JScrollPane jScrollPane1;
-	private JMenuItem mnItemExit;
-	private JMenu mnFile;
-	private JMenu mnOptions;
-	private JMenuItem mnItemGuide;
-	private JMenuItem mnItemAbout;
-	private JMenu mnHelp;
+	private JMenuItem jMenuItem0;
+	private JMenu jMenu0;
+	private JMenu jMenu1;
+	private JMenuItem jMenuItem2;
+	private JMenuItem jMenuItem3;
+	private JMenu jMenu2;
 	private JMenuBar jMenuBar0;
-	private JButton btSwitch;
-	private JLabel lbConvRateName1;
-	private JLabel lbConvRateName2;
-	private JLabel lbSumName;
-	private JFormattedTextField tfSum;
-	private JFormattedTextField tfConvRate;
-	private JLabel lbFromCurrency;
-	private JLabel lbVatName;
-	private JLabel lbResultAndVatName;
-	private JLabel lbResultName;
-	private JLabel lbVat;
-	private JLabel lbResultAndVat;
-	private JLabel lbToCurrency;
-	private JLabel lbResult;
-	private int i;
-	private static final int NR_OF_FRACTION_DIGITS = 2;
-
-	NumberFormat numberFormat = NumberFormat.getInstance(new Locale("en"));
-	NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
+	private JButton jButton0;
+	private JLabel jLabel3;
+	private JLabel jLabel4;
+	private JLabel jLabel2;
+	private JTextField jTextField0;
+	private JTextField jTextField1;
+	private JLabel jLabel5;
+	private JLabel jLabel6;
+	private JLabel jLabel7;
+	private JLabel jLabel8;
+	private JLabel jLabel9;
+	private JLabel jLabel10;
+	private JLabel jLabel12;
+	private JLabel jLabel13;
+	private JLabel jLabel14;
+	private JLabel jLabel11;
 	private static final String PREFERRED_LOOK_AND_FEEL = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+
 	public MainFrame() {
-		numberFormat.setMaximumFractionDigits(NR_OF_FRACTION_DIGITS);
-		numberFormat.setMinimumFractionDigits(0);
-		numberFormatter.setCommitsOnValidEdit(true);
 		initComponents();
 	}
 
 	private void initComponents() {
 		setLayout(new GroupLayout());
-		add(getJScrollPane1(), new Constraints(new Leading(273, 234, 6, 6), new Leading(73, 174, 6, 6)));
-		add(getJScrollPane0(), new Constraints(new Leading(30, 234, 10, 10), new Leading(73, 174, 6, 6)));
-		add(getLbDateName(), new Constraints(new Leading(231, 10, 10), new Leading(19, 10, 10)));
-		add(getLbDate(), new Constraints(new Leading(222, 10, 10), new Leading(39, 6, 6)));
-		add(getBtSwitch(), new Constraints(new Leading(217, 100, 6, 6), new Leading(263, 10, 10)));
-		add(getLbConvRateName1(), new Constraints(new Leading(581, 10, 10), new Leading(73, 6, 6)));
-		add(getLbConvRateName2(), new Constraints(new Leading(641, 10, 10), new Leading(93, 6, 6)));
-		add(getLbSumName(), new Constraints(new Leading(647, 10, 10), new Leading(49, 6, 6)));
-		add(getTfSum(), new Constraints(new Leading(710, 112, 10, 10), new Leading(39, 6, 6)));
-		add(getTfConvRate(), new Constraints(new Leading(710, 112, 10, 10), new Leading(80, 6, 6)));
-		add(getLbVatName(), new Constraints(new Leading(623, 10, 10), new Leading(183, 10, 10)));
-		add(getLbResultAndVatName(), new Constraints(new Leading(602, 10, 10), new Leading(205, 10, 10)));
-		add(getLbResultName(), new Constraints(new Leading(636, 10, 10), new Leading(247, 10, 10)));
-		add(getLbVat(), new Constraints(new Leading(716, 116, 10, 10), new Leading(183, 10, 10)));
-		add(getLbResultAndVat(), new Constraints(new Leading(716, 116, 10, 10), new Leading(207, 6, 6)));
-		add(getLbToCurrency(), new Constraints(new Leading(847, 10, 10), new Leading(247, 10, 10)));
-		add(getLbResult(), new Constraints(new Leading(715, 116, 10, 10), new Leading(243, 6, 6)));
-		add(getLbFromCurrency(), new Constraints(new Leading(843, 6, 6), new Leading(43, 6, 6)));
+		add(getJLabel0(), new Constraints(new Leading(113, 10, 10), new Leading(20, 10, 10)));
+		add(getJLabel1(), new Constraints(new Leading(104, 12, 12), new Leading(39, 10, 10)));
+		add(getJButton0(), new Constraints(new Leading(106, 100, 10, 10), new Leading(259, 12, 12)));
+		add(getJScrollPane0(), new Constraints(new Leading(41, 100, 10, 10), new Leading(85, 155, 10, 10)));
+		add(getJScrollPane1(), new Constraints(new Leading(181, 100, 10, 10), new Leading(87, 153, 12, 12)));
+		add(getJLabel3(), new Constraints(new Leading(423, 12, 12), new Leading(67, 10, 10)));
+		add(getJLabel4(), new Constraints(new Leading(483, 12, 12), new Leading(89, 12, 12)));
+		add(getJLabel2(), new Constraints(new Leading(489, 12, 12), new Leading(33, 12, 12)));
+		add(getJTextField0(), new Constraints(new Leading(552, 112, 10, 10), new Leading(27, 12, 12)));
+		add(getJTextField1(), new Constraints(new Leading(552, 112, 12, 12), new Leading(73, 12, 12)));
+		add(getJLabel5(), new Constraints(new Leading(676, 12, 12), new Leading(33, 12, 12)));
+		add(getJLabel6(), new Constraints(new Leading(465, 12, 12), new Leading(178, 10, 10)));
+		add(getJLabel7(), new Constraints(new Leading(444, 12, 12), new Leading(200, 12, 12)));
+		add(getJLabel8(), new Constraints(new Leading(478, 12, 12), new Leading(242, 10, 10)));
+		add(getJLabel9(), new Constraints(new Leading(558, 116, 12, 12), new Leading(178, 12, 12)));
+		add(getJLabel10(), new Constraints(new Leading(558, 116, 12, 12), new Leading(200, 12, 12)));
+		add(getJLabel12(), new Constraints(new Leading(689, 10, 10), new Leading(178, 12, 12)));
+		add(getJLabel13(), new Constraints(new Leading(689, 12, 12), new Leading(202, 12, 12)));
+		add(getJLabel14(), new Constraints(new Leading(689, 12, 12), new Leading(242, 12, 12)));
+		add(getJLabel11(), new Constraints(new Leading(558, 116, 12, 12), new Leading(240, 12, 12)));
 		setJMenuBar(getJMenuBar0());
-		setSize(908, 328);
+		setSize(754, 328);
 	}
 
-	public JLabel getLbResult() {
-		if (lbResult == null) {
-			lbResult = new JLabel();
-			lbResult.setHorizontalAlignment(SwingConstants.CENTER);
-			lbResult.setText("3524,57");
-			lbResult.setBorder(BorderFactory.createEtchedBorder(
-					EtchedBorder.LOWERED, null, null));
+	private JLabel getJLabel11() {
+		if (jLabel11 == null) {
+			jLabel11 = new JLabel();
+			jLabel11.setHorizontalAlignment(SwingConstants.CENTER);
+			jLabel11.setText("3524,57");
+			jLabel11.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, null, null));
 		}
-		return lbResult;
+		return jLabel11;
 	}
 
-	public JLabel getLbToCurrency() {
-		if (lbToCurrency == null) {
-			lbToCurrency = new JLabel();
-			lbToCurrency.setText("LEI");
+	private JLabel getJLabel14() {
+		if (jLabel14 == null) {
+			jLabel14 = new JLabel();
+			jLabel14.setText("LEI");
 		}
-		return lbToCurrency;
+		return jLabel14;
 	}
 
-	public JLabel getLbResultAndVat() {
-		if (lbResultAndVat == null) {
-			lbResultAndVat = new JLabel();
-			lbResultAndVat.setHorizontalAlignment(SwingConstants.CENTER);
-			lbResultAndVat.setText("jLabel10");
-			lbResultAndVat.setBorder(BorderFactory.createEtchedBorder(
-					EtchedBorder.LOWERED, null, null));
+	private JLabel getJLabel13() {
+		if (jLabel13 == null) {
+			jLabel13 = new JLabel();
+			jLabel13.setText("LEI");
 		}
-		return lbResultAndVat;
+		return jLabel13;
 	}
 
-	public JLabel getLbVat() {
-		if (lbVat == null) {
-			lbVat = new JLabel();
-			lbVat.setHorizontalAlignment(SwingConstants.CENTER);
-			lbVat.setText("jLabel9");
-			lbVat.setBorder(BorderFactory.createEtchedBorder(
-					EtchedBorder.LOWERED, null, null));
+	private JLabel getJLabel12() {
+		if (jLabel12 == null) {
+			jLabel12 = new JLabel();
+			jLabel12.setText("LEI");
 		}
-		return lbVat;
+		return jLabel12;
 	}
 
-	public JLabel getLbResultName() {
-		if (lbResultName == null) {
-			lbResultName = new JLabel();
-			lbResultName.setForeground(Color.red);
-			lbResultName.setText("Rezultat");
+	private JLabel getJLabel10() {
+		if (jLabel10 == null) {
+			jLabel10 = new JLabel();
+			jLabel10.setHorizontalAlignment(SwingConstants.CENTER);
+			jLabel10.setText("jLabel10");
+			jLabel10.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, null, null));
 		}
-		return lbResultName;
+		return jLabel10;
 	}
 
-	public JLabel getLbResultAndVatName() {
-		if (lbResultAndVatName == null) {
-			lbResultAndVatName = new JLabel();
-			lbResultAndVatName.setText("Rezultat + TVA");
+	private JLabel getJLabel9() {
+		if (jLabel9 == null) {
+			jLabel9 = new JLabel();
+			jLabel9.setHorizontalAlignment(SwingConstants.CENTER);
+			jLabel9.setText("jLabel9");
+			jLabel9.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, null, null));
 		}
-		return lbResultAndVatName;
+		return jLabel9;
 	}
 
-	public JLabel getLbVatName() {
-		if (lbVatName == null) {
-			lbVatName = new JLabel();
-			lbVatName.setText("TVA ("
-					+ new Integer((int) (ConvValutarModel.VAT * 100)) + "%)");
+	private JLabel getJLabel8() {
+		if (jLabel8 == null) {
+			jLabel8 = new JLabel();
+			jLabel8.setForeground(Color.red);
+			jLabel8.setText("Rezultat");
 		}
-		return lbVatName;
+		return jLabel8;
 	}
 
-	public JLabel getLbFromCurrency() {
-		if (lbFromCurrency == null) {
-			lbFromCurrency = new JLabel();
-			lbFromCurrency.setText("EUR");
+	private JLabel getJLabel7() {
+		if (jLabel7 == null) {
+			jLabel7 = new JLabel();
+			jLabel7.setText("Rezultat + TVA");
 		}
-		return lbFromCurrency;
+		return jLabel7;
 	}
 
-	public JFormattedTextField getTfConvRate() {
-		if (tfConvRate == null) {
-			tfConvRate = new JFormattedTextField(numberFormatter);
-			tfConvRate.setHorizontalAlignment(SwingConstants.CENTER);
-			tfConvRate.setValue(new Double(0));
-			tfConvRate.addFocusListener(new FormattedTextFieldFocusListener());
+	private JLabel getJLabel6() {
+		if (jLabel6 == null) {
+			jLabel6 = new JLabel();
+			jLabel6.setText("TVA (24%)");
 		}
-		return tfConvRate;
+		return jLabel6;
 	}
 
-	public JFormattedTextField getTfSum() {
-		if (tfSum == null) {
-			tfSum = new JFormattedTextField(numberFormatter);
-			tfSum.setHorizontalAlignment(SwingConstants.CENTER);
-			tfSum.setValue(new Double(1));
-			tfSum.addFocusListener(new FormattedTextFieldFocusListener());
-
+	private JLabel getJLabel5() {
+		if (jLabel5 == null) {
+			jLabel5 = new JLabel();
+			jLabel5.setText("EUR");
 		}
-		return tfSum;
+		return jLabel5;
 	}
 
-	public JLabel getLbSumName() {
-		if (lbSumName == null) {
-			lbSumName = new JLabel();
-			lbSumName.setText("Sumã");
+	private JTextField getJTextField1() {
+		if (jTextField1 == null) {
+			jTextField1 = new JTextField();
+			jTextField1.setHorizontalAlignment(SwingConstants.CENTER);
+			jTextField1.setText("jTextField1");
 		}
-		return lbSumName;
+		return jTextField1;
 	}
 
-	public JLabel getLbConvRateName2() {
-		if (lbConvRateName2 == null) {
-			lbConvRateName2 = new JLabel();
-			lbConvRateName2.setText("proprie");
+	private JTextField getJTextField0() {
+		if (jTextField0 == null) {
+			jTextField0 = new JTextField();
+			jTextField0.setHorizontalAlignment(SwingConstants.CENTER);
+			jTextField0.setText("jTextField0");
 		}
-		return lbConvRateName2;
+		return jTextField0;
 	}
 
-	public JLabel getLbConvRateName1() {
-		if (lbConvRateName1 == null) {
-			lbConvRateName1 = new JLabel();
-			lbConvRateName1.setText("Ratã de conversie");
+	private JLabel getJLabel2() {
+		if (jLabel2 == null) {
+			jLabel2 = new JLabel();
+			jLabel2.setText("Sumã");
 		}
-		return lbConvRateName1;
+		return jLabel2;
 	}
 
-	public JButton getBtSwitch() {
-		if (btSwitch == null) {
-			btSwitch = new JButton();
-			btSwitch.setMnemonic(KeyEvent.VK_S);
-			btSwitch.setText("Inverseazã");
+	private JLabel getJLabel4() {
+		if (jLabel4 == null) {
+			jLabel4 = new JLabel();
+			jLabel4.setText("proprie");
 		}
-		return btSwitch;
+		return jLabel4;
 	}
 
-	public JMenuBar getJMenuBar0() {
+	private JLabel getJLabel3() {
+		if (jLabel3 == null) {
+			jLabel3 = new JLabel();
+			jLabel3.setText("Ratã de conversie");
+		}
+		return jLabel3;
+	}
+
+	private JButton getJButton0() {
+		if (jButton0 == null) {
+			jButton0 = new JButton();
+			jButton0.setText("Inverseazã");
+		}
+		return jButton0;
+	}
+
+	private JMenuBar getJMenuBar0() {
 		if (jMenuBar0 == null) {
 			jMenuBar0 = new JMenuBar();
-			jMenuBar0.add(getMnFile());
-			jMenuBar0.add(getMnOptions());
-			jMenuBar0.add(getMnHelp());
+			jMenuBar0.add(getJMenu0());
+			jMenuBar0.add(getJMenu1());
+			jMenuBar0.add(getJMenu2());
 		}
 		return jMenuBar0;
 	}
 
-	public JMenu getMnHelp() {
-		if (mnHelp == null) {
-			mnHelp = new JMenu();
-			mnHelp.setText("Ajutor");
-			mnHelp.add(getMnItemGuide());
-			mnHelp.add(getMnItemAbout());
-			mnHelp.setMnemonic(KeyEvent.VK_A);
+	private JMenu getJMenu2() {
+		if (jMenu2 == null) {
+			jMenu2 = new JMenu();
+			jMenu2.setText("Ajutor");
+			jMenu2.add(getJMenuItem2());
+			jMenu2.add(getJMenuItem3());
 		}
-		return mnHelp;
+		return jMenu2;
 	}
 
-	public JMenuItem getMnItemAbout() {
-		if (mnItemAbout == null) {
-			mnItemAbout = new JMenuItem();
-			mnItemAbout.setText("Despre");
-			mnItemAbout.setMnemonic(KeyEvent.VK_D);
+	private JMenuItem getJMenuItem3() {
+		if (jMenuItem3 == null) {
+			jMenuItem3 = new JMenuItem();
+			jMenuItem3.setText("Despre");
 		}
-		return mnItemAbout;
+		return jMenuItem3;
 	}
 
-	public JMenuItem getMnItemGuide() {
-		if (mnItemGuide == null) {
-			mnItemGuide = new JMenuItem();
-			mnItemGuide.setText("Ghid utilizare");
-			mnItemGuide.setMnemonic(KeyEvent.VK_G);
+	private JMenuItem getJMenuItem2() {
+		if (jMenuItem2 == null) {
+			jMenuItem2 = new JMenuItem();
+			jMenuItem2.setText("Ghid utilizare");
 		}
-		return mnItemGuide;
+		return jMenuItem2;
 	}
 
-	public JMenu getMnOptions() {
-		if (mnOptions == null) {
-			mnOptions = new JMenu();
-			mnOptions.setText("Opþiuni");
-			mnOptions.setMnemonic(KeyEvent.VK_O);
+	private JMenu getJMenu1() {
+		if (jMenu1 == null) {
+			jMenu1 = new JMenu();
+			jMenu1.setText("Opþiuni");
 		}
-		return mnOptions;
+		return jMenu1;
 	}
 
-	public JMenu getMnFile() {
-		if (mnFile == null) {
-			mnFile = new JMenu();
-			mnFile.setText("File");
-			mnFile.add(getMnItemExit());
-			mnFile.setMnemonic(KeyEvent.VK_F);
+	private JMenu getJMenu0() {
+		if (jMenu0 == null) {
+			jMenu0 = new JMenu();
+			jMenu0.setText("File");
+			jMenu0.add(getJMenuItem0());
 		}
-		return mnFile;
+		return jMenu0;
 	}
 
-	public JMenuItem getMnItemExit() {
-		if (mnItemExit == null) {
-			mnItemExit = new JMenuItem();
-			mnItemExit.setText("Ieºire");
-			mnItemExit.setMnemonic(KeyEvent.VK_E);
+	private JMenuItem getJMenuItem0() {
+		if (jMenuItem0 == null) {
+			jMenuItem0 = new JMenuItem();
+			jMenuItem0.setText("Ieºire");
 		}
-		return mnItemExit;
+		return jMenuItem0;
 	}
 
 	private JScrollPane getJScrollPane1() {
 		if (jScrollPane1 == null) {
 			jScrollPane1 = new JScrollPane();
-			jScrollPane1
-					.setBorder(BorderFactory.createTitledBorder(null, "în",
-							TitledBorder.CENTER, TitledBorder.ABOVE_TOP,
-							new Font("SansSerif", Font.BOLD, 12), new Color(59,
-									59, 59)));
-			jScrollPane1.setViewportView(getLsTo());
+			jScrollPane1.setViewportView(getJList1());
 		}
 		return jScrollPane1;
 	}
 
-	public JList getLsTo() {
-		if (lsTo == null) {
-			lsTo = new JList();
-			lsTo.setBorder(null);
-			lsTo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	private JList getJList1() {
+		if (jList1 == null) {
+			jList1 = new JList();
+			jList1.setBorder(BorderFactory.createTitledBorder(null, "în", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, new Font("SansSerif", Font.BOLD, 12),
+					new Color(59, 59, 59)));
+			jList1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			DefaultListModel listModel = new DefaultListModel();
 			listModel.addElement("item0");
 			listModel.addElement("item1");
 			listModel.addElement("item2");
 			listModel.addElement("item3");
-			lsTo.setModel(listModel);
+			jList1.setModel(listModel);
 		}
-		return lsTo;
+		return jList1;
 	}
 
-	public JScrollPane getJScrollPane0() {
+	private JScrollPane getJScrollPane0() {
 		if (jScrollPane0 == null) {
 			jScrollPane0 = new JScrollPane();
-			jScrollPane0.setBorder(BorderFactory
-					.createTitledBorder(null, "Schimbã", TitledBorder.CENTER,
-							TitledBorder.ABOVE_TOP, new Font("SansSerif",
-									Font.BOLD, 12), new Color(59, 59, 59)));
-			jScrollPane0.setViewportView(getLsFrom());
+			jScrollPane0.setViewportView(getJList0());
 		}
 		return jScrollPane0;
 	}
 
-	public JList getLsFrom() {
-		if (lsFrom == null) {
-			lsFrom = new JList();
-			lsFrom.setBorder(null);
-			lsFrom.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	private JList getJList0() {
+		if (jList0 == null) {
+			jList0 = new JList();
+			jList0.setBorder(BorderFactory.createTitledBorder(null, "Schimbã", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, new Font("SansSerif", Font.BOLD, 12),
+					new Color(59, 59, 59)));
+			jList0.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			DefaultListModel listModel = new DefaultListModel();
-			listModel.addElement("AED - Dirhamul Emiratelor Arabe");
+			listModel.addElement("item0");
 			listModel.addElement("item1");
 			listModel.addElement("item2");
 			listModel.addElement("item3");
-			lsFrom.setModel(listModel);
+			jList0.setModel(listModel);
 		}
-		return lsFrom;
+		return jList0;
 	}
 
-	public JLabel getLbDate() {
-		if (lbDate == null) {
-			lbDate = new JLabel();
-			lbDate.setText("14 August 2010");
-			lbDate.setBorder(BorderFactory.createEtchedBorder(
-					EtchedBorder.LOWERED, null, null));
+	private JLabel getJLabel1() {
+		if (jLabel1 == null) {
+			jLabel1 = new JLabel();
+			jLabel1.setText("14 August 2010");
+			jLabel1.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, null, null));
 		}
-		return lbDate;
+		return jLabel1;
 	}
 
-	public JLabel getLbDateName() {
-		if (lbDateName == null) {
-			lbDateName = new JLabel();
-			lbDateName.setText("Data cursului");
+	private JLabel getJLabel0() {
+		if (jLabel0 == null) {
+			jLabel0 = new JLabel();
+			jLabel0.setText("Data cursului");
 		}
-		return lbDateName;
+		return jLabel0;
 	}
 
-	@SuppressWarnings("unused")
-	public static void installLnF() {
+	private static void installLnF() {
 		try {
 			String lnfClassname = PREFERRED_LOOK_AND_FEEL;
 			if (lnfClassname == null)
@@ -387,9 +366,10 @@ public class MainFrame extends JFrame implements ModelListener {
 	}
 
 	/**
-	 * Main entry of the class. Note: This class is only created so that you can
-	 * easily preview the result at runtime. It is not expected to be managed by
-	 * the designer. You can modify it as you like.
+	 * Main entry of the class.
+	 * Note: This class is only created so that you can easily preview the result at runtime.
+	 * It is not expected to be managed by the designer.
+	 * You can modify it as you like.
 	 */
 	public static void main(String[] args) {
 		installLnF();
@@ -398,94 +378,13 @@ public class MainFrame extends JFrame implements ModelListener {
 			public void run() {
 				MainFrame frame = new MainFrame();
 				frame.setDefaultCloseOperation(MainFrame.EXIT_ON_CLOSE);
-				frame.setTitle("Convertor Valutar");
+				frame.setTitle("MainFrame");
 				frame.getContentPane().setPreferredSize(frame.getSize());
 				frame.pack();
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 			}
 		});
-	}
-
-	// TODO override hashCode and equals
-
-	@Override
-	public void update(Model m, final Object obj) {
-		// TODO Auto-generated method stub
-		System.out.println("Successssssss: update() in MainFrame");
-		System.out.println();
-		System.out.println(((ConvValutarModel) m).getResult());
-
-		// implementation
-		final ConvValutarModel myModel = (ConvValutarModel) m;
-		final Currency[] currenciesArray = myModel.getXmlInfo().getCurrencies()
-				.toArray(new Currency[0]);
-		final String lbDateText = myModel.getXmlInfo().getDateString();
-		final String lbResultText = String.valueOf(numberFormat.format(myModel
-				.getResult()));
-		final String lbVatText = String.valueOf(numberFormat.format(myModel
-				.getVat()));
-		final String lbResultAndVatText = String.valueOf(numberFormat
-				.format(myModel.getResultAndVat()));
-		final String lbFromCurrencyText = myModel.getFromCurrencyLabel();
-		final String lbToCurrencyText = myModel.getToCurrencyLabel();
-
-		SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				// JLists
-				if (obj instanceof XmlInformation || i == 0) {
-					lsFrom.setListData(currenciesArray);
-					lsTo.setListData(currenciesArray);
-					i = 1;
-				}
-
-				// Date
-				lbDate.setText(lbDateText);
-
-				// JFormattedTextField
-				// tfSum.setValue(new Double(myModel.getSum()));
-				// tfConvRate.setValue(new Double(myModel.getConvRate()));
-
-				// Result related labels
-				lbResult.setText(lbResultText);
-				lbVat.setText(lbVatText);
-				lbResultAndVat.setText(lbResultAndVatText);
-				lbFromCurrency.setText(lbFromCurrencyText);
-				lbToCurrency.setText(lbToCurrencyText);
-
-			}
-		});
-
-	}
-
-	/**
-	 * Used to call <code>selectAll()</code> on the
-	 * <code>JFormattedTextField</code>'s when they acquire keyboard focus
-	 * 
-	 * @author VlaD
-	 * 
-	 */
-	private class FormattedTextFieldFocusListener implements FocusListener {
-
-		@Override
-		public void focusGained(final FocusEvent e) {
-
-			SwingUtilities.invokeLater(new Runnable() {
-
-				@Override
-				public void run() {
-					((JFormattedTextField) (e.getSource())).selectAll();
-				}
-			});
-
-		}
-
-		@Override
-		public void focusLost(FocusEvent e) {
-		}
-
 	}
 
 }
