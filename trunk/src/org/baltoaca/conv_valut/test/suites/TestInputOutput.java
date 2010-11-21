@@ -15,6 +15,7 @@ import org.baltoaca.conv_valut.mvc.ConvValutarController;
 import org.baltoaca.conv_valut.mvc.ConvValutarModel;
 import org.baltoaca.conv_valut.mvc.ModelListener;
 import org.baltoaca.conv_valut.test.TestUtils;
+import org.baltoaca.conv_valut.thread.Main;
 import org.baltoaca.conv_valut.xml.XmlInfoBnr;
 import org.baltoaca.conv_valut.xml.XmlSource;
 import org.junit.BeforeClass;
@@ -29,7 +30,7 @@ public class TestInputOutput {
 	private static ConvValutarModel model;
 	private static XmlInfoBnr xmlInfoBnr;
 	private static XmlSource xmlSource;
-
+	Main m = new Main();
 	@BeforeClass
 	public static void before() {
 		try {
@@ -92,8 +93,8 @@ public class TestInputOutput {
 			}
 
 			private void selectEurAndRon() {
-				frame.getLsFrom().setSelectedIndex(1);
-				frame.getLsTo().setSelectedIndex(0);
+				frame.selectCurrencyInFromList("EUR");
+				frame.selectCurrencyInToList("RON");
 			}
 		});
 		

@@ -12,6 +12,8 @@ public class Currency {
 	public Currency(String shortName){
 		this.shortName = shortName;
 	}
+	
+	
 	/**
 	 * Creates an instance without a multiplier
 	 * 
