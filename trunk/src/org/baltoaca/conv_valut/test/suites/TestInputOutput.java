@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.SwingUtilities;
 import javax.xml.parsers.ParserConfigurationException;
@@ -18,6 +20,7 @@ import org.baltoaca.conv_valut.test.TestUtils;
 import org.baltoaca.conv_valut.thread.Main;
 import org.baltoaca.conv_valut.xml.XmlInfoBnr;
 import org.baltoaca.conv_valut.xml.XmlSource;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -30,7 +33,9 @@ public class TestInputOutput {
 	private static ConvValutarModel model;
 	private static XmlInfoBnr xmlInfoBnr;
 	private static XmlSource xmlSource;
-	Main m = new Main();
+	
+	private static Set<Currency> currencySet;
+	
 	@BeforeClass
 	public static void before() {
 		try {
@@ -57,6 +62,8 @@ public class TestInputOutput {
 		xmlSource = new XmlSource(new URL("http://www.bnro.ro/nbrfxrates.xml"),
 		"Banca Nationala a Romaniei");
 		xmlInfoBnr = new XmlInfoBnr(xmlSource);
+		
+		currencySet = xmlInfoBnr.getCurrencies();
 	}
 
 	private static void setUpMVC() {
@@ -88,14 +95,15 @@ public class TestInputOutput {
 				frame.pack();
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
-				
 
 			}
-
-			private void selectEurAndRon() {
+			
+			public void selectEurAndRon() {
 				frame.selectCurrencyInFromList("EUR");
 				frame.selectCurrencyInToList("RON");
 			}
+
+
 		});
 		
 		//time for GUI to appear
@@ -107,30 +115,71 @@ public class TestInputOutput {
 	}
 
 
+	@Before
+	public void selectEurAndRon() {
+		frame.selectCurrencyInFromList("EUR");
+		frame.selectCurrencyInToList("RON");
+	}
+	
+	@Test
+	public void testResultAllCurrenciesToBaseCurrency() throws InterruptedException{
+		Double result = 0.0;
+		Set<Currency> currencySet = xmlInfoBnr.getCurrencies();
+		
+		for (Currency currency : currencySet) {
+			frame.selectCurrencyInFromList(currency.getShortName());
+			waitABit();
+			result = currency.getRate();
+			
+			assertEquals(result,Double.parseDouble(frame.getLbResult().getText()),0.01);
+		}
+		
+	}
+	
+	@Test
+	public void testLabelAllCurrenciesToBaseCurrency() throws InterruptedException{
+		
+		for (Currency currency : currencySet) {
+			frame.selectCurrencyInFromList(currency.getShortName());
+			waitABit();
+			
+			assertEquals(currency.getShortName(),frame.getLbFromCurrency().getText());
+		}
+		
+	}
+	
+	
+	@Test
+	public void testResultAndVatAllCurrenciesToBaseCurrency() throws InterruptedException{
+		Double result = 0.0;
+		
+		for (Currency currency : currencySet) {
+			frame.selectCurrencyInFromList(currency.getShortName());
+			waitABit();
+			result = currency.getRate()*(1+ConvValutarModel.VAT);
+			
+			assertEquals(result,Double.parseDouble(frame.getLbResultAndVat().getText()),0.01);
+		}
+}
+
 
 	
 	@Test
-	public void testResult(){
-		Double result = xmlInfoBnr.getCurrencies().tailSet(new Currency("EUR", "", 0.0)).first().getRate();
+	public void testVatAllCurrenciesToBaseCurrency() throws InterruptedException{
+		Double result = 0.0;
 		
-		assertEquals(result,Double.parseDouble(frame.getLbResult().getText()),0.01);
+		for (Currency currency : currencySet) {
+			frame.selectCurrencyInFromList(currency.getShortName());
+			waitABit();
+			result = currency.getRate()*ConvValutarModel.VAT;
+			
+			assertEquals(result,Double.parseDouble(frame.getLbVat().getText()),0.01);
+		}
 	}
 	
-	
-	@Test
-	public void testResultAndVat(){
-		Double result = xmlInfoBnr.getCurrencies().tailSet(new Currency("EUR", "", 0.0)).first().getRate()*(1+ConvValutarModel.VAT);
-		
-		assertEquals(result,Double.parseDouble(frame.getLbResultAndVat().getText()),0.01);
+	private void waitABit() throws InterruptedException {
+		Thread.sleep(50);
 	}
-	
-	@Test
-	public void testVat(){
-		Double vat = xmlInfoBnr.getCurrencies().tailSet(new Currency("EUR", "", 0.0)).first().getRate()*ConvValutarModel.VAT;
-		
-		assertEquals(vat,Double.parseDouble(frame.getLbVat().getText()),0.01);
-	}
-	
 	
 
 }
