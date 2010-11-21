@@ -4,10 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
 import javax.swing.JList;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.baltoaca.conv_valut.computer.Currency;
 import org.baltoaca.conv_valut.gui.MainFrame;
@@ -59,7 +60,7 @@ public class ConvValutarController extends Controller {
 																// NOT adjusting
 
 							String label = ((Currency) ((JList) e.getSource())
-									.getSelectedValue()).getName();
+									.getSelectedValue()).getShortName();
 							myModel.setFromCurrencyLabel(label);
 
 							SwingUtilities.invokeLater(new Runnable() {
@@ -86,7 +87,7 @@ public class ConvValutarController extends Controller {
 				if (e.getValueIsAdjusting() == false) { // if value is NOT
 														// adjusting
 					String label = ((Currency) ((JList) e.getSource())
-							.getSelectedValue()).getName();
+							.getSelectedValue()).getShortName();
 					myModel.setToCurrencyLabel(label);
 					SwingUtilities.invokeLater(new Runnable() {
 

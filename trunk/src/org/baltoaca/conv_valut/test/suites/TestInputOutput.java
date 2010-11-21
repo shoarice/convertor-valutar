@@ -31,21 +31,23 @@ public class TestInputOutput {
 
 	@BeforeClass
 	public static void before() {
-		MainFrame.installLnF();
 		try {
 			
 			initClassFields();
-
+			setUpMVC();
+			startGUI();
+			
 		} catch (ParserConfigurationException e) {
 			TestUtils.failBecauseOfUnexpectedExeption(e);
 		} catch (SAXException e) {
 			TestUtils.failBecauseOfUnexpectedExeption(e);
 		} catch (IOException e) {
 			TestUtils.failBecauseOfUnexpectedExeption(e);
+		} catch (Exception e) {
+			TestUtils.failBecauseOfUnexpectedExeption(e);
 		}
 
-		setUpMVC();
-		startGUI();
+
 	}
 	
 	private static void initClassFields() throws MalformedURLException,
@@ -68,7 +70,7 @@ public class TestInputOutput {
 	
 
 	private static void startGUI() {
-		
+		MainFrame.installLnF();
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override

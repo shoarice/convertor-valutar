@@ -31,7 +31,6 @@ import org.baltoaca.conv_valut.computer.Currency;
 import org.baltoaca.conv_valut.mvc.ConvValutarModel;
 import org.baltoaca.conv_valut.mvc.Model;
 import org.baltoaca.conv_valut.mvc.ModelListener;
-import org.baltoaca.conv_valut.xml.XmlInformation;
 import org.dyno.visual.swing.layouts.Constraints;
 import org.dyno.visual.swing.layouts.GroupLayout;
 import org.dyno.visual.swing.layouts.Leading;
@@ -43,8 +42,8 @@ public class MainFrame extends JFrame implements ModelListener {
 	private JLabel lbDateName;
 	private JLabel lbDate;
 	private JList lsFrom;
-	private JScrollPane jScrollPane0;
 	private JList lsTo;
+	private JScrollPane jScrollPane0;
 	private JScrollPane jScrollPane1;
 	private JMenuItem mnItemExit;
 	private JMenu mnFile;
@@ -67,7 +66,7 @@ public class MainFrame extends JFrame implements ModelListener {
 	private JLabel lbResultAndVat;
 	private JLabel lbToCurrency;
 	private JLabel lbResult;
-	private int i;
+	private boolean areListsUpdated;
 	private static final int NR_OF_FRACTION_DIGITS = 2;
 
 	NumberFormat numberFormat = NumberFormat.getInstance(new Locale("en"));
@@ -411,10 +410,7 @@ public class MainFrame extends JFrame implements ModelListener {
 
 	@Override
 	public void update(Model m, final Object obj) {
-		// TODO Auto-generated method stub
-		System.out.println("Successssssss: update() in MainFrame");
-		System.out.println();
-		System.out.println(((ConvValutarModel) m).getResult());
+		
 
 		// implementation
 		final ConvValutarModel myModel = (ConvValutarModel) m;
@@ -435,10 +431,10 @@ public class MainFrame extends JFrame implements ModelListener {
 			@Override
 			public void run() {
 				// JLists
-				if (obj instanceof XmlInformation || i == 0) {
+				if (!areListsUpdated) {
 					lsFrom.setListData(currenciesArray);
 					lsTo.setListData(currenciesArray);
-					i = 1;
+					areListsUpdated = true;
 				}
 
 				// Date
