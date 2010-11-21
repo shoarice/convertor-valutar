@@ -1,18 +1,15 @@
 package org.baltoaca.conv_valut.test;
 
 import static org.junit.Assert.*;
-
 import java.io.IOException;
 import java.net.URL;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.baltoaca.conv_valut.xml.XmlSource;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
 
-public class TestXmlSource {
+public class TestXmlSource{
 	
 	@Test
 	public void test(){
@@ -25,11 +22,11 @@ public class TestXmlSource {
 					.getNodeName());
 			
 		} catch (ParserConfigurationException e) {
-			fail("Unexpected "+e);
+			TestUtils.failBecauseOfUnexpectedExeption(e);
 		} catch (SAXException e) {
-			fail("Unexpected SAXException "+e);
+			TestUtils.failBecauseOfUnexpectedExeption(e);
 		} catch (IOException e) {
-			fail("Unexpected IOException "+e);
+			TestUtils.failBecauseOfUnexpectedExeption(e);
 		}
 	}
 
