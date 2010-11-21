@@ -5,9 +5,6 @@ import java.awt.Component;
 import java.io.IOException;
 import java.net.URL;
 
-import javax.sound.midi.SysexMessage;
-import javax.swing.JFrame;
-import javax.swing.ProgressMonitor;
 import javax.swing.SwingUtilities;
 import javax.xml.parsers.ParserConfigurationException;
 
