@@ -9,6 +9,7 @@ import java.net.URL;
 import javax.swing.SwingUtilities;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.baltoaca.conv_valut.computer.Currency;
 import org.baltoaca.conv_valut.gui.MainFrame;
 import org.baltoaca.conv_valut.mvc.ConvValutarController;
 import org.baltoaca.conv_valut.mvc.ConvValutarModel;
@@ -109,21 +110,22 @@ public class TestInputOutput {
 	
 	@Test
 	public void testResult(){
-		Double result = xmlInfoBnr.getCurrencies().get(1).getRate();
+		Double result = xmlInfoBnr.getCurrencies().tailSet(new Currency("EUR", "", 0.0)).first().getRate();
 		
 		assertEquals(result,Double.parseDouble(frame.getLbResult().getText()),0.01);
 	}
 	
+	
 	@Test
 	public void testResultAndVat(){
-		Double result = xmlInfoBnr.getCurrencies().get(1).getRate()*(1+ConvValutarModel.VAT);
+		Double result = xmlInfoBnr.getCurrencies().tailSet(new Currency("EUR", "", 0.0)).first().getRate()*(1+ConvValutarModel.VAT);
 		
 		assertEquals(result,Double.parseDouble(frame.getLbResultAndVat().getText()),0.01);
 	}
 	
 	@Test
 	public void testVat(){
-		Double vat = xmlInfoBnr.getCurrencies().get(1).getRate()*ConvValutarModel.VAT;
+		Double vat = xmlInfoBnr.getCurrencies().tailSet(new Currency("EUR", "", 0.0)).first().getRate()*ConvValutarModel.VAT;
 		
 		assertEquals(vat,Double.parseDouble(frame.getLbVat().getText()),0.01);
 	}

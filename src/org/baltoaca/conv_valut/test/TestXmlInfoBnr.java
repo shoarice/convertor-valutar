@@ -62,7 +62,7 @@ public class TestXmlInfoBnr {
 		for (int i = 0; i < currenciesStrings.length; i++) {
 			currenciesStrings[i] = currencies[i].toString();
 		}
-
+		
 		assertArrayEquals(
 				new String[] { "RON - Leul românesc", "EUR - Euro",
 						"USD - Dolarul SUA", "AED - Dirhamul Emiratelor Arabe",

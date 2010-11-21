@@ -3,15 +3,16 @@ package org.baltoaca.conv_valut.xml;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.baltoaca.conv_valut.computer.Currency;
+import org.baltoaca.conv_valut.computer.CurrencyBnrComparator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -31,11 +32,11 @@ public class XmlInfoBnr extends XmlInformation {
 	@Override
 	public void refreshData() throws ParserConfigurationException,
 			SAXException, IOException {
-		currencies = new ArrayList<Currency>();
+		currencies = new TreeSet<Currency>(new CurrencyBnrComparator());
 		
 		Document doc = origin.getParsedDocument();
 		readCurrencies(doc);
-		arrangeCurrencies();
+		addBaseCurrency();
 		
 		date = readDate(doc);
 	}
@@ -48,7 +49,7 @@ public class XmlInfoBnr extends XmlInformation {
 	 *         from the xml file
 	 * @see Currency
 	 */
-	private List<Currency> readCurrencies(Document doc) {
+	private SortedSet<Currency> readCurrencies(Document doc) {
 		
 		try {
 			NodeList rateNodes = parseRateNodes(doc);
@@ -59,6 +60,7 @@ public class XmlInfoBnr extends XmlInformation {
 	
 				Currency parsedCurrency = parseCurrencyFromElement(e);				
 				currencies.add(parsedCurrency);
+				System.out.println();
 			}
 		} catch (ParserConfigurationException e1) {
 			// TODO Auto-generated catch block
