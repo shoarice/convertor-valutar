@@ -1,36 +1,36 @@
 package org.baltoaca.conv_valut.test;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.net.URL;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.baltoaca.conv_valut.xml.XmlSource;
+import org.junit.Test;
 import org.xml.sax.SAXException;
 
-public class XmlSourceTest {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
+public class TestXmlSource {
+	
+	@Test
+	public void test(){
 		
-		try {
+		try{
 			XmlSource bnr = new XmlSource(new URL("http://www.bnro.ro/nbrfxrates.xml"),
 			"Banca Nationala Romana");
-			System.out.println(bnr.getParsedDocument().getChildNodes().item(0)
+			
+			assertEquals("DataSet",bnr.getParsedDocument().getChildNodes().item(0)
 					.getNodeName());
+			
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail("Unexpected "+e);
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail("Unexpected SAXException "+e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail("Unexpected IOException "+e);
 		}
-
 	}
 
 }
