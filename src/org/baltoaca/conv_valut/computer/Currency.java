@@ -2,12 +2,16 @@ package org.baltoaca.conv_valut.computer;
 
 public class Currency {
 
-	private String iso4271Name;
+	private String shortName;
 	private String fullName;
 	private double rate;
 	private boolean hasMultiplier;
 	private double multiplier;
 
+	
+	public Currency(String shortName){
+		this.shortName = shortName;
+	}
 	/**
 	 * Creates an instance without a multiplier
 	 * 
@@ -16,9 +20,9 @@ public class Currency {
 	 * @param rate
 	 *            The rate of the currency
 	 */
-	public Currency(String name, String fullName, Double rate) {
+	public Currency(String shortName, String fullName, Double rate) {
 		this.rate = rate;
-		this.iso4271Name = name;
+		this.shortName = shortName;
 		hasMultiplier = false;
 		multiplier = 1;
 		this.fullName = fullName;
@@ -37,7 +41,7 @@ public class Currency {
 	 *            the field inside the object will be set to 1. If this is
 	 *            negative, the field inside the object will be set to positive
 	 */
-	public Currency(String name,String fullName, double rate, double multiplier) {
+	public Currency(String name, String fullName, double rate, double multiplier) {
 		this(name, fullName, rate);
 		if (multiplier < 0) {
 			this.multiplier = -1 * multiplier;
@@ -56,8 +60,7 @@ public class Currency {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Currency) {
-			if (rate == ((Currency) obj).rate
-					&& iso4271Name.equals(((Currency) obj).iso4271Name)) {
+			if (shortName.equals(((Currency) obj).shortName)) {
 				return true;
 			}
 		}
@@ -69,9 +72,9 @@ public class Currency {
 		String str = "";
 		if (hasMultiplier)
 			str += (int) multiplier;
-		str += iso4271Name;
-		if(fullName!=null)
-			str+=" - "+fullName;
+		str += shortName;
+		if (fullName != null)
+			str += " - " + fullName;
 		return str;
 	}
 
@@ -80,9 +83,10 @@ public class Currency {
 	}
 
 	public String getShortName() {
-		return iso4271Name;
+		return shortName;
 	}
-	public String getFullName(){
+
+	public String getFullName() {
 		return fullName;
 	}
 
