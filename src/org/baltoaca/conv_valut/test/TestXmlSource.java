@@ -21,7 +21,7 @@ public class TestXmlSource{
 			XmlSource bnr = new XmlSource(new URL("http://www.bnro.ro/nbrfxrates.xml"),
 			"Banca Nationala Romana");
 			
-			assertEquals("DataSet",bnr.getParsedDocument().getChildNodes().item(0)
+			assertEquals("DataSet",bnr.parseAndGetParsedDocument().getChildNodes().item(0)
 					.getNodeName());
 			
 		} catch (ParserConfigurationException e) {

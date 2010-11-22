@@ -34,7 +34,7 @@ public class XmlInfoBnr extends XmlInformation {
 			SAXException, IOException {
 		currencies = new TreeSet<Currency>(new CurrencyBnrComparator());
 		
-		Document doc = origin.getParsedDocument();
+		Document doc = currencyRateSource.parseAndGetParsedDocument();
 		readCurrencies(doc);
 		addBaseCurrency();
 		
@@ -113,7 +113,7 @@ public class XmlInfoBnr extends XmlInformation {
 		return e.getAttribute("currency");
 	}
 	private String parseCurrencyFullName(Element e) throws ParserConfigurationException, SAXException, IOException {
-		Document currencyFullNameDoc = currencyFullNameSource.getParsedDocument();
+		Document currencyFullNameDoc = currencyFullNameSource.parseAndGetParsedDocument();
 		return getFullNameOfCurrency(parseCurrencyShortName(e),currencyFullNameDoc);
 	}
 	private double parseRate(Element e) {

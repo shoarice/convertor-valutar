@@ -1,11 +1,9 @@
 package org.baltoaca.conv_valut.test;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Calendar;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -19,11 +17,9 @@ import org.xml.sax.SAXException;
 
 public class TestXmlInfoBnr {
 	private static XmlInformation info;
-	private static Calendar currentCalendar;
 
 	@BeforeClass
 	public static void beforeClass() {
-		currentCalendar = Calendar.getInstance();
 
 		try {
 
@@ -40,18 +36,6 @@ public class TestXmlInfoBnr {
 		} catch (IOException e) {
 			TestUtils.failBecauseOfUnexpectedExeption(e);
 		}
-	}
-
-	@Test
-	public void testDate() {
-
-		assertEquals(currentCalendar.get(Calendar.DATE),
-				info.getDate().get(Calendar.DATE), 3);
-		assertEquals(currentCalendar.get(Calendar.MONTH),
-				info.getDate().get(Calendar.MONTH) + 1, 1);
-		assertEquals(currentCalendar.get(Calendar.YEAR),
-				info.getDate().get(Calendar.YEAR), 1);
-
 	}
 
 	@Test
