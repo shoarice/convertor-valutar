@@ -67,7 +67,7 @@ public class MainFrame extends JFrame implements ModelListener {
 	private JLabel lbResultAndVat;
 	private JLabel lbToCurrency;
 	private JLabel lbResult;
-	private boolean areListsUpdated;
+	private boolean listsNeedToBeUpdated = true;
 	private static final int NR_OF_FRACTION_DIGITS = 2;
 
 	NumberFormat numberFormat = NumberFormat.getInstance(new Locale("en"));
@@ -452,10 +452,10 @@ public class MainFrame extends JFrame implements ModelListener {
 			}
 
 			private void updateJLists(final Currency[] currenciesArray) {
-				if (!areListsUpdated) {
+				if (listsNeedToBeUpdated) {
 					lsFrom.setListData(currenciesArray);
 					lsTo.setListData(currenciesArray);
-					areListsUpdated = true;
+					listsNeedToBeUpdated = false;
 				}
 			}
 
