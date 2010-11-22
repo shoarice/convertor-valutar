@@ -47,10 +47,10 @@ public abstract class XmlInformation {
 	 */
 	public String dateToString() {
 		DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG,Main.locale);
-		return dateFormat.format(date);
+		return dateFormat.format(date.getTime());
 	}
 
-	protected void addBaseCurrency(){
+	protected void addBaseCurrencyIfNeeded(){
 		Currency ron = new Currency("RON","Leul românesc", 1.0);
 		
 		if(!currencies.contains(ron)){
