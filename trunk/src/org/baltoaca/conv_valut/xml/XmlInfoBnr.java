@@ -27,18 +27,27 @@ public class XmlInfoBnr extends XmlInformation {
 		super(origin);
 		currencyFullNameSource = new XmlSource(getClass().getClassLoader().getResource("fullCurrNames.xml"),
 				"ISO4217");
+		currencies = new TreeSet<Currency>(new CurrencyBnrComparator());
 		refreshData();
 	}
 
 	@Override
 	public void refreshData() throws ParserConfigurationException,
 			SAXException, IOException {
-		currencies = new TreeSet<Currency>(new CurrencyBnrComparator());
-		
 		Document doc = currencyRateSource.parseAndGetParsedDocument();
-		readCurrencies(doc);
-		addBaseCurrency();
+
+		refreshDate(doc);
+		refreshCurrencies(doc);	
+		addBaseCurrencyIfNeeded();
 		
+	}
+
+	private void refreshCurrencies(Document doc) {
+		currencies.clear();
+		readCurrencies(doc);
+	}
+
+	private void refreshDate(Document doc) {
 		date = readDate(doc);
 	}
 
