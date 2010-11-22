@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.baltoaca.conv_valut.computer.Currency;
 import org.baltoaca.conv_valut.computer.CurrencyBnrComparator;
+import org.baltoaca.conv_valut.thread.Main;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -167,7 +168,7 @@ public class XmlInfoBnr extends XmlInformation {
 			e.printStackTrace();
 		}
 		
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance(Main.locale);
 		calendar.setTime(formattedDate);
 		return calendar;
 	}

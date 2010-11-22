@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.Set;
 
 import javax.swing.SwingUtilities;
@@ -17,7 +16,6 @@ import org.baltoaca.conv_valut.mvc.ConvValutarController;
 import org.baltoaca.conv_valut.mvc.ConvValutarModel;
 import org.baltoaca.conv_valut.mvc.ModelListener;
 import org.baltoaca.conv_valut.test.TestUtils;
-import org.baltoaca.conv_valut.thread.Main;
 import org.baltoaca.conv_valut.xml.XmlInfoBnr;
 import org.baltoaca.conv_valut.xml.XmlSource;
 import org.junit.Before;

@@ -4,6 +4,7 @@ package org.baltoaca.conv_valut.thread;
 import java.awt.Component;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 
 import javax.swing.SwingUtilities;
 import javax.xml.parsers.ParserConfigurationException;
@@ -19,6 +20,7 @@ import org.xml.sax.SAXException;
 
 public class Main {
 
+	public static final Locale locale = new Locale("ro");
 	
 	public static void main(String[] args) {
 		MainFrame.installLnF();
