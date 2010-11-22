@@ -37,8 +37,8 @@ public class XmlSource {
 	 * @throws SAXException
 	 *             if the parsing failed
 	 */
-	public Document getParsedDocument() throws ParserConfigurationException,
-			SAXException, IOException {
+	public Document parseAndGetParsedDocument()
+			throws ParserConfigurationException, SAXException, IOException {
 		parseUri();
 		return document;
 	}
@@ -47,7 +47,8 @@ public class XmlSource {
 			IOException {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder(); // throws a ParserConfigurationException
+		DocumentBuilder builder = factory.newDocumentBuilder(); // throws a
+																// ParserConfigurationException
 
 		document = builder.parse(uri.openStream());
 	}
@@ -62,8 +63,7 @@ public class XmlSource {
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof XmlSource) {
-			if (name.equals(((XmlSource) o).name)
-					&& uri.equals(((XmlSource) o).uri)) {
+			if (uri.equals(((XmlSource) o).uri)) {
 				return true;
 			}
 		}

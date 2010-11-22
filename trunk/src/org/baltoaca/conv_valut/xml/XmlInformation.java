@@ -19,10 +19,10 @@ public abstract class XmlInformation {
 
 	protected Calendar date;
 	protected SortedSet<Currency> currencies;
-	protected XmlSource origin;
+	protected XmlSource currencyRateSource;
 
 	public XmlInformation(XmlSource origin) {
-		this.origin = origin;
+		currencyRateSource = origin;
 	}
 
 	/**
@@ -39,92 +39,86 @@ public abstract class XmlInformation {
 		return currencies;
 	}
 
-	public Calendar getDate() {
-		return date;
-	}
-
 	/**
 	 * 
 	 * @return The date field in a human-readable format
 	 */
-	public String getDateString() {
-		String str = "";
-		str += date.get(Calendar.DATE);
-		str += " ";
-		switch (date.get(Calendar.MONTH)) {
+	public String dateToString() {
+		StringBuilder dateStringBuilder = new StringBuilder();
+		
+		addDayOfMonthToStringBuilder(dateStringBuilder);
+		addEmptySpaceToStringBuilder(dateStringBuilder);
+		
+		switch (getMonthNumber()) {
 		case 0:
-			str += "Ianuarie";
+			addStringToStringBuilder("Ianuarie",dateStringBuilder);
 			break;
 		case 1:
-			str += "Februarie";
+			addStringToStringBuilder("Februarie",dateStringBuilder);
 			break;
 		case 2:
-			str += "Martie";
+			addStringToStringBuilder("Martie",dateStringBuilder);
 			break;
 		case 3:
-			str += "Aprilie";
+			addStringToStringBuilder("Aprilie",dateStringBuilder);
 			break;
 		case 4:
-			str += "Mai";
+			addStringToStringBuilder("Mai",dateStringBuilder);
 			break;
 		case 5:
-			str += "Iunie";
+			addStringToStringBuilder("Iunie",dateStringBuilder);
 			break;
 		case 6:
-			str += "Iulie";
+			addStringToStringBuilder("Iulie",dateStringBuilder);
 			break;
 		case 7:
-			str += "August";
+			addStringToStringBuilder("August",dateStringBuilder);
 			break;
 		case 8:
-			str += "Septembrie";
+			addStringToStringBuilder("Septembrie",dateStringBuilder);
 			break;
 		case 9:
-			str += "Octombrie";
+			addStringToStringBuilder("Octombrie",dateStringBuilder);
 			break;
 		case 10:
-			str += "Noiembrie";
+			addStringToStringBuilder("Noiembrie",dateStringBuilder);
 			break;
 		case 11:
-			str += "Decembrie";
+			addStringToStringBuilder("Decembrie",dateStringBuilder);
 			break;
 		default:
-			str += "N/A";
+			addStringToStringBuilder("N/A",dateStringBuilder);
 			break;
 		}
-		str += " ";
-		str += date.get(Calendar.YEAR);
-		return str;
+		addEmptySpaceToStringBuilder(dateStringBuilder);
+		dateStringBuilder.append(date.get(Calendar.YEAR));
+		return dateStringBuilder.toString();
+	}
+
+	private int getMonthNumber() {
+		return date.get(Calendar.MONTH);
+	}
+
+	private void addEmptySpaceToStringBuilder(StringBuilder dateStringBuilder) {
+		dateStringBuilder.append(" ");
 	}
 	
-	/**
-	 * Arranges the Currencies list in a more user friendly way
-	 */
+	private void addStringToStringBuilder(String string, StringBuilder dateStringBuilder) {
+		dateStringBuilder.append(string);
+	}
+
+	private void addDayOfMonthToStringBuilder(StringBuilder dateString) {
+		dateString.append(date.get(Calendar.DATE));
+	}
+
 	protected void addBaseCurrency(){
 		Currency ron = new Currency("RON","Leul românesc", 1.0);
 		
-		//adds RON on top of the list
 		if(!currencies.contains(ron)){
 			currencies.add(ron);
 		}
 		
-		/*
-		for (Currency c : currencies) {
-			if(c.getShortName().equals("EUR")){
-				eur = c;
-				pass = true;
-			}
-			if(pass == false && c.getShortName().equals("USD")){
-				usd = c;
-			}
-			pass = false;
-		}
-		
-		currencies.remove(eur);
-		currencies.remove(usd);
-		currencies.add(1, eur);
-		currencies.add(2, usd);
-		*/
+
 	}
 
 }

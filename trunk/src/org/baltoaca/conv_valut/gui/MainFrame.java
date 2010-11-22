@@ -436,7 +436,7 @@ public class MainFrame extends JFrame implements ModelListener {
 
 		final Currency[] currenciesArray = myModel.getXmlInfo().getCurrencies()
 				.toArray(new Currency[0]);
-		final String lbDateText = myModel.getXmlInfo().getDateString();
+		final String lbDateText = myModel.getXmlInfo().dateToString();
 		
 		labelsTextMap = generateLabelsTextMapFromModel(myModel);
 
