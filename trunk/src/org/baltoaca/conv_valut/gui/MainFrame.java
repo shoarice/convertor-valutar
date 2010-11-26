@@ -434,8 +434,8 @@ public class MainFrame extends JFrame implements ModelListener {
 		final ConvValutarModel myModel = (ConvValutarModel) m;
 		final HashMap<String, String> labelsTextMap;
 
-		final Currency[] currenciesArray = myModel.getXmlInfo().getCurrencies()
-				.toArray(new Currency[0]);
+		final Currency[] currenciesArray = myModel.getXmlInfo().getCurrenciesArray();
+
 		final String lbDateText = myModel.getXmlInfo().dateToString();
 		
 		labelsTextMap = generateLabelsTextMapFromModel(myModel);

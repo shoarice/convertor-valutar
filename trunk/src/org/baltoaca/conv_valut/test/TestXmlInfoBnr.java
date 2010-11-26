@@ -40,7 +40,7 @@ public class TestXmlInfoBnr {
 
 	@Test
 	public void testCurrencies() {
-		Currency[] currencies = info.getCurrencies().toArray(new Currency[0]);
+		Currency[] currencies = info.getCurrenciesArray();
 		String[] currenciesStrings = new String[currencies.length];
 
 		for (int i = 0; i < currenciesStrings.length; i++) {
