@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Set;
 
 import javax.swing.SwingUtilities;
 import javax.xml.parsers.ParserConfigurationException;
@@ -32,7 +31,7 @@ public class TestInputOutput {
 	private static XmlInfoBnr xmlInfoBnr;
 	private static XmlSource xmlSource;
 	
-	private static Set<Currency> currencySet;
+	private static Currency[] currencyArray;
 	
 	@BeforeClass
 	public static void before() {
@@ -61,7 +60,7 @@ public class TestInputOutput {
 		"Banca Nationala a Romaniei");
 		xmlInfoBnr = new XmlInfoBnr(xmlSource);
 		
-		currencySet = xmlInfoBnr.getCurrencies();
+		currencyArray = xmlInfoBnr.getCurrenciesArray();
 	}
 
 	private static void setUpMVC() {
@@ -122,7 +121,7 @@ public class TestInputOutput {
 	@Test
 	public void testResultAllCurrenciesToBaseCurrency() throws InterruptedException{
 		Double result = 0.0;
-		Set<Currency> currencySet = xmlInfoBnr.getCurrencies();
+		Currency[] currencySet = xmlInfoBnr.getCurrenciesArray();
 		
 		for (Currency currency : currencySet) {
 			frame.selectCurrencyInFromList(currency.getShortName());
@@ -137,7 +136,7 @@ public class TestInputOutput {
 	@Test
 	public void testLabelAllCurrenciesToBaseCurrency() throws InterruptedException{
 		
-		for (Currency currency : currencySet) {
+		for (Currency currency : currencyArray) {
 			frame.selectCurrencyInFromList(currency.getShortName());
 			waitABit();
 			
@@ -151,7 +150,7 @@ public class TestInputOutput {
 	public void testResultAndVatAllCurrenciesToBaseCurrency() throws InterruptedException{
 		Double result = 0.0;
 		
-		for (Currency currency : currencySet) {
+		for (Currency currency : currencyArray) {
 			frame.selectCurrencyInFromList(currency.getShortName());
 			waitABit();
 			result = currency.getRate()*(1+ConvValutarModel.VAT);
@@ -166,7 +165,7 @@ public class TestInputOutput {
 	public void testVatAllCurrenciesToBaseCurrency() throws InterruptedException{
 		Double result = 0.0;
 		
-		for (Currency currency : currencySet) {
+		for (Currency currency : currencyArray) {
 			frame.selectCurrencyInFromList(currency.getShortName());
 			waitABit();
 			result = currency.getRate()*ConvValutarModel.VAT;

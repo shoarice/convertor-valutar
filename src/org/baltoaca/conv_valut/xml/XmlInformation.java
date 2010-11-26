@@ -36,9 +36,11 @@ public abstract class XmlInformation {
 	 */
 	public abstract void refreshData() throws ParserConfigurationException,
 			SAXException, IOException;
-
-	public SortedSet<Currency> getCurrencies() {
-		return currencies;
+	
+	
+	public Currency[] getCurrenciesArray(){
+		Currency[] currenciesArray = new Currency[currencies.size()];
+		return currencies.toArray(currenciesArray);
 	}
 
 	/**
