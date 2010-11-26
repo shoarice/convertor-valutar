@@ -1,14 +1,12 @@
 package org.baltoaca.conv_valut.xml;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.SortedSet;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.baltoaca.conv_valut.computer.Currency;
-import org.baltoaca.conv_valut.thread.Main;
 import org.xml.sax.SAXException;
 
 /**
@@ -20,11 +18,13 @@ import org.xml.sax.SAXException;
 public abstract class XmlInformation {
 
 	protected Calendar date;
+	protected XmlDateFormatter dateFormatter;
 	protected SortedSet<Currency> currencies;
 	protected XmlSource currencyRateSource;
 
 	public XmlInformation(XmlSource origin) {
 		currencyRateSource = origin;
+		dateFormatter = new XmlDateFormatter();
 	}
 
 	/**
@@ -48,8 +48,7 @@ public abstract class XmlInformation {
 	 * @return The date field in a human-readable format
 	 */
 	public String dateToString() {
-		DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG,Main.locale);
-		return dateFormat.format(date.getTime());
+		return dateFormatter.formatDateFromCalendar(date);
 	}
 
 	protected void addBaseCurrencyIfNeeded(){
