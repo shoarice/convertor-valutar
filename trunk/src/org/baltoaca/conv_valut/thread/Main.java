@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -35,9 +36,10 @@ public class Main {
 		
 		
 		XmlInfoBnr xmlInfoBnr = null;
+		XmlSource xmlSource = null;
 		try {
 			
-			XmlSource xmlSource = new XmlSource(new URL("http://www.bnro.ro/nbrfxrates.xml"),
+			xmlSource = new XmlSource(new URL("http://www.bnro.ro/nbrfxrates.xml"),
 			"Banca Nationala a Romaniei");
 			
 			loader.next();
@@ -90,7 +92,7 @@ public class Main {
 			e.printStackTrace();
 			System.exit(0);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null,"Nu s-a reusit stabilirea unei conexiuni la server:\n"+xmlSource,"Eroare",JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 			System.exit(0);
 		}
