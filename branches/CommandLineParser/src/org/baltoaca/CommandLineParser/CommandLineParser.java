@@ -35,13 +35,12 @@ public class CommandLineParser {
 				throw new ExecutorNotFoundException();
 			
 			String response = executor.executeAndGenerateResponse(commandElements);			
-			console.printf(response);
+			if(responseIsNotEmpty(response))
+				console.printf(response);
 			
 			writePrompt();
 		}
 	}
-
-
 
 	private void writePrompt(){
 		console.printf("> ");
@@ -63,6 +62,15 @@ public class CommandLineParser {
 		if(executor == null)
 			return true;
 		return false;
+	}
+	
+	private boolean responseIsNotEmpty(String response) {
+		if(response == null)
+			return false;
+		if(response.equalsIgnoreCase(""))
+			return false;
+		
+		return true;
 	}
 
 	public void setExecutor(Executor executor) {
