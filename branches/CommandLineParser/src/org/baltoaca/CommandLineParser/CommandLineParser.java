@@ -6,7 +6,7 @@ import exceptions.ConsoleNotFoundException;
 
 public class CommandLineParser {
 	private static CommandLineParser parser = null;
-	
+	private Executor executor;
 	private CommandLineParser(){}
 	
 	public static CommandLineParser instance(){
@@ -22,24 +22,28 @@ public class CommandLineParser {
 		String commandLine = null;
 		String[] commandsElements = null; 
 		
-		isConsoleAvailable(console);
+		if(consoleNotFound(console))
+			throw new ConsoleNotFoundException();
 		
 		writePrompt(console);
 		while((commandLine=console.readLine())!=null){
 			commandsElements = extractCommands(commandLine);
 			
+			String response = executor.executeAndGenerateAnswer(commandsElements);			
+			console.printf(response);
 			
 			writePrompt(console);
 		}
 	}
 
 	private void writePrompt(Console console){
-		console.printf("action > ");
+		console.printf("> ");
 	}
 	
-	private void isConsoleAvailable(Console console) throws ConsoleNotFoundException {
+	private boolean consoleNotFound(Console console) {
 		if(console == null)
-			throw new ConsoleNotFoundException();
+			return true;
+		return false;
 	}
 	
 	private String[] extractCommands(String commandLine) {
