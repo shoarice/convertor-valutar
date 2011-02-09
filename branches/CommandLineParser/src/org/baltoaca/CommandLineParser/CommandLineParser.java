@@ -3,10 +3,13 @@ package org.baltoaca.CommandLineParser;
 import java.io.Console;
 
 import exceptions.ConsoleNotFoundException;
+import exceptions.ExecutorNotFoundException;
 
 public class CommandLineParser {
 	private static CommandLineParser parser = null;
 	private Executor executor;
+	Console console = System.console();
+	
 	private CommandLineParser(){}
 	
 	public static CommandLineParser instance(){
@@ -17,30 +20,34 @@ public class CommandLineParser {
 	}
 	
 	
-	public void run() throws ConsoleNotFoundException{
-		Console console = System.console();
+	public void run() throws ConsoleNotFoundException, ExecutorNotFoundException{
 		String commandLine = null;
-		String[] commandsElements = null; 
+		String[] commandElements = null; 
 		
-		if(consoleNotFound(console))
+		if(consoleNotFound())
 			throw new ConsoleNotFoundException();
 		
-		writePrompt(console);
-		while((commandLine=console.readLine())!=null){
-			commandsElements = extractCommands(commandLine);
+		writePrompt();
+		while((commandLine=console.readLine()) !=null){
+			commandElements = extractCommands(commandLine);
 			
-			String response = executor.executeAndGenerateAnswer(commandsElements);			
+			if(executorNotFound())
+				throw new ExecutorNotFoundException();
+			
+			String response = executor.executeAndGenerateResponse(commandElements);			
 			console.printf(response);
 			
-			writePrompt(console);
+			writePrompt();
 		}
 	}
 
-	private void writePrompt(Console console){
+
+
+	private void writePrompt(){
 		console.printf("> ");
 	}
 	
-	private boolean consoleNotFound(Console console) {
+	private boolean consoleNotFound() {
 		if(console == null)
 			return true;
 		return false;
@@ -51,5 +58,16 @@ public class CommandLineParser {
 		commandsElements = commandLine.split("[\\s\\t]+");
 		return commandsElements;
 	}
+	
+	private boolean executorNotFound() {
+		if(executor == null)
+			return true;
+		return false;
+	}
 
+	public void setExecutor(Executor executor) {
+		this.executor = executor;
+	}
+	
+	
 }
