@@ -38,18 +38,23 @@ public class CommandLineParser {
 		
 		writePrompt();
 		while((commandLine=console.readLine()) !=null){
-			commandElements = extractCommands(commandLine);
-			
-			if(executorNotFound())
-				throw new ExecutorNotFoundException();
-			
-			String response = executor.executeAndGenerateResponse(commandElements);			
-			if(responseIsNotEmpty(response))
-				console.printf(response);
+			if(stringIsNotEmpty(commandLine)){
+				
+				commandElements = extractCommands(commandLine);
+				
+				if(executorNotFound())
+					throw new ExecutorNotFoundException();
+				
+				String response = executor.executeAndGenerateResponse(commandElements);			
+				if(responseIsNotEmpty(response))
+					console.printf(response);
+				
+			}
 			
 			writePrompt();
 		}
 	}
+
 
 	private void writePrompt(){
 		console.printf("> ");
@@ -59,6 +64,10 @@ public class CommandLineParser {
 		if(console == null)
 			return true;
 		return false;
+	}
+	
+	private boolean stringIsNotEmpty(String commandLine) {
+		return !commandLine.isEmpty();
 	}
 	
 	private String[] extractCommands(String commandLine) {
