@@ -1,3 +1,4 @@
+package org.baltoaca;
 import org.baltoaca.CommandLineParser.CommandLineParser;
 import org.baltoaca.CommandLineParser.Executor;
 import org.baltoaca.CommandLineParser.exceptions.ConsoleNotFoundException;
