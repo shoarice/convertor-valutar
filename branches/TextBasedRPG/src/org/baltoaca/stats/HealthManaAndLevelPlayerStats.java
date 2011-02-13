@@ -6,8 +6,17 @@ public class HealthManaAndLevelPlayerStats {
 	IntervalIntegerValue mana;
 	Level level;
 	
-
+	public HealthManaAndLevelPlayerStats(int maxHealth, int maxMana, int experience){
+		health = new IntervalIntegerValue(maxHealth);
+		mana = new IntervalIntegerValue(maxMana);
+		level = new Level(experience);
+	}
 	
+	public HealthManaAndLevelPlayerStats(int maxHealth,int currentHealth, int maxMana, int currentMana, int experience){
+		health = new IntervalIntegerValue(maxHealth, currentHealth);
+		mana = new IntervalIntegerValue(maxMana, currentMana);
+		level = new Level(experience);
+	}
 	
 	public int getMaxHealth(){
 		return health.getMaxValue();
@@ -36,7 +45,7 @@ public class HealthManaAndLevelPlayerStats {
 	/**
 	 * Resets the level up flag when called
 	 */
-	public boolean levelUp(){
+	public boolean isLeveledUp(){
 		return level.isLeveledUp();
 	}
 	
