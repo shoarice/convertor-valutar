@@ -10,8 +10,4 @@ public class PlayerCharacter {
 	private Inventory inventory;
 	private EquippedSet equippedSet;
 	
-	public PlayerCharacter(String name, HealthManaAndLevelPlayerStats initialStats){
-		this.name = name;
-		this.stats = initialStats;
-	}
 }
