@@ -11,12 +11,20 @@ package org.baltoaca.stats;
  */
 public class Level {
 	private int experience;
-	private int level;
+	private int level = 1;
 	private ExperienceToLevelMapper mapper;
 	private boolean levelUp;
 	
 	public Level(){
 		//TODO init mapper
+	}
+	
+	public Level(int experience){
+		this();
+		this.experience = experience;
+		updateLevelIfNeededAndSetLevelUpFlag();
+		
+		levelUp = false;
 	}
 	public void addExperience(int amount){
 		experience+=amount;
