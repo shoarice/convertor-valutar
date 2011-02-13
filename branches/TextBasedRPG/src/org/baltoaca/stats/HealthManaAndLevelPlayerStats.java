@@ -1,10 +1,13 @@
 package org.baltoaca.stats;
 
 
-public class PlayerStats {
+public class HealthManaAndLevelPlayerStats {
 	IntervalIntegerValue health;
 	IntervalIntegerValue mana;
 	Level level;
+	
+
+	
 	
 	public int getMaxHealth(){
 		return health.getMaxValue();

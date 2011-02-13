@@ -1,14 +1,16 @@
 package org.baltoaca.characters;
 
-import org.baltoaca.stats.PlayerStats;
+import org.baltoaca.stats.CorePlayerStats;
+import org.baltoaca.stats.HealthManaAndLevelPlayerStats;
 
 public class PlayerCharacter {
 	private String name;
-	private PlayerStats stats;
+	private HealthManaAndLevelPlayerStats stats;
+	private CorePlayerStats coreStats;
 	private Inventory inventory;
 	private EquippedSet equippedSet;
 	
-	public PlayerCharacter(String name, PlayerStats initialStats){
+	public PlayerCharacter(String name, HealthManaAndLevelPlayerStats initialStats){
 		this.name = name;
 		this.stats = initialStats;
 	}
