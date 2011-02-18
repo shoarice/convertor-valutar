@@ -5,13 +5,11 @@ import org.baltoaca.objects.InventoryObject;
 public class InventorySlot {
 	private int amount;
 	private InventoryObject object;
-	
-	
+		
 	public InventorySlot(InventoryObject object) {
 		amount = 1;
 		this.object = object;
 	}
-
 
 	public InventorySlot(int ammount, InventoryObject object) {
 		this.amount = ammount;
@@ -33,8 +31,25 @@ public class InventorySlot {
 		amount--;
 	}
 	
+	public boolean isEmpty(){
+		if(amount == 0)
+			return true;
+		return false;
+	}
+	
 	public void setAmountToZero(){
 		amount = 0;
 	}
+
+	public InventoryObject getObject() {
+		return object;
+	}
+
+	@Override
+	public String toString() {
+		return "InventorySlot [amount=" + amount + ", object=" + object + "]";
+	}
+	
+	
 	
 }
