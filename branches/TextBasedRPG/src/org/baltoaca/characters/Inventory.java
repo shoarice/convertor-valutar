@@ -16,5 +16,5 @@ public class Inventory {
 	public Inventory(int maxSlots){
 		this.maxSlots = maxSlots;
 	}
-	
+		
 }
