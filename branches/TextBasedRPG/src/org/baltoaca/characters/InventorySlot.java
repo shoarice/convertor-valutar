@@ -11,7 +11,7 @@ public class InventorySlot {
 		this.object = object;
 	}
 
-	public InventorySlot(int ammount, InventoryObject object) {
+	public InventorySlot(InventoryObject object, int ammount) {
 		this.amount = ammount;
 		this.object = object;
 	}
@@ -23,12 +23,18 @@ public class InventorySlot {
 			return false;
 	}
 	
-	public void incrementAmount(){
-		amount++;
+	public void incrementAmountBy(int delta){
+		amount+=delta;
 	}
 	
-	public void decrementAmount(){
-		amount--;
+	public void decrementAmount(int delta){
+		amount-=delta;
+		if(amount < 0)
+			amount = 0;
+	}
+	
+	public void setAmount(int amount){
+		this.amount = amount;
 	}
 	
 	public boolean isEmpty(){
@@ -41,8 +47,13 @@ public class InventorySlot {
 		amount = 0;
 	}
 
+
 	public InventoryObject getObject() {
 		return object;
+	}
+
+	public int getAmount() {
+		return amount;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package org.baltoaca.tests.unit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.baltoaca.characters.Inventory;
 import org.baltoaca.objects.InventoryObject;
@@ -41,6 +42,45 @@ public class TestInventory {
 		checkInventoryHead(20);
 		assertNull(inventory.getObjectAtIndex(21));
 	}
+	
+	@Test
+	public void testAddingTheSameObject(){
+		inventory = new Inventory(2);
+		addSomeObjectsToInventory(1);
+		addSomeObjectsToInventory(2);
+		addSomeObjectsToInventory(1);
+		
+		assertEquals(3, inventory.getAmountAtIndex(0));
+		assertEquals(1, inventory.getAmountAtIndex(1));
+	}
+	
+	@Test
+	public void testAutoRemoveToEmptyObject(){
+		inventory = new Inventory();
+		addSomeObjectsToInventory(1);
+		addSomeObjectsToInventory(1);
+		addSomeObjectsToInventory(1);
+		
+		inventory.decreaseAmountFromIndex(0, 2);
+		assertEquals(1, inventory.getAmountAtIndex(0));
+		
+		inventory.decreaseAmountFromIndex(0, 1);
+		assertTrue(inventory.isEmpty());
+	}
+	
+	@Test
+	public void testAutoRemoveInMiddleObject(){
+		inventory = new Inventory();
+		addSomeObjectsToInventory(3);
+		addSomeObjectsToInventory(3);
+		addSomeObjectsToInventory(3);
+		
+		assertEquals(new MyInventoryObject("1"), inventory.getObjectAtIndex(1));
+		inventory.decreaseAmountFromIndex(1, 3);
+		assertEquals(new MyInventoryObject("2"), inventory.getObjectAtIndex(1));
+	}
+	
+	
 	
 	private void addSomeObjectsToInventory(int number){
 		MyInventoryObject object;

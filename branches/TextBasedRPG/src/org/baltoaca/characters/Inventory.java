@@ -29,6 +29,7 @@ public class Inventory {
 			return true;
 	}
 	
+	
 	public InventoryObject getObjectAtIndex(int index){
 		InventorySlot slot = null;
 		
@@ -51,10 +52,57 @@ public class Inventory {
 			return false;
 		}
 	}
+	
+	public int getAmountAtIndex(int index){
+		InventorySlot slot = null;
+		
+		if(isIndexNotOutOfBounds(index)){
+			slot = inventory.get(index);
+			
+			if(!slot.isEmpty()){
+				return slot.getAmount();
+			}
+		}
+		
+		return (Integer) null;
+		
+	}
+
+	public void decreaseAmountFromIndex(int index, int delta){
+		InventorySlot slot = null;
+		
+		if(isIndexNotOutOfBounds(index)){
+			slot = inventory.get(index);
+			
+			if(!slot.isEmpty()){
+				slot.decrementAmount(delta);
+				removeEmptySlots();
+			}
+		}	
+	}
 
 	public void addObjectIfNotFull(InventoryObject object){
-		if(!isFull()){
-			incrementOrAddObject(object);
+		incrementOrAddObjectIfNotFull(object);
+	}
+	
+	public void addObjectIfNotFull(InventoryObject object, int amount){
+		incrementOrAddObjectIfNotFull(object, amount);
+	}
+
+	private void incrementOrAddObjectIfNotFull(InventoryObject object) {
+		incrementOrAddObjectIfNotFull(object, 1);		
+	}
+
+	private void incrementOrAddObjectIfNotFull(InventoryObject object, int amount) {
+		InventorySlot slot = null;
+		slot = findSlotWithObjectIfExists(object);
+		
+		if(slot != null){
+			slot.incrementAmountBy(1);
+		}else{
+			if(!isFull()){
+				inventory.add(buildSlot(object, amount));
+			}
 		}
 	}
 
@@ -64,10 +112,14 @@ public class Inventory {
 		else
 			return false;
 	}
+	
+	public boolean isEmpty() {
+		return inventory.isEmpty();
+	}
 
 	public void removeObjectIfExists(InventoryObject object){
 		InventorySlot slot = findSlotWithObjectIfExists(object);
-		slot.decrementAmount();
+		slot.setAmountToZero();
 		removeEmptySlots();
 	}
 
@@ -80,18 +132,8 @@ public class Inventory {
 				iter.remove();
 		}
 	}
-
-	private void incrementOrAddObject(InventoryObject object) {
-		InventorySlot slot = null;
-		slot = findSlotWithObjectIfExists(object);
-		
-		if(slot != null){
-			slot.incrementAmount();
-		}else{
-			inventory.add(buildSlot(object));
-		}
-	}
-
+	
+	
 	private InventorySlot findSlotWithObjectIfExists(InventoryObject object){
 		for (InventorySlot slot : inventory) {
 			if(slot.hasObject(object))
@@ -101,8 +143,8 @@ public class Inventory {
 		return null;
 	}
 
-	private InventorySlot buildSlot(InventoryObject object) {
-		return new InventorySlot(object);
+	private InventorySlot buildSlot(InventoryObject object, int amount) {
+		return new InventorySlot(object, amount);
 	}
 
 	@Override
