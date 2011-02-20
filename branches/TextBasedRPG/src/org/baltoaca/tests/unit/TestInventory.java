@@ -50,8 +50,8 @@ public class TestInventory {
 		addSomeObjectsToInventory(2);
 		addSomeObjectsToInventory(1);
 		
-		assertEquals(3, inventory.getAmountAtIndex(0));
-		assertEquals(1, inventory.getAmountAtIndex(1));
+		assertEquals(3, inventory.getAmount(0));
+		assertEquals(1, inventory.getAmount(1));
 	}
 	
 	@Test
@@ -62,7 +62,7 @@ public class TestInventory {
 		addSomeObjectsToInventory(1);
 		
 		inventory.decreaseAmountFromIndex(0, 2);
-		assertEquals(1, inventory.getAmountAtIndex(0));
+		assertEquals(1, inventory.getAmount(0));
 		
 		inventory.decreaseAmountFromIndex(0, 1);
 		assertTrue(inventory.isEmpty());
@@ -86,7 +86,7 @@ public class TestInventory {
 		MyInventoryObject object;
 		for(int i=0;i < number; i++){
 			object = new MyInventoryObject(""+i);
-			inventory.addObjectIfNotFull(object);
+			inventory.addObject(object);
 		}
 	}
 	
