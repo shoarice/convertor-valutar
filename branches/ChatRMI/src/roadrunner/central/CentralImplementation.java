@@ -65,6 +65,7 @@ public class CentralImplementation implements Central {
 			Registry reg = LocateRegistry.getRegistry();
 			reg.rebind("central", centralStub);
 			
+			System.out.println("Central program ready");
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			System.exit(1);
