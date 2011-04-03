@@ -5,6 +5,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import roadrunner.remote.Component;
@@ -25,8 +26,22 @@ public class CentralImplementation implements Central {
 		components.add(component);
 		
 		//notify components
-		for (Component comp : components) {
-			comp.updateComponents();
+		Iterator<Component> it = components.iterator();
+		while (it.hasNext()) {
+			Component comp = it.next();
+			
+			try {
+				comp.updateComponents();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+				
+				/**
+				 * If there is an exception when calling a remote method on a component
+				 * we assume that the connection is lost and remove the component from the list
+				 */
+				it.remove();
+				
+			}
 		}
 	}
 
