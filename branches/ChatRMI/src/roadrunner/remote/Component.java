@@ -1,6 +1,7 @@
 package roadrunner.remote;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  * The interface that will be available for remote method invocation on a component
@@ -11,5 +12,5 @@ public interface Component extends Remote{
 	/**
 	 * Method called by the central program when a new component connects to the swarm :P
 	 */
-	public void updateComponents();
+	public void updateComponents() throws RemoteException;
 }
