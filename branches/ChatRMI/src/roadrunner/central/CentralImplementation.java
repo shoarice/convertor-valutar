@@ -35,6 +35,11 @@ public class CentralImplementation implements Central {
 		components.remove(component);
 	}
 
+	@Override
+	public synchronized Set<Component> getComponents() throws RemoteException {
+		return components;
+	}
+
 	public static void main(String[] args) {
 		CentralImplementation central = new CentralImplementation();
 		Central centralStub = null;
