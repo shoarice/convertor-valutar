@@ -8,5 +8,8 @@ import java.rmi.Remote;
  *
  */
 public interface Component extends Remote{
-
+	/**
+	 * Method called by the central program when a new component connects to the swarm :P
+	 */
+	public void updateComponents();
 }
