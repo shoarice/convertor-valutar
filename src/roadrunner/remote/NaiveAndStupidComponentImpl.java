@@ -1,22 +1,21 @@
-package roadrunner.remote;
+/*package roadrunner.remote;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import roadrunner.central.Central;
 
-/**
+*//**
  * For testing purposes
  * @author VlaD
  *
- */
+ *//*
 public class NaiveAndStupidComponentImpl implements Component {
 
 	private Central central;
@@ -85,3 +84,4 @@ public class NaiveAndStupidComponentImpl implements Component {
 	}
 
 }
+*/
