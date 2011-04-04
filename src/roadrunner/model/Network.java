@@ -1,5 +1,6 @@
 package roadrunner.model;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -17,10 +18,10 @@ public class Network extends Model implements Iterable<ComponentInfo>{
 	private static Network instance = null;
 	
 	private Network() {
-		componentsInfo = new HashSet<ComponentInfo>();
+		componentsInfo = Collections.synchronizedSet(new HashSet<ComponentInfo>());
 	}
 	
-	public static Network instance(){
+	public synchronized static Network instance(){
 		if(instance == null)
 			instance = new Network();
 		
@@ -46,15 +47,23 @@ public class Network extends Model implements Iterable<ComponentInfo>{
 			
 			if(componentInfo.isComponent(component)){
 				componentInfo.setUsers(users);
+				System.out.println("Users set: "+users);
 				return;
 			}
 		}
+		
 	}
 
 	@Override
 	public Iterator<ComponentInfo> iterator() {
 		return componentsInfo.iterator();
 	}
+
+	public Set<ComponentInfo> getComponentsInfo() {
+		return componentsInfo;
+	}
+	
+	
 	
 	
 }
