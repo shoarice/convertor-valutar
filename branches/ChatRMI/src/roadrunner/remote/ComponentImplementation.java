@@ -6,11 +6,13 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import roadrunner.central.Central;
+import roadrunner.model.ComponentInfo;
 import roadrunner.model.LocalUsers;
 import roadrunner.model.Network;
 import roadrunner.model.User;
@@ -86,6 +88,33 @@ public class ComponentImplementation implements Component {
 		ComponentImplementation component = createAndExportComponent(central);
 		
 		connectToCentral(central, component);
+		
+//JUST SOME TESTING
+/*		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		component.addLocalUser("cacaaaaaaaaaaaaa1");
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		component.addLocalUser("cacaaaaaaaaaaaaa2");
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		component.addLocalUser("cacaaaaaaaaaaaaa3");
+		component.addLocalUser("cacaaaaaaaaaaaaa4");
+		
+		System.out.println("gata");*/
 	}
 
 	private static String getHostName(String[] args) {
@@ -135,6 +164,43 @@ public class ComponentImplementation implements Component {
 	//TODO returneaza doar un array de nume
 	public LocalUsers getLocalUsers() {
 		return localUsers;
+	}
+	
+	public void addLocalUser(String username){
+		localUsers.addUser(username);
+		
+		notifyComponents();
+		
+	}
+
+	public void addLocalUser(User user){
+		localUsers.addUser(user);
+		
+		notifyComponents();
+	}
+	
+	
+	private void notifyComponents() {
+		ExecutorService thread = Executors.newSingleThreadExecutor();
+		thread.execute(new Runnable() {
+			
+			@Override
+			public void run() {
+				synchronized (Network.instance().getComponentsInfo()) {
+					Iterator<ComponentInfo> it = Network.instance().iterator();
+					while(it.hasNext()){
+						Component component = it.next().getComponent();
+						
+						try {
+							component.updateUsers(self);
+						} catch (RemoteException e) {
+							it.remove();
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		});
 	}
 	
 	
