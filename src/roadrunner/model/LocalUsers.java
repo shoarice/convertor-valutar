@@ -1,11 +1,18 @@
 package roadrunner.model;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 public class LocalUsers extends Model {
 	
 	private Set<User> users;
 	
+	public LocalUsers() {
+		super();
+		users = Collections.synchronizedSet(new HashSet<User>());
+	}
+
 	public Set<User> getUsers() {
 		return users;
 	}
