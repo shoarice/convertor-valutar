@@ -1,5 +1,6 @@
 package roadrunner.model;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -15,7 +16,9 @@ public class Network extends Model implements Iterable<ComponentInfo>{
 
 	private static Network instance = null;
 	
-	private Network() {}
+	private Network() {
+		componentsInfo = new HashSet<ComponentInfo>();
+	}
 	
 	public static Network instance(){
 		if(instance == null)
@@ -26,6 +29,14 @@ public class Network extends Model implements Iterable<ComponentInfo>{
 
 	public void setComponentsInfo(Set<ComponentInfo> componentsInfo) {
 		this.componentsInfo = componentsInfo;
+		notifyListeners();
+	}
+	
+	public void setComponents(Set<Component> components){
+		for (Component component : components) {
+			componentsInfo.add(new ComponentInfo(component));
+		}
+		
 		notifyListeners();
 	}
 	
