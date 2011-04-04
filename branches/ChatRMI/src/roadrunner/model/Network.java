@@ -13,7 +13,7 @@ import roadrunner.remote.Component;
 public class Network extends Model implements Iterable<ComponentInfo>{
 	private Set<ComponentInfo> componentsInfo;
 
-	public static Network instance = null;
+	private static Network instance = null;
 	
 	private Network() {}
 	
