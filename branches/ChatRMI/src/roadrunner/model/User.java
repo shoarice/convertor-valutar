@@ -1,6 +1,12 @@
 package roadrunner.model;
 
-public class User extends Model{
+import java.io.Serializable;
+
+public class User extends Model implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -500718627599027557L;
 	private String username;
 	private Status status;
 	
