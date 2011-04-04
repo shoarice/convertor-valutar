@@ -1,5 +1,6 @@
 package roadrunner.model;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class ComponentInfo extends Model {
 	
 	public ComponentInfo(Component component) {
 		this.component = component;
-		users = new HashSet<User>();
+		users = Collections.synchronizedSet(new HashSet<User>());
 	}
 	
 	public boolean hasUser(String username){
@@ -65,10 +66,5 @@ public class ComponentInfo extends Model {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
 	
 }
