@@ -89,6 +89,7 @@ public class ComponentImplementation implements Component {
 		
 		connectToCentral(central, component);
 		
+		//TODO in cazul set-urilor set-urilor, acestea trebuie sincronizate cu Collections.syncr...Set() etc
 //JUST SOME TESTING
 /*		try {
 			Thread.sleep(10000);
