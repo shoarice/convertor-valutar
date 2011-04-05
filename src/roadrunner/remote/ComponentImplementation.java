@@ -14,10 +14,11 @@ import java.util.concurrent.Executors;
 import roadrunner.central.Central;
 import roadrunner.model.ComponentInfo;
 import roadrunner.model.LocalUsers;
+import roadrunner.model.Model;
 import roadrunner.model.Network;
 import roadrunner.model.User;
 
-public class ComponentImplementation implements Component {
+public class ComponentImplementation extends Model implements Component {
 	
 	private LocalUsers localUsers;
 	private Central central;
@@ -79,7 +80,7 @@ public class ComponentImplementation implements Component {
 		return localUsers.getUsers();
 	}
 
-	public static void main(String[] args) {
+	public static ComponentImplementation start(String[] args) {
 		
 		String host = getHostName(args);
 		
@@ -88,6 +89,8 @@ public class ComponentImplementation implements Component {
 		ComponentImplementation component = createAndExportComponent(central);
 		
 		connectToCentral(central, component);
+		
+		return component;
 		
 		//TODO in cazul set-urilor set-urilor, acestea trebuie sincronizate cu Collections.syncr...Set() etc
 //JUST SOME TESTING
@@ -162,15 +165,21 @@ public class ComponentImplementation implements Component {
 		}
 	}
 
-	//TODO returneaza doar un array de nume
-	public LocalUsers getLocalUsers() {
-		return localUsers;
+	public String[] getLocalUsers() {
+		User[] users=(User[]) localUsers.getUsers().toArray();
+		String[] userNames= new String[users.length];
+		for (int i=0;i<users.length;i++)
+		{
+			userNames[i]=users[i].getUsername();
+		}
+		return userNames;
 	}
 	
 	public void addLocalUser(String username){
 		localUsers.addUser(username);
 		
 		notifyComponents();
+		notifyListeners(getLocalUsers());
 		
 	}
 
@@ -178,6 +187,8 @@ public class ComponentImplementation implements Component {
 		localUsers.addUser(user);
 		
 		notifyComponents();
+		notifyListeners(getLocalUsers());
+
 	}
 	
 	
