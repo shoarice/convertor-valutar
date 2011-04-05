@@ -166,7 +166,7 @@ public class ComponentImplementation extends Model implements Component {
 	}
 
 	public String[] getLocalUsers() {
-		User[] users=(User[]) localUsers.getUsers().toArray();
+		User[] users= localUsers.getUsers().toArray(new User[1]);
 		String[] userNames= new String[users.length];
 		for (int i=0;i<users.length;i++)
 		{
