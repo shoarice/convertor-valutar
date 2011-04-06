@@ -7,10 +7,11 @@ import javax.swing.JButton;
 
 import roadrunner.remote.ComponentImplementation;
 
-public class ComponentAddUser 
+public class ComponentAddUser extends Controller
 {
 	private JButton button;
 	private ComponentImplementation impl;
+	
 	public ComponentAddUser(ComponentImplementation impl,JButton button)
 	{
 		this.button=button;
