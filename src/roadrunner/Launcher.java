@@ -1,9 +1,9 @@
 package roadrunner;
 
 import roadrunner.controller.ComponentAddUser;
-import roadrunner.controller.ComponentUserList;
 import roadrunner.gui.ComponentFrame;
 import roadrunner.remote.ComponentImplementation;
+import roadrunner.view.ComponentUserList;
 
 public class Launcher {
 
