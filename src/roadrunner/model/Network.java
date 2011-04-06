@@ -53,6 +53,15 @@ public class Network extends Model implements Iterable<ComponentInfo>{
 		}
 		
 	}
+	
+	public boolean isUserPresent(String username){
+		for (ComponentInfo componentInfo : componentsInfo) {
+			if(componentInfo.hasUser(username))
+				return true;
+		}
+		
+		return false;
+	}
 
 	@Override
 	public Iterator<ComponentInfo> iterator() {
