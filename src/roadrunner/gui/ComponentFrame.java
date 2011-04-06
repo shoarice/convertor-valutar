@@ -1,12 +1,11 @@
 package roadrunner.gui;
 
-import java.awt.Color;
-
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -23,35 +22,27 @@ public class ComponentFrame extends JFrame
 	private JButton buttonApasa;
 	private JList listLocalUsers;
 	private JScrollPane jScrollPane0;
-	private JPanel panelLogo;
+	private JLabel jLabel0;
 	private static final String PREFERRED_LOOK_AND_FEEL = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
-
 	public ComponentFrame()
 	{
 		initComponents();
 	}
 
-	private void initComponents()
-	{
+	private void initComponents() {
 		setLayout(new GroupLayout());
-		add(getJScrollPane0(), new Constraints(new Leading(14, 167, 10, 10),
-				new Leading(14, 220, 10, 10)));
-		add(getPanelLogo(), new Constraints(new Leading(16, 76, 12, 12),
-				new Leading(240, 60, 12, 12)));
-		add(getButtonApasa(), new Constraints(new Leading(102, 79, 12, 12),
-				new Leading(240, 60, 12, 12)));
+		add(getJScrollPane0(), new Constraints(new Leading(14, 167, 10, 10), new Leading(14, 220, 10, 10)));
+		add(getButtonApasa(), new Constraints(new Leading(102, 79, 12, 12), new Leading(240, 60, 12, 12)));
+		add(getJLabel0(), new Constraints(new Leading(18, 78, 6, 6), new Leading(242, 58, 6, 6)));
 		setSize(193, 319);
 	}
 
-	private JPanel getPanelLogo()
-	{
-		if (panelLogo == null)
-		{
-			panelLogo = new JPanel();
-			panelLogo.setLayout(new GroupLayout());
-			panelLogo.setBackground(Color.PINK);
+	private JLabel getJLabel0() {
+		if (jLabel0 == null) {
+			jLabel0 = new JLabel();
+			jLabel0.setIcon(new ImageIcon("res/img.jpg"));
 		}
-		return panelLogo;
+		return jLabel0;
 	}
 
 	private JScrollPane getJScrollPane0()
