@@ -26,7 +26,7 @@ public class ComponentAddUser extends Controller
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				impl.addLocalUser("random"+Math.random());
+				new LoginUserController(impl);
 			}
 		});
 	}
