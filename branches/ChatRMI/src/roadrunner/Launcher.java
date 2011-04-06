@@ -19,9 +19,6 @@ public class Launcher {
 		ComponentUserList compusrlist = new ComponentUserList(compimpl, frame.getListLocalUsers());
 		
 		compaddusr = new ComponentAddUser(compimpl, frame.getButtonApasa());
-		compimpl.addLocalUser("andrei");
-		compimpl.addLocalUser("vlad");
-		compimpl.addLocalUser("PinkyPrincess");
 	}
 
 	private static ComponentFrame initGUI() {
