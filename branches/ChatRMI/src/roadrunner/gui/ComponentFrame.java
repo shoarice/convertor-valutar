@@ -32,15 +32,15 @@ public class ComponentFrame extends JFrame
 	private void initComponents() {
 		setLayout(new GroupLayout());
 		add(getJScrollPane0(), new Constraints(new Leading(14, 167, 10, 10), new Leading(14, 220, 10, 10)));
-		add(getButtonApasa(), new Constraints(new Leading(102, 79, 12, 12), new Leading(240, 60, 12, 12)));
 		add(getJLabel0(), new Constraints(new Leading(18, 78, 6, 6), new Leading(242, 58, 6, 6)));
+		add(getButtonApasa(), new Constraints(new Leading(102, 79, 6, 6), new Leading(238, 66, 6, 6)));
 		setSize(193, 319);
 	}
 
 	private JLabel getJLabel0() {
 		if (jLabel0 == null) {
 			jLabel0 = new JLabel();
-			jLabel0.setIcon(new ImageIcon("res/img.jpg"));
+			jLabel0.setIcon(new ImageIcon("res/Logo.jpg"));
 		}
 		return jLabel0;
 	}
@@ -107,7 +107,7 @@ public class ComponentFrame extends JFrame
 			{
 				ComponentFrame frame = new ComponentFrame();
 				frame.setDefaultCloseOperation(ComponentFrame.EXIT_ON_CLOSE);
-				frame.setTitle("Component User List");
+				frame.setTitle("Local User List");
 				frame.getContentPane().setPreferredSize(frame.getSize());
 				frame.pack();
 				frame.setLocationRelativeTo(null);
