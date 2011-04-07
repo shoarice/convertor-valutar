@@ -1,6 +1,7 @@
 package roadrunner;
 
-import roadrunner.controller.ComponentAddUser;
+import roadrunner.controller.ComponentAddUserController;
+import roadrunner.controller.ComponentExitController;
 import roadrunner.gui.ComponentFrame;
 import roadrunner.remote.ComponentImplementation;
 import roadrunner.view.ComponentUserList;
@@ -12,13 +13,12 @@ public class Launcher {
 	 */
 	public static void main(String[] args) {
 
-		ComponentImplementation compimpl;
-		ComponentAddUser compaddusr;
-		compimpl = ComponentImplementation.start(args);
+		ComponentImplementation component = ComponentImplementation.start(args);
 		ComponentFrame frame=initGUI();
-		ComponentUserList compusrlist = new ComponentUserList(compimpl, frame.getListLocalUsers());
 		
-		compaddusr = new ComponentAddUser(compimpl, frame.getButtonApasa());
+		new ComponentUserList(component, frame.getListLocalUsers());
+		new ComponentAddUserController(component, frame.getButtonApasa());
+		new ComponentExitController(frame, component);
 	}
 
 	private static ComponentFrame initGUI() {
