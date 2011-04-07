@@ -175,6 +175,14 @@ public class ComponentImplementation extends Model implements Component {
 		return userNames;
 	}
 	
+	public void disconnect(){
+		try {
+			central.disconnect(this);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void addLocalUser(String username){
 		localUsers.addUser(username);
 		

@@ -7,12 +7,12 @@ import javax.swing.JButton;
 
 import roadrunner.remote.ComponentImplementation;
 
-public class ComponentAddUser extends Controller
+public class ComponentAddUserController extends Controller
 {
 	private JButton button;
 	private ComponentImplementation impl;
 	
-	public ComponentAddUser(ComponentImplementation impl,JButton button)
+	public ComponentAddUserController(ComponentImplementation impl,JButton button)
 	{
 		this.button=button;
 		this.impl=impl;
