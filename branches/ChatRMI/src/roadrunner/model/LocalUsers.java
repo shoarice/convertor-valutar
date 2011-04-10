@@ -6,15 +6,19 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import roadrunner.gui.ChatFrame;
 import roadrunner.gui.ClientFrame;
 
 public class LocalUsers extends Model {
 	
 	private final Map<User, ClientFrame> users;
+	private final Map<User, Set<ChatFrame>> userChatFrames;
 	
 	public LocalUsers() {
 		super();
 		users = Collections.synchronizedMap(new HashMap<User, ClientFrame>());
+		Set<ChatFrame> chatFrames = Collections.synchronizedSet(new HashSet<ChatFrame>());
+		userChatFrames = Collections.synchronizedMap(new HashMap<User, Set<ChatFrame>>());
 	}
 
 	public Set<User> getUsers() {
@@ -27,16 +31,22 @@ public class LocalUsers extends Model {
 
 	public void addUser(User user, ClientFrame clientFrame){
 		users.put(user,clientFrame);
+		Set<ChatFrame> chatFrames = Collections.synchronizedSet(new HashSet<ChatFrame>());
+		userChatFrames.put(user, chatFrames);
 		notifyListeners();
 	}
 	
 	public void addUser(String username, ClientFrame frame){
 		users.put(new User(username), frame);
+		Set<ChatFrame> chatFrames = Collections.synchronizedSet(new HashSet<ChatFrame>());
+		userChatFrames.put(new User(username), chatFrames);
 		notifyListeners();
 	}
 	
 	public void removeUser(String username){
-		users.remove(new User(username));
+		User u = new User(username);
+		users.remove(u);
+		userChatFrames.remove(u);
 		notifyListeners();
 	}
 
@@ -47,6 +57,36 @@ public class LocalUsers extends Model {
 				return;
 			}
 		}
+	}
+	
+	public void addCHatFrameForUser(String username, ChatFrame frame){
+		userChatFrames.get(new User(username)).add(frame);
+	}
+	
+	public ChatFrame getChatFrame(String localUsername, String remoteUsername){
+		Set<ChatFrame> frames = userChatFrames.get(new User(localUsername));
+		if(frames != null){
+			if(frames.isEmpty()){
+				//CREATE
+				ChatFrame newFrame = ChatFrame.getFrame(remoteUsername);
+				frames.add(newFrame);
+				return newFrame;
+			}else{
+				//RETURN FORM SET
+				for (ChatFrame chatFrame : frames) {
+					if(chatFrame.getTitle().contains(remoteUsername)){
+						return chatFrame;
+					}
+				}
+				
+				//CREATE
+				ChatFrame newFrame = ChatFrame.getFrame(remoteUsername);
+				frames.add(newFrame);
+				return newFrame;
+			}
+		}
+		
+		return null;
 	}
 
 	

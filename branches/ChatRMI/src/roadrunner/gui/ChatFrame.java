@@ -22,9 +22,28 @@ public class ChatFrame extends JFrame {
 	private JTextArea textAreaSend;
 	private JScrollPane jScrollPane1;
 	private JButton buttonSend;
+		
 	private static final String PREFERRED_LOOK_AND_FEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
 	public ChatFrame() {
 		initComponents();
+	}
+	
+	public static ChatFrame getFrame(final String title){
+		final ChatFrame frame = new ChatFrame();
+		installLnF();
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				frame.setDefaultCloseOperation(ChatFrame.EXIT_ON_CLOSE);
+				frame.setTitle(title);
+				frame.getContentPane().setPreferredSize(frame.getSize());
+				frame.pack();
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				frame.getRootPane().setDefaultButton(frame.getButtonSend());
+			}
+		});
+		return frame;
 	}
 
 	private void initComponents() {
