@@ -40,5 +40,14 @@ public class LocalUsers extends Model {
 		notifyListeners();
 	}
 
+	public void setStatusForUser(String username, Status status) {
+		for (User user : users.keySet()) {
+			if(user.getUsername().equals(username)){
+				user.setStatus(status);
+				return;
+			}
+		}
+	}
+
 	
 }

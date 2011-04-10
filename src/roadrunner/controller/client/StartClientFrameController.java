@@ -27,6 +27,7 @@ public class StartClientFrameController extends Controller {
 		final ClientFrame frame = new ClientFrame();
 		setUpFrame(frame);
 		
+		new SetStatusForUserController(frame,user.getUsername(),component);
 		new ClientUserListView(Network.instance(), frame);
 		new ClientExitController(frame,user.getUsername(), component);
 		component.addLocalUser(user, frame);
