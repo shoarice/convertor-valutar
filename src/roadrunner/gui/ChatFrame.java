@@ -34,7 +34,7 @@ public class ChatFrame extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				frame.setDefaultCloseOperation(ChatFrame.EXIT_ON_CLOSE);
+				frame.setDefaultCloseOperation(ChatFrame.DISPOSE_ON_CLOSE);
 				frame.setTitle(title);
 				frame.getContentPane().setPreferredSize(frame.getSize());
 				frame.pack();
