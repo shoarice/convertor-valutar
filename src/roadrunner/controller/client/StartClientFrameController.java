@@ -5,9 +5,11 @@ import javax.swing.SwingUtilities;
 
 import roadrunner.controller.Controller;
 import roadrunner.gui.ClientFrame;
+import roadrunner.model.Network;
 import roadrunner.model.Status;
 import roadrunner.model.User;
 import roadrunner.remote.ComponentImplementation;
+import roadrunner.view.client.ClientUserListView;
 
 public class StartClientFrameController extends Controller {
 
@@ -24,6 +26,8 @@ public class StartClientFrameController extends Controller {
 	private void startFrame() {
 		final ClientFrame frame = new ClientFrame();
 		setUpFrame(frame);
+		
+		new ClientUserListView(Network.instance(), frame);
 		new ClientExitController(frame,user.getUsername(), component);
 		component.addLocalUser(user, frame);
 		ClientFrame.showFrame(frame);

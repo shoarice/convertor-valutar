@@ -1,5 +1,7 @@
 package roadrunner.model;
 
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -30,15 +32,19 @@ public class Network extends Model implements Iterable<ComponentInfo>{
 
 	public void setComponentsInfo(Set<ComponentInfo> componentsInfo) {
 		this.componentsInfo = componentsInfo;
-		notifyListeners();
+		notifyListeners(null);
 	}
 	
 	public void setComponents(Set<Component> components){
+		componentsInfo.clear();
 		for (Component component : components) {
-			componentsInfo.add(new ComponentInfo(component));
+			try {
+				componentsInfo.add(new ComponentInfo(component,component.getUsers()));
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
-		
-		notifyListeners();
+		notifyListeners(null);
 	}
 	
 	public void updateUsers(Component component, Set<User> users){
@@ -47,11 +53,10 @@ public class Network extends Model implements Iterable<ComponentInfo>{
 			
 			if(componentInfo.isComponent(component)){
 				componentInfo.setUsers(users);
-				System.out.println("Users set: "+users);
+				notifyListeners(null);
 				return;
 			}
 		}
-		
 	}
 	
 	public boolean isUserPresent(String username){
@@ -59,7 +64,6 @@ public class Network extends Model implements Iterable<ComponentInfo>{
 			if(componentInfo.hasUser(username))
 				return true;
 		}
-		
 		return false;
 	}
 
@@ -70,6 +74,23 @@ public class Network extends Model implements Iterable<ComponentInfo>{
 
 	public Set<ComponentInfo> getComponentsInfo() {
 		return componentsInfo;
+	}
+	
+	public String[] getAllUsers(){
+		ArrayList<String> result = new ArrayList<String>();
+		synchronized (componentsInfo) {
+			for (ComponentInfo componentInfo : componentsInfo) {
+				for (String username : componentInfo.getUserNames()) {
+					result.add(username);
+				}
+			}
+		}
+		return result.toArray(new String[1]);
+	}
+
+	@Override
+	public String toString() {
+		return componentsInfo.toString();
 	}
 	
 	
