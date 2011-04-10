@@ -24,7 +24,16 @@ public class CentralImplementation implements Central {
 		
 		//if the component already exists it will not be added because this is a set
 		components.add(component);
-		
+		notifyComponents();
+	}
+
+	@Override
+	public synchronized void disconnect(Component component) {
+		components.remove(component);
+		notifyComponents();
+	}
+
+	private void notifyComponents() {
 		//notify components
 		Iterator<Component> it = components.iterator();
 		while (it.hasNext()) {
@@ -43,11 +52,6 @@ public class CentralImplementation implements Central {
 				
 			}
 		}
-	}
-
-	@Override
-	public synchronized void disconnect(Component component) {
-		components.remove(component);
 	}
 
 	@Override

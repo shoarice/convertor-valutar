@@ -1,7 +1,7 @@
 package roadrunner.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 import roadrunner.remote.Component;
@@ -12,12 +12,12 @@ import roadrunner.remote.Component;
  *
  */
 public class ComponentInfo extends Model {
-	private Component component;
+	private final Component component;
 	private Set<User> users;
 	
-	public ComponentInfo(Component component) {
+	public ComponentInfo(Component component, Set<User> users) {
 		this.component = component;
-		users = Collections.synchronizedSet(new HashSet<User>());
+		this.users = Collections.synchronizedSet(users);
 	}
 	
 	public boolean hasUser(String username){
@@ -34,7 +34,7 @@ public class ComponentInfo extends Model {
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
-		notifyListeners();
+		notifyListeners(null);
 	}
 
 	public Component getComponent() {
@@ -66,5 +66,22 @@ public class ComponentInfo extends Model {
 			return false;
 		return true;
 	}
+
+	public String[] getUserNames() {
+		ArrayList<String> result = new ArrayList<String>();
+		for (User user : users) {
+			result.add(user.toString());
+		}
+		
+		return result.toArray(new String[1]);
+	}
+
+	@Override
+	public String toString() {
+		return "ComponentInfo [component=" + component + ", users=" + users
+				+ "]";
+	}
+	
+	
 	
 }
