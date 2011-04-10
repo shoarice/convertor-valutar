@@ -23,7 +23,7 @@ public class ComponentFrame extends JFrame
 	private JList listLocalUsers;
 	private JScrollPane jScrollPane0;
 	private JLabel jLabel0;
-	private static final String PREFERRED_LOOK_AND_FEEL = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+	private static final String PREFERRED_LOOK_AND_FEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
 	public ComponentFrame()
 	{
 		initComponents();

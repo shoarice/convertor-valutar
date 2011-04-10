@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import roadrunner.central.Central;
+import roadrunner.gui.ClientFrame;
 import roadrunner.model.ComponentInfo;
 import roadrunner.model.LocalUsers;
 import roadrunner.model.Model;
@@ -20,8 +21,8 @@ import roadrunner.model.User;
 
 public class ComponentImplementation extends Model implements Component {
 	
-	private LocalUsers localUsers;
-	private Central central;
+	private final LocalUsers localUsers;
+	private final Central central;
 	private Component self;
 	
 	public ComponentImplementation(Central central) {
@@ -93,32 +94,6 @@ public class ComponentImplementation extends Model implements Component {
 		return component;
 		
 		//TODO in cazul set-urilor set-urilor, acestea trebuie sincronizate cu Collections.syncr...Set() etc
-//JUST SOME TESTING
-/*		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		component.addLocalUser("cacaaaaaaaaaaaaa1");
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		component.addLocalUser("cacaaaaaaaaaaaaa2");
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		component.addLocalUser("cacaaaaaaaaaaaaa3");
-		component.addLocalUser("cacaaaaaaaaaaaaa4");
-		
-		System.out.println("gata");*/
 	}
 
 	private static String getHostName(String[] args) {
@@ -159,7 +134,7 @@ public class ComponentImplementation extends Model implements Component {
 	private static void connectToCentral(Central central,
 			ComponentImplementation component) {
 		try {
-			central.connect((Component) component);
+			central.connect(component);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -167,6 +142,9 @@ public class ComponentImplementation extends Model implements Component {
 
 	public String[] getLocalUsers() {
 		User[] users= localUsers.getUsers().toArray(new User[1]);
+		if(users.length == 1 && users[0] == null){
+			return new String[0];
+		}
 		String[] userNames= new String[users.length];
 		for (int i=0;i<users.length;i++)
 		{
@@ -183,20 +161,27 @@ public class ComponentImplementation extends Model implements Component {
 		}
 	}
 	
-	public void addLocalUser(String username){
-		localUsers.addUser(username);
+	public void addLocalUser(String username, ClientFrame clientFrame){
+		localUsers.addUser(username,clientFrame);
 		
 		notifyComponents();
 		notifyListeners(getLocalUsers());
 		
 	}
 
-	public void addLocalUser(User user){
-		localUsers.addUser(user);
+	public void addLocalUser(User user, ClientFrame frame){
+		localUsers.addUser(user, frame);
 		
 		notifyComponents();
 		notifyListeners(getLocalUsers());
 
+	}
+	
+	public void removeLocalUser(String username){
+		localUsers.removeUser(username);
+		
+		notifyComponents();
+		notifyListeners(getLocalUsers());
 	}
 	
 	
