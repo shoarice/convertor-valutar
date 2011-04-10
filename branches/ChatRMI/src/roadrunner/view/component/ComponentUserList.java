@@ -1,4 +1,4 @@
-package roadrunner.view;
+package roadrunner.view.component;
 
 import java.util.Observable;
 
@@ -6,6 +6,7 @@ import javax.swing.JList;
 import javax.swing.SwingUtilities;
 
 import roadrunner.model.Model;
+import roadrunner.view.View;
 
 public class ComponentUserList extends View {
 
