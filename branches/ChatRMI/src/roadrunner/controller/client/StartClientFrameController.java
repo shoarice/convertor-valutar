@@ -1,7 +1,11 @@
 package roadrunner.controller.client;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingUtilities;
+
 import roadrunner.controller.Controller;
 import roadrunner.gui.ClientFrame;
+import roadrunner.model.Status;
 import roadrunner.model.User;
 import roadrunner.remote.ComponentImplementation;
 
@@ -18,9 +22,22 @@ public class StartClientFrameController extends Controller {
 	}
 
 	private void startFrame() {
-		ClientFrame frame = new ClientFrame();
+		final ClientFrame frame = new ClientFrame();
+		setUpFrame(frame);
 		new ClientExitController(frame,user.getUsername(), component);
 		component.addLocalUser(user, frame);
 		ClientFrame.showFrame(frame);
+	}
+
+	private void setUpFrame(final ClientFrame frame) {
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				frame.getLabelUsername().setText(user.getUsername());
+				frame.getComboBoxStatus().setModel(new DefaultComboBoxModel(Status.values()));
+				
+			}
+		});
 	}
 }
