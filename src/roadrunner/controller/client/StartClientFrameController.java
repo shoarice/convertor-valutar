@@ -1,5 +1,6 @@
-package roadrunner.controller;
+package roadrunner.controller.client;
 
+import roadrunner.controller.Controller;
 import roadrunner.gui.ClientFrame;
 import roadrunner.model.User;
 import roadrunner.remote.ComponentImplementation;

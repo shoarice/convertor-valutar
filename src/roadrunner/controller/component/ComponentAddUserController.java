@@ -1,10 +1,11 @@
-package roadrunner.controller;
+package roadrunner.controller.component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import roadrunner.controller.Controller;
 import roadrunner.remote.ComponentImplementation;
 
 public class ComponentAddUserController extends Controller

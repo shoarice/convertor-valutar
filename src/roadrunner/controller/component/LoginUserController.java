@@ -1,7 +1,9 @@
-package roadrunner.controller;
+package roadrunner.controller.component;
 
 import javax.swing.JOptionPane;
 
+import roadrunner.controller.Controller;
+import roadrunner.controller.client.StartClientFrameController;
 import roadrunner.model.Network;
 import roadrunner.remote.ComponentImplementation;
 

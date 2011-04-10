@@ -1,8 +1,9 @@
-package roadrunner.controller;
+package roadrunner.controller.component;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import roadrunner.controller.Controller;
 import roadrunner.gui.ComponentFrame;
 import roadrunner.remote.ComponentImplementation;
 

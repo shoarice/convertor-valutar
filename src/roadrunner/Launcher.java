@@ -1,10 +1,10 @@
 package roadrunner;
 
-import roadrunner.controller.ComponentAddUserController;
-import roadrunner.controller.ComponentExitController;
+import roadrunner.controller.component.ComponentAddUserController;
+import roadrunner.controller.component.ComponentExitController;
 import roadrunner.gui.ComponentFrame;
 import roadrunner.remote.ComponentImplementation;
-import roadrunner.view.ComponentUserList;
+import roadrunner.view.component.ComponentUserList;
 
 public class Launcher {
 
