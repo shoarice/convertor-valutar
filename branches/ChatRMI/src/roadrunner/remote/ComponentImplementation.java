@@ -17,6 +17,7 @@ import roadrunner.model.ComponentInfo;
 import roadrunner.model.LocalUsers;
 import roadrunner.model.Model;
 import roadrunner.model.Network;
+import roadrunner.model.Status;
 import roadrunner.model.User;
 
 public class ComponentImplementation extends Model implements Component {
@@ -179,6 +180,13 @@ public class ComponentImplementation extends Model implements Component {
 	
 	public void removeLocalUser(String username){
 		localUsers.removeUser(username);
+		
+		notifyComponents();
+		notifyListeners(getLocalUsers());
+	}
+	
+	public void setStatusForUser(String username, Status status){
+		localUsers.setStatusForUser(username,status);
 		
 		notifyComponents();
 		notifyListeners(getLocalUsers());
