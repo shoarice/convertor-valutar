@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import roadrunner.central.Central;
+import roadrunner.gui.ChatFrame;
 import roadrunner.gui.ClientFrame;
 import roadrunner.model.ComponentInfo;
 import roadrunner.model.LocalUsers;
@@ -192,7 +193,13 @@ public class ComponentImplementation extends Model implements Component {
 		notifyListeners(getLocalUsers());
 	}
 	
-	
+	public void addChatFrameForUser(String username, ChatFrame frame){
+		localUsers.addChatFrameForUser(username, frame);
+	}
+	public void removeFrame(ChatFrame frame) {
+		localUsers.removeFrame(frame);
+	}
+
 	private void notifyComponents() {
 		ExecutorService thread = Executors.newSingleThreadExecutor();
 		thread.execute(new Runnable() {

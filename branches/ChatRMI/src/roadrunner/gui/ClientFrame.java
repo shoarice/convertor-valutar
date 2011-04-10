@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -63,6 +64,7 @@ public class ClientFrame extends JFrame {
 	public JList getListOnlineUsers() {
 		if (listOnlineUsers == null) {
 			listOnlineUsers = new JList();
+			listOnlineUsers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 /*			DefaultListModel listModel = new DefaultListModel();
 			listModel.addElement("item0");
 			listModel.addElement("item1");

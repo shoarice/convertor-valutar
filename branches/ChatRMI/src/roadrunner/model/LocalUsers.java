@@ -3,6 +3,7 @@ package roadrunner.model;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -59,7 +60,7 @@ public class LocalUsers extends Model {
 		}
 	}
 	
-	public void addCHatFrameForUser(String username, ChatFrame frame){
+	public void addChatFrameForUser(String username, ChatFrame frame){
 		userChatFrames.get(new User(username)).add(frame);
 	}
 	
@@ -87,6 +88,16 @@ public class LocalUsers extends Model {
 		}
 		
 		return null;
+	}
+
+	public void removeFrame(ChatFrame frame) {
+		Iterator<User> it = userChatFrames.keySet().iterator();
+		while(it.hasNext()){
+			User u = it.next();
+			if(userChatFrames.get(u).remove(frame) == true){
+				return;
+			}
+		}
 	}
 
 	
