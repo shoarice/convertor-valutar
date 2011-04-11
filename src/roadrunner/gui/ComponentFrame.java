@@ -22,8 +22,8 @@ public class ComponentFrame extends JFrame
 	private JButton buttonApasa;
 	private JList listLocalUsers;
 	private JScrollPane jScrollPane0;
-	private JLabel jLabel0;
-	private static final String PREFERRED_LOOK_AND_FEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
+	private JLabel labelLogo;
+	private static final String PREFERRED_LOOK_AND_FEEL = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
 	public ComponentFrame()
 	{
 		initComponents();
@@ -32,17 +32,17 @@ public class ComponentFrame extends JFrame
 	private void initComponents() {
 		setLayout(new GroupLayout());
 		add(getJScrollPane0(), new Constraints(new Leading(14, 167, 10, 10), new Leading(14, 220, 10, 10)));
-		add(getJLabel0(), new Constraints(new Leading(18, 78, 6, 6), new Leading(242, 58, 6, 6)));
+		add(getLabelLogo(), new Constraints(new Leading(18, 78, 6, 6), new Leading(242, 58, 6, 6)));
 		add(getButtonApasa(), new Constraints(new Leading(102, 79, 6, 6), new Leading(238, 66, 6, 6)));
 		setSize(193, 319);
 	}
 
-	private JLabel getJLabel0() {
-		if (jLabel0 == null) {
-			jLabel0 = new JLabel();
-			jLabel0.setIcon(new ImageIcon("res/Logo.jpg"));
+	private JLabel getLabelLogo() {
+		if (labelLogo == null) {
+			labelLogo = new JLabel();
+			labelLogo.setIcon(new ImageIcon("res/Logo.jpg"));
 		}
-		return jLabel0;
+		return labelLogo;
 	}
 
 	private JScrollPane getJScrollPane0()

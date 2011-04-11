@@ -1,5 +1,7 @@
 package roadrunner.gui;
 
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,7 +14,6 @@ import javax.swing.UIManager;
 import org.dyno.visual.swing.layouts.Constraints;
 import org.dyno.visual.swing.layouts.GroupLayout;
 import org.dyno.visual.swing.layouts.Leading;
-import org.dyno.visual.swing.layouts.Trailing;
 
 //VS4E -- DO NOT REMOVE THIS LINE!
 public class ClientFrame extends JFrame {
@@ -24,7 +25,9 @@ public class ClientFrame extends JFrame {
 	private JComboBox comboBoxStatus;
 	private JList listOnlineUsers;
 	private JScrollPane jScrollPane0;
-	private static final String PREFERRED_LOOK_AND_FEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
+	private JButton buttonLogout;
+	private JLabel labelLogo;
+	private static final String PREFERRED_LOOK_AND_FEEL = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
 	public ClientFrame() {
 		initComponents();
 	}
@@ -45,12 +48,30 @@ public class ClientFrame extends JFrame {
 
 	private void initComponents() {
 		setLayout(new GroupLayout());
-		add(getLabelWelcome(), new Constraints(new Leading(7, 10, 10), new Leading(9, 10, 10)));
-		add(getLabelUsername(), new Constraints(new Leading(71, 12, 12), new Leading(9, 12, 12)));
-		add(getLabelStatus(), new Constraints(new Trailing(107, 108, 108), new Leading(9, 12, 12)));
-		add(getComboBoxStatus(), new Constraints(new Leading(154, 86, 10, 10), new Leading(4, 12, 12)));
-		add(getJScrollPane0(), new Constraints(new Leading(20, 206, 10, 10), new Leading(39, 186, 10, 10)));
-		setSize(253, 240);
+		add(getJScrollPane0(), new Constraints(new Leading(20, 220, 10, 10), new Leading(79, 326, 10, 10)));
+		add(getComboBoxStatus(), new Constraints(new Leading(103, 134, 10, 10), new Leading(45, 6, 6)));
+		add(getLabelWelcome(), new Constraints(new Leading(27, 6, 6), new Leading(12, 6, 6)));
+		add(getLabelUsername(), new Constraints(new Leading(94, 143, 6, 6), new Leading(12, 6, 6)));
+		add(getLabelStatus(), new Constraints(new Leading(27, 59, 6, 6), new Leading(45, 24, 6, 6)));
+		add(getButtonLogout(), new Constraints(new Leading(20, 100, 6, 6), new Leading(423, 63, 6, 6)));
+		add(getLabelLogo(), new Constraints(new Leading(136, 101, 6, 6), new Leading(426, 57, 6, 6)));
+		setSize(260, 513);
+	}
+
+	private JLabel getLabelLogo() {
+		if (labelLogo == null) {
+			labelLogo = new JLabel();
+			labelLogo.setIcon(new ImageIcon("res/Logo.jpg"));
+		}
+		return labelLogo;
+	}
+
+	private JButton getButtonLogout() {
+		if (buttonLogout == null) {
+			buttonLogout = new JButton();
+			buttonLogout.setText("Logout");
+		}
+		return buttonLogout;
 	}
 
 	private JScrollPane getJScrollPane0() {
@@ -132,7 +153,7 @@ public class ClientFrame extends JFrame {
 			public void run() {
 				ClientFrame frame = new ClientFrame();
 				frame.setDefaultCloseOperation(ClientFrame.EXIT_ON_CLOSE);
-				frame.setTitle("ClientFrame");
+				frame.setTitle("RoadRunner 1.0");
 				frame.getContentPane().setPreferredSize(frame.getSize());
 				frame.pack();
 				frame.setLocationRelativeTo(null);
