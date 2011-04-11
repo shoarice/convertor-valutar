@@ -1,7 +1,7 @@
 package roadrunner.gui;
 
-import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -49,19 +49,19 @@ public class ClientFrame extends JFrame {
 	private void initComponents() {
 		setLayout(new GroupLayout());
 		add(getJScrollPane0(), new Constraints(new Leading(20, 220, 10, 10), new Leading(79, 326, 10, 10)));
-		add(getComboBoxStatus(), new Constraints(new Leading(103, 134, 10, 10), new Leading(45, 6, 6)));
 		add(getLabelWelcome(), new Constraints(new Leading(27, 6, 6), new Leading(12, 6, 6)));
 		add(getLabelUsername(), new Constraints(new Leading(94, 143, 6, 6), new Leading(12, 6, 6)));
 		add(getLabelStatus(), new Constraints(new Leading(27, 59, 6, 6), new Leading(45, 24, 6, 6)));
 		add(getButtonLogout(), new Constraints(new Leading(20, 100, 6, 6), new Leading(423, 63, 6, 6)));
 		add(getLabelLogo(), new Constraints(new Leading(136, 101, 6, 6), new Leading(426, 57, 6, 6)));
+		add(getComboBoxStatus(), new Constraints(new Leading(81, 156, 10, 10), new Leading(45, 6, 6)));
 		setSize(260, 513);
 	}
 
 	private JLabel getLabelLogo() {
 		if (labelLogo == null) {
 			labelLogo = new JLabel();
-			labelLogo.setIcon(new ImageIcon("res/Logo.jpg"));
+			labelLogo.setIcon(new ImageIcon("res/Logo2.jpg"));
 		}
 		return labelLogo;
 	}
