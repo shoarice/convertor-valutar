@@ -2,8 +2,10 @@ package roadrunner.gui;
 
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
@@ -22,8 +24,8 @@ public class ChatFrame extends JFrame {
 	private JTextArea textAreaSend;
 	private JScrollPane jScrollPane1;
 	private JButton buttonSend;
-		
-	private static final String PREFERRED_LOOK_AND_FEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
+	private JLabel labelLogo;
+	private static final String PREFERRED_LOOK_AND_FEEL = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
 	public ChatFrame() {
 		initComponents();
 	}
@@ -48,10 +50,19 @@ public class ChatFrame extends JFrame {
 
 	private void initComponents() {
 		setLayout(new GroupLayout());
-		add(getJScrollPane0(), new Constraints(new Leading(13, 444, 10, 10), new Leading(11, 191, 12, 12)));
-		add(getJScrollPane1(), new Constraints(new Leading(14, 349, 10, 10), new Leading(208, 80, 10, 10)));
-		add(getButtonSend(), new Constraints(new Leading(375, 82, 12, 12), new Leading(208, 80, 12, 12)));
-		setSize(473, 300);
+		add(getJScrollPane0(), new Constraints(new Leading(13, 536, 10, 10), new Leading(11, 191, 12, 12)));
+		add(getButtonSend(), new Constraints(new Leading(467, 82, 6, 6), new Leading(208, 80, 6, 6)));
+		add(getLabelLogo(), new Constraints(new Leading(13, 89, 6, 6), new Leading(210, 75, 6, 6)));
+		add(getJScrollPane1(), new Constraints(new Leading(114, 341, 6, 6), new Leading(207, 80, 10, 10)));
+		setSize(559, 299);
+	}
+
+	private JLabel getLabelLogo() {
+		if (labelLogo == null) {
+			labelLogo = new JLabel();
+			labelLogo.setIcon(new ImageIcon("res/Logo3.jpg"));
+		}
+		return labelLogo;
 	}
 
 	public JTextArea getTextAreaChat() {
@@ -71,6 +82,7 @@ public class ChatFrame extends JFrame {
 			textAreaSend = new JTextArea();
 			textAreaSend.setLineWrap(true);
 			textAreaSend.setWrapStyleWord(true);
+			textAreaSend.setAutoscrolls(true);
 		}
 		return textAreaSend;
 	}
