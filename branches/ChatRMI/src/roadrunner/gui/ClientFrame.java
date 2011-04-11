@@ -66,7 +66,7 @@ public class ClientFrame extends JFrame {
 		return labelLogo;
 	}
 
-	private JButton getButtonLogout() {
+	public JButton getButtonLogout() {
 		if (buttonLogout == null) {
 			buttonLogout = new JButton();
 			buttonLogout.setText("Logout");

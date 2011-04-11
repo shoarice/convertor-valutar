@@ -47,6 +47,9 @@ public class LocalUsers extends Model {
 	public void removeUser(String username){
 		User u = new User(username);
 		users.remove(u);
+		for (ChatFrame chatFrame : userChatFrames.get(u)) {
+			chatFrame.dispose();
+		}
 		userChatFrames.remove(u);
 		notifyListeners();
 	}
