@@ -1,5 +1,8 @@
 package roadrunner.controller.client;
 
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
 import roadrunner.gui.ChatFrame;
 import roadrunner.remote.ComponentImplementation;
 
@@ -17,9 +20,16 @@ public class ChatWithUserController {
 		startChatFrame();
 	}
 	private void startChatFrame() {
-		ChatFrame chatFrame = ChatFrame.getFrame(remoteUsername);
+		final ChatFrame chatFrame = ChatFrame.getFrame(remoteUsername);
 		component.addChatFrameForUser(localUsername,chatFrame);
 		new ChatExitController(component, chatFrame);
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				chatFrame.getTextAreaSend().requestFocus();
+			}
+		});
 		
 	}
 
