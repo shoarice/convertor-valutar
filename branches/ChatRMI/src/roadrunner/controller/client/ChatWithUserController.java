@@ -1,6 +1,5 @@
 package roadrunner.controller.client;
 
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import roadrunner.gui.ChatFrame;
@@ -22,7 +21,10 @@ public class ChatWithUserController {
 	private void startChatFrame() {
 		final ChatFrame chatFrame = ChatFrame.getFrame(remoteUsername);
 		component.addChatFrameForUser(localUsername,chatFrame);
+		
 		new ChatExitController(component, chatFrame);
+		new ChatSendController(chatFrame.getTextAreaSend(), chatFrame.getTextAreaChat(), localUsername, chatFrame.getButtonSend());
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			
 			@Override
