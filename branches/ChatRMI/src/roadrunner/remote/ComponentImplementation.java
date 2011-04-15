@@ -11,7 +11,12 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+
 import roadrunner.central.Central;
+import roadrunner.controller.client.ChatExitController;
+import roadrunner.controller.client.ChatSendController;
 import roadrunner.gui.ChatFrame;
 import roadrunner.gui.ClientFrame;
 import roadrunner.model.ComponentInfo;
@@ -59,7 +64,7 @@ public class ComponentImplementation extends Model implements Component {
 	}
 	
 	@Override
-	public synchronized void updateUsers(final Component component) throws RemoteException {
+	public void updateUsers(final Component component) throws RemoteException {
 		ExecutorService thread = Executors.newSingleThreadExecutor();
 		thread.execute(new Runnable() {
 			
@@ -79,8 +84,42 @@ public class ComponentImplementation extends Model implements Component {
 	}
 
 	@Override
-	public synchronized Set<User> getUsers() throws RemoteException {
+	public Set<User> getUsers() throws RemoteException {
 		return localUsers.getUsers();
+	}
+
+	@Override
+	public boolean sendMessage(final String usernameFrom, String usernameTo,
+			final String message) throws RemoteException {
+		
+		final ChatFrame chatFrame = getChatFrameOrCreate(usernameTo, usernameFrom);
+		if(chatFrame == null)
+			return false;
+		
+		new ChatExitController(this, chatFrame);
+		new ChatSendController(chatFrame, usernameTo , usernameFrom);
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				chatFrame.getTextAreaSend().requestFocus();
+			}
+		});
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				JTextArea chatTextArea = chatFrame.getTextAreaChat();
+				
+				chatTextArea.append(usernameFrom);
+				chatTextArea.append(": ");
+				chatTextArea.append(message);
+				chatTextArea.append("\n");
+			}
+		});
+		return true;
 	}
 
 	public static ComponentImplementation start(String[] args) {
@@ -193,8 +232,8 @@ public class ComponentImplementation extends Model implements Component {
 		notifyListeners(getLocalUsers());
 	}
 	
-	public void addChatFrameForUser(String username, ChatFrame frame){
-		localUsers.addChatFrameForUser(username, frame);
+	public ChatFrame getChatFrameOrCreate(String localUsername, String remoteUsername){
+		return localUsers.getChatFrame(localUsername, remoteUsername);
 	}
 	public void removeFrame(ChatFrame frame) {
 		localUsers.removeFrame(frame);

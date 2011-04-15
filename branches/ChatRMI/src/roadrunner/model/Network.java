@@ -76,16 +76,25 @@ public class Network extends Model implements Iterable<ComponentInfo>{
 		return componentsInfo;
 	}
 	
-	public String[] getAllUsers(){
-		ArrayList<String> result = new ArrayList<String>();
+	public User[] getAllUsers(){
+		ArrayList<User> result = new ArrayList<User>();
 		synchronized (componentsInfo) {
 			for (ComponentInfo componentInfo : componentsInfo) {
-				for (String username : componentInfo.getUserNames()) {
-					result.add(username);
+				for (User user : componentInfo.getUsers()) {
+					result.add(user);
 				}
 			}
 		}
-		return result.toArray(new String[1]);
+		return result.toArray(new User[1]);
+	}
+	
+	public Component getComponentForUser(String username){
+		for (ComponentInfo componentInfo : componentsInfo) {
+			if(componentInfo.hasUser(username)){
+				return componentInfo.getComponent();
+			}
+		}
+		return null;
 	}
 
 	@Override
