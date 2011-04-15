@@ -21,7 +21,13 @@ public class ComponentInfo extends Model {
 	}
 	
 	public boolean hasUser(String username){
-		return users.contains(new User(username));
+		
+		for (User user : users) {
+			if(user.getUsername().contains(username))
+				return true;
+		}
+		
+		return false;
 	}
 	
 	public boolean isComponent(Component component){

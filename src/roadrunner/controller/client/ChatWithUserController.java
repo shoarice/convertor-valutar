@@ -3,6 +3,7 @@ package roadrunner.controller.client;
 import javax.swing.SwingUtilities;
 
 import roadrunner.gui.ChatFrame;
+import roadrunner.model.User;
 import roadrunner.remote.ComponentImplementation;
 
 public class ChatWithUserController {
@@ -10,20 +11,20 @@ public class ChatWithUserController {
 	private final String remoteUsername;
 	private final ComponentImplementation component;
 	private final  String localUsername;
+	
 	public ChatWithUserController(ComponentImplementation component,
 			Object selectedValue, String localUsername) {
 		
-		this.remoteUsername = (String) selectedValue;
+		this.remoteUsername = ((User) selectedValue).getUsername();
 		this.component = component;
 		this.localUsername = localUsername;
 		startChatFrame();
 	}
 	private void startChatFrame() {
-		final ChatFrame chatFrame = ChatFrame.getFrame(remoteUsername);
-		component.addChatFrameForUser(localUsername,chatFrame);
+		final ChatFrame chatFrame = component.getChatFrameOrCreate(localUsername,remoteUsername);
 		
 		new ChatExitController(component, chatFrame);
-		new ChatSendController(chatFrame.getTextAreaSend(), chatFrame.getTextAreaChat(), localUsername, chatFrame.getButtonSend());
+		new ChatSendController(chatFrame, localUsername, remoteUsername);
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			

@@ -30,4 +30,15 @@ public interface Component extends Remote{
 	 * @throws RemoteException
 	 */
 	public Set<User> getUsers() throws RemoteException;
+	
+	/**
+	 * Method called by other components when they want to send a message to this component
+	 * @param usernameFrom
+	 * @param usernameTo
+	 * @param message
+	 * @return true if the message was delivered to the client,
+	 * 		   false if the user is not online
+	 * @throws RemoteException
+	 */
+	public boolean sendMessage(String usernameFrom, String usernameTo, String message) throws RemoteException;
 }

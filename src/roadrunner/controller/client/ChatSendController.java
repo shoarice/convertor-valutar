@@ -2,31 +2,36 @@ package roadrunner.controller.client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
 import roadrunner.controller.Controller;
+import roadrunner.gui.ChatFrame;
+import roadrunner.model.Network;
+import roadrunner.remote.Component;
 
 public class ChatSendController extends Controller {
 
 	private final JTextArea sendTextArea;
 	private final JTextArea chatTextArea;
 	private final String localUsername;
+	private final String remoteUsername;
 	private final JButton sendButton;
 
-	public ChatSendController(JTextArea sendTextArea, JTextArea chatTextArea,
-			String localUsername, JButton sendButton) {
+	public ChatSendController(ChatFrame chatFrame, String localUsername, String remoteUsername) {
 		super();
-		this.sendTextArea = sendTextArea;
-		this.chatTextArea = chatTextArea;
+		
+		sendTextArea = chatFrame.getTextAreaSend();
+		chatTextArea = chatFrame.getTextAreaChat();
+		sendButton = chatFrame.getButtonSend();
+		this.remoteUsername = remoteUsername;
 		this.localUsername = localUsername;
-		this.sendButton = sendButton;
 		
 		setUpAction();
 	}
 
-	//TODO trimite mesajul pe RMI
 	private void setUpAction() {
 		sendButton.addActionListener(new ActionListener() {
 			
@@ -39,12 +44,34 @@ public class ChatSendController extends Controller {
 					chatTextArea.append(": ");
 					chatTextArea.append(msg);
 					chatTextArea.append("\n");
+				
+				
+					sendTextArea.setText("");
+					sendTextArea.requestFocus();
+					
+					
+					Component component = Network.instance().getComponentForUser(remoteUsername);
+					if(component == null){
+						actionIfRemoteUserIsOffline();
+					}else{
+						try {
+							if(false == component.sendMessage(localUsername, remoteUsername, msg))
+								actionIfRemoteUserIsOffline();
+						} catch (RemoteException e) {
+							e.printStackTrace();
+							
+						}
+					}
 				}
 				
-				sendTextArea.setText("");
-				sendTextArea.requestFocus();
 			}
+			
+			
 		});
+	}
+
+	private void actionIfRemoteUserIsOffline() {
+		chatTextArea.append("\n\nThe user is offline\n");
 	}
 	
 	
