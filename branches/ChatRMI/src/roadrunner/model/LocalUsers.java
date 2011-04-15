@@ -61,6 +61,13 @@ public class LocalUsers extends Model {
 				return;
 			}
 		}
+		
+		for (User user : userChatFrames.keySet()) {
+			if(user.getUsername().equals(username)){
+				user.setStatus(status);
+				return;
+			}
+		}
 	}
 	
 	public void addChatFrameForUser(String username, ChatFrame frame){
@@ -101,6 +108,14 @@ public class LocalUsers extends Model {
 				return;
 			}
 		}
+	}
+	
+	public User getUser(String username){
+		for (User user : users.keySet()) {
+			if(user.getUsername().endsWith(username))
+				return user;
+		}
+		return null;
 	}
 
 	

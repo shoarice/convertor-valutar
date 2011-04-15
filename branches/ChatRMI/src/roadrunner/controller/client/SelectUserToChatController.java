@@ -4,8 +4,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 import roadrunner.controller.Controller;
+import roadrunner.model.Network;
+import roadrunner.model.Status;
+import roadrunner.model.User;
 import roadrunner.remote.ComponentImplementation;
 
 public class SelectUserToChatController extends Controller {
@@ -27,10 +31,13 @@ public class SelectUserToChatController extends Controller {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//DOUBLE-CLICK
-				if(e.getClickCount() == 2){
-					new ChatWithUserController(component, usersList.getSelectedValue(), localUsername);
-				}
+				if(Network.instance().getUser((((User) usersList.getSelectedValue()).getUsername())).getStatus() == Status.BUSY){
+					JOptionPane.showMessageDialog(null, "The selected user is busy", "Ooops", JOptionPane.INFORMATION_MESSAGE);
+				}else
+					//DOUBLE-CLICK
+					if(e.getClickCount() == 2){
+						new ChatWithUserController(component, usersList.getSelectedValue(), localUsername);
+					}
 			}
 			
 		});

@@ -52,11 +52,11 @@ public class ChatSendController extends Controller {
 					
 					Component component = Network.instance().getComponentForUser(remoteUsername);
 					if(component == null){
-						actionIfRemoteUserIsOffline();
+						actionIfRemoteUserIsNotAvailable();
 					}else{
 						try {
 							if(false == component.sendMessage(localUsername, remoteUsername, msg))
-								actionIfRemoteUserIsOffline();
+								actionIfRemoteUserIsNotAvailable();
 						} catch (RemoteException e) {
 							e.printStackTrace();
 							
@@ -70,8 +70,8 @@ public class ChatSendController extends Controller {
 		});
 	}
 
-	private void actionIfRemoteUserIsOffline() {
-		chatTextArea.append("\n\nThe user is offline\n");
+	private void actionIfRemoteUserIsNotAvailable() {
+		chatTextArea.append("\n\nThe user is not available\n");
 	}
 	
 	
