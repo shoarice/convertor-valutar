@@ -7,7 +7,7 @@ public class User extends Model implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -500718627599027557L;
-	private String username;
+	private final String username;
 	private Status status;
 	
 	public User(String username) {
@@ -18,6 +18,10 @@ public class User extends Model implements Serializable{
 	public void setStatus(Status status) {
 		this.status = status;
 		notifyListeners();
+	}
+
+	public Status getStatus() {
+		return status;
 	}
 
 	public String getUsername() {

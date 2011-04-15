@@ -1,7 +1,7 @@
 package roadrunner.model;
 
 public enum Status {
-	AVAILABLE ("Available"), AWAY ("Away");
+	AVAILABLE ("Available"), AWAY ("Away"), BUSY ("Busy");
 	
 	private String description;
 	
