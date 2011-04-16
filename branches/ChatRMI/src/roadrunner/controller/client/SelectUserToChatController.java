@@ -31,7 +31,10 @@ public class SelectUserToChatController extends Controller {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(Network.instance().getUser((((User) usersList.getSelectedValue()).getUsername())).getStatus() == Status.BUSY){
+				User selectedUser = (User) usersList.getSelectedValue();
+				if(selectedUser == null)
+					return;
+				if(Network.instance().getUser((selectedUser.getUsername())).getStatus() == Status.BUSY){
 					JOptionPane.showMessageDialog(null, "The selected user is busy", "Ooops", JOptionPane.INFORMATION_MESSAGE);
 				}else
 					//DOUBLE-CLICK
