@@ -24,7 +24,7 @@ public class Launcher {
 	private static ComponentFrame initGUI() {
 		ComponentFrame frame = new ComponentFrame();
 		frame.setDefaultCloseOperation(ComponentFrame.EXIT_ON_CLOSE);
-		frame.setTitle("ComponentFrame");
+		frame.setTitle("Local User List");
 		frame.getContentPane().setPreferredSize(frame.getSize());
 		frame.pack();
 		frame.setLocationRelativeTo(null);
