@@ -37,7 +37,7 @@ public class ClientFrame extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				frame.setTitle("ClientFrame");
+				frame.setTitle("RoadRunner 1.0");
 				frame.getContentPane().setPreferredSize(frame.getSize());
 				frame.pack();
 				frame.setLocationRelativeTo(null);
