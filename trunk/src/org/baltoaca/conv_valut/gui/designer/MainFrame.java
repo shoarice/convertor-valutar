@@ -1,34 +1,34 @@
 package org.baltoaca.conv_valut.gui.designer;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import javax.swing.Box;
-import java.awt.GridLayout;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
 import javax.swing.JList;
-import javax.swing.ListSelectionModel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import java.awt.Rectangle;
-import java.awt.Color;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
 
 public class MainFrame {
 
 	private JFrame frame;
+	private JLabel lblData;
+	private JList lsTo;
+	private JList lsFrom;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					MainFrame window = new MainFrame();
@@ -89,7 +89,7 @@ public class MainFrame {
 		frame.getContentPane().add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblData = new JLabel("14 August 2011");
+		lblData = new JLabel("14 August 2011");
 		panel.add(lblData);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -97,7 +97,7 @@ public class MainFrame {
 		scrollPane.setBounds(39, 101, 228, 184);
 		frame.getContentPane().add(scrollPane);
 		
-		JList lsFrom = new JList();
+		lsFrom = new JList();
 		scrollPane.setViewportView(lsFrom);
 		lsFrom.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
@@ -106,8 +106,8 @@ public class MainFrame {
 		scrollPane_1.setBounds(281, 102, 228, 184);
 		frame.getContentPane().add(scrollPane_1);
 		
-		JList list = new JList();
-		scrollPane_1.setViewportView(list);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		lsTo = new JList();
+		scrollPane_1.setViewportView(lsTo);
+		lsTo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
 }
