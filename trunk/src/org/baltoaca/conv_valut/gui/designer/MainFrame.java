@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -13,8 +14,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
+
+import org.baltoaca.conv_valut.mvc.ConvValutarModel;
 
 public class MainFrame {
 
@@ -22,6 +29,8 @@ public class MainFrame {
 	private JLabel lblData;
 	private JList lsTo;
 	private JList lsFrom;
+	private JTextField txtSum;
+	private JTextField txtRate;
 
 	/**
 	 * Launch the application.
@@ -52,7 +61,7 @@ public class MainFrame {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 736, 348);
+		frame.setBounds(100, 100, 939, 392);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -93,8 +102,8 @@ public class MainFrame {
 		panel.add(lblData);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(new TitledBorder(null, "Schimba", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
-		scrollPane.setBounds(39, 101, 228, 184);
+		scrollPane.setBorder(new TitledBorder(null, "Schimb\u0103", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
+		scrollPane.setBounds(25, 89, 228, 184);
 		frame.getContentPane().add(scrollPane);
 		
 		lsFrom = new JList();
@@ -102,12 +111,92 @@ public class MainFrame {
 		lsFrom.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBorder(new TitledBorder(null, "in", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, null));
-		scrollPane_1.setBounds(281, 102, 228, 184);
+		scrollPane_1.setBorder(new TitledBorder(null, "\u00EEn", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
+		scrollPane_1.setBounds(267, 90, 228, 184);
 		frame.getContentPane().add(scrollPane_1);
 		
 		lsTo = new JList();
 		scrollPane_1.setViewportView(lsTo);
 		lsTo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		txtSum = new JTextField();
+		txtSum.setText("1");
+		txtSum.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSum.setBounds(719, 59, 122, 28);
+		frame.getContentPane().add(txtSum);
+		txtSum.setColumns(10);
+		
+		txtRate = new JTextField();
+		txtRate.setText("0");
+		txtRate.setHorizontalAlignment(SwingConstants.CENTER);
+		txtRate.setBounds(719, 105, 122, 28);
+		frame.getContentPane().add(txtRate);
+		txtRate.setColumns(10);
+		
+		JLabel lblFromCurrency = new JLabel("EUR");
+		lblFromCurrency.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblFromCurrency.setBounds(853, 65, 55, 16);
+		frame.getContentPane().add(lblFromCurrency);
+		
+		JLabel lblSum = new JLabel("Sum\u0103");
+		lblSum.setLabelFor(txtSum);
+		lblSum.setBounds(637, 65, 55, 16);
+		frame.getContentPane().add(lblSum);
+		
+		JLabel lblRata1 = new JLabel("Rat\u0103 de conversie");
+		lblRata1.setLabelFor(txtRate);
+		lblRata1.setBounds(579, 101, 112, 16);
+		frame.getContentPane().add(lblRata1);
+		
+		JLabel lblRata2 = new JLabel("proprie");
+		lblRata2.setLabelFor(txtRate);
+		lblRata2.setBounds(636, 118, 55, 16);
+		frame.getContentPane().add(lblRata2);
+		
+		JButton btnReverse = new JButton("Inverseaz\u0103");
+		btnReverse.setMnemonic(KeyEvent.VK_S);
+		btnReverse.setBounds(220, 285, 90, 28);
+		frame.getContentPane().add(btnReverse);
+		
+		JLabel lblTva = new JLabel("tva");
+		lblTva.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTva.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblTva.setBounds(723, 222, 105, 16);
+		frame.getContentPane().add(lblTva);
+		
+		JLabel lblResultPlusTva = new JLabel("rez + tva");
+		lblResultPlusTva.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblResultPlusTva.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResultPlusTva.setBounds(723, 252, 105, 16);
+		frame.getContentPane().add(lblResultPlusTva);
+		
+		JLabel lblResult = new JLabel("rez");
+		lblResult.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResult.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblResult.setBounds(723, 298, 105, 16);
+		frame.getContentPane().add(lblResult);
+		
+		JLabel lblTvaDescriptor = new JLabel("TVA (XX%)");
+		lblTvaDescriptor.setLabelFor(lblTva);
+		lblTvaDescriptor.setText("TVA ("
+				+ new Integer((int) (ConvValutarModel.VAT * 100)) + "%)");
+		lblTvaDescriptor.setBounds(625, 222, 67, 16);
+		frame.getContentPane().add(lblTvaDescriptor);
+		
+		JLabel lblResultPlusTvaDescriptor = new JLabel("Rezultat + TVA");
+		lblResultPlusTvaDescriptor.setLabelFor(lblResultPlusTva);
+		lblResultPlusTvaDescriptor.setBounds(608, 252, 84, 16);
+		frame.getContentPane().add(lblResultPlusTvaDescriptor);
+		
+		JLabel lblResultDescriptor = new JLabel("Rezultat");
+		lblResultDescriptor.setForeground(Color.RED);
+		lblResultDescriptor.setOpaque(true);
+		lblResultDescriptor.setLabelFor(lblResult);
+		lblResultDescriptor.setBounds(637, 298, 55, 16);
+		frame.getContentPane().add(lblResultDescriptor);
+		
+		JLabel lblToCurrency = new JLabel("LEI");
+		lblToCurrency.setBounds(853, 298, 55, 16);
+		frame.getContentPane().add(lblToCurrency);
 	}
 }
