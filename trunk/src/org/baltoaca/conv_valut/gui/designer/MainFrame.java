@@ -3,9 +3,15 @@ package org.baltoaca.conv_valut.gui.designer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
+import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Locale;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -14,24 +20,41 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.NumberFormatter;
 
+import org.baltoaca.conv_valut.computer.Currency;
 import org.baltoaca.conv_valut.mvc.ConvValutarModel;
+import org.baltoaca.conv_valut.mvc.Model;
+import org.baltoaca.conv_valut.mvc.ModelListener;
 
-public class MainFrame {
+public class MainFrame implements ModelListener{
 
 	private JFrame frame;
 	private JLabel lblData;
 	private JList lsTo;
 	private JList lsFrom;
-	private JTextField txtSum;
-	private JTextField txtRate;
+	private JMenuItem mntmIesire;
+	private JMenuItem mntmGhidUtilizare;
+	private JMenuItem mntmDespre;
+	private JButton btnReverse;
+	private JLabel lblResult;
+	private JLabel lblResultPlusTva;
+	private JLabel lblTva;
+	private JLabel lblFromCurrency;
+	private JLabel lblToCurrency;
+	public JFormattedTextField txtSum;
+	public JFormattedTextField txtRate;
 
+	private boolean listsNeedToBeUpdated = true;
+	private static final int NR_OF_FRACTION_DIGITS = 2;
+	NumberFormat numberFormat = NumberFormat.getInstance(new Locale("en"));
+	NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
 	/**
 	 * Launch the application.
 	 */
@@ -53,6 +76,9 @@ public class MainFrame {
 	 * Create the application.
 	 */
 	public MainFrame() {
+		numberFormat.setMaximumFractionDigits(NR_OF_FRACTION_DIGITS);
+		numberFormat.setMinimumFractionDigits(0);
+		numberFormatter.setCommitsOnValidEdit(true);
 		initialize();
 	}
 
@@ -61,6 +87,7 @@ public class MainFrame {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setTitle("Convertor Valutar");
 		frame.setBounds(100, 100, 939, 392);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -71,11 +98,11 @@ public class MainFrame {
 		mnFile.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(mnFile);
 		
-		JMenuItem mntmIesire = new JMenuItem("Iesire");
+		mntmIesire = new JMenuItem("Ie\u015Fire");
 		mntmIesire.setMnemonic(KeyEvent.VK_I);
 		mnFile.add(mntmIesire);
 		
-		JMenu mnOptiuni = new JMenu("Optiuni");
+		JMenu mnOptiuni = new JMenu("Op\u0163iuni");
 		mnOptiuni.setMnemonic(KeyEvent.VK_O);
 		menuBar.add(mnOptiuni);
 		
@@ -83,11 +110,11 @@ public class MainFrame {
 		mnAjutor.setMnemonic(KeyEvent.VK_A);
 		menuBar.add(mnAjutor);
 		
-		JMenuItem mntmGhidUtilizare = new JMenuItem("Ghid utilizare");
+		mntmGhidUtilizare = new JMenuItem("Ghid utilizare");
 		mntmGhidUtilizare.setMnemonic(KeyEvent.VK_G);
 		mnAjutor.add(mntmGhidUtilizare);
 		
-		JMenuItem mntmDespre = new JMenuItem("Despre");
+		mntmDespre = new JMenuItem("Despre");
 		mntmDespre.setMnemonic(KeyEvent.VK_D);
 		mnAjutor.add(mntmDespre);
 		frame.getContentPane().setLayout(null);
@@ -119,58 +146,41 @@ public class MainFrame {
 		scrollPane_1.setViewportView(lsTo);
 		lsTo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		txtSum = new JTextField();
-		txtSum.setText("1");
-		txtSum.setHorizontalAlignment(SwingConstants.CENTER);
-		txtSum.setBounds(719, 59, 122, 28);
-		frame.getContentPane().add(txtSum);
-		txtSum.setColumns(10);
-		
-		txtRate = new JTextField();
-		txtRate.setText("0");
-		txtRate.setHorizontalAlignment(SwingConstants.CENTER);
-		txtRate.setBounds(719, 105, 122, 28);
-		frame.getContentPane().add(txtRate);
-		txtRate.setColumns(10);
-		
-		JLabel lblFromCurrency = new JLabel("EUR");
+		lblFromCurrency = new JLabel("EUR");
 		lblFromCurrency.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblFromCurrency.setBounds(853, 65, 55, 16);
 		frame.getContentPane().add(lblFromCurrency);
 		
 		JLabel lblSum = new JLabel("Sum\u0103");
-		lblSum.setLabelFor(txtSum);
 		lblSum.setBounds(637, 65, 55, 16);
 		frame.getContentPane().add(lblSum);
 		
-		JLabel lblRata1 = new JLabel("Rat\u0103 de conversie");
-		lblRata1.setLabelFor(txtRate);
-		lblRata1.setBounds(579, 101, 112, 16);
-		frame.getContentPane().add(lblRata1);
+		JLabel lblRate1 = new JLabel("Rat\u0103 de conversie");
+		lblRate1.setBounds(579, 101, 112, 16);
+		frame.getContentPane().add(lblRate1);
 		
-		JLabel lblRata2 = new JLabel("proprie");
-		lblRata2.setLabelFor(txtRate);
-		lblRata2.setBounds(636, 118, 55, 16);
-		frame.getContentPane().add(lblRata2);
+		JLabel lblRate2 = new JLabel("proprie");
+		lblRate2.setBounds(636, 118, 55, 16);
+		frame.getContentPane().add(lblRate2);
 		
-		JButton btnReverse = new JButton("Inverseaz\u0103");
+		btnReverse = new JButton("Inverseaz\u0103");
 		btnReverse.setMnemonic(KeyEvent.VK_S);
 		btnReverse.setBounds(220, 285, 90, 28);
 		frame.getContentPane().add(btnReverse);
 		
-		JLabel lblTva = new JLabel("tva");
+		lblTva = new JLabel("tva");
 		lblTva.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTva.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		lblTva.setBounds(723, 222, 105, 16);
 		frame.getContentPane().add(lblTva);
 		
-		JLabel lblResultPlusTva = new JLabel("rez + tva");
+		lblResultPlusTva = new JLabel("rez + tva");
 		lblResultPlusTva.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		lblResultPlusTva.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResultPlusTva.setBounds(723, 252, 105, 16);
 		frame.getContentPane().add(lblResultPlusTva);
 		
-		JLabel lblResult = new JLabel("rez");
+		lblResult = new JLabel("rez");
 		lblResult.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResult.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		lblResult.setBounds(723, 298, 105, 16);
@@ -195,8 +205,190 @@ public class MainFrame {
 		lblResultDescriptor.setBounds(637, 298, 55, 16);
 		frame.getContentPane().add(lblResultDescriptor);
 		
-		JLabel lblToCurrency = new JLabel("LEI");
+		lblToCurrency = new JLabel("LEI");
 		lblToCurrency.setBounds(853, 298, 55, 16);
 		frame.getContentPane().add(lblToCurrency);
+		
+		txtSum = new JFormattedTextField();
+		txtSum.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSum.setText("1");
+		txtSum.setBounds(723, 59, 105, 28);
+		txtSum.addFocusListener(new FormattedTextFieldFocusListener());
+		frame.getContentPane().add(txtSum);
+		
+		txtRate = new JFormattedTextField();
+		txtRate.setHorizontalAlignment(SwingConstants.CENTER);
+		txtRate.setText("0");
+		txtRate.setBounds(723, 105, 105, 28);
+		txtRate.addFocusListener(new FormattedTextFieldFocusListener());
+		frame.getContentPane().add(txtRate);
+	}
+
+	@Override
+	public void update(Model m, Object obj) {
+		final ConvValutarModel myModel = (ConvValutarModel) m;
+		final HashMap<String, String> labelsTextMap;
+
+		final Currency[] currenciesArray = myModel.getXmlInfo().getCurrenciesArray();
+
+		final String lbDateText = myModel.getXmlInfo().dateToString();
+		
+		labelsTextMap = generateLabelsTextMapFromModel(myModel);
+
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				updateJLists(currenciesArray);
+
+				updateDate(lbDateText);
+
+				updateResultLabels(labelsTextMap);
+			}
+
+			private void updateJLists(final Currency[] currenciesArray) {
+				if (listsNeedToBeUpdated) {
+					lsFrom.setListData(currenciesArray);
+					lsTo.setListData(currenciesArray);
+					listsNeedToBeUpdated = false;
+				}
+			}
+
+			private void updateDate(final String lbDateText) {
+				lblData.setText(lbDateText);
+			}
+
+			private void updateResultLabels(HashMap<String, String> labelsText) {
+				lblResult.setText(labelsText.get("lbResultText").toString());
+				lblTva.setText(labelsText.get("lbVatText").toString());
+				lblResultPlusTva.setText(labelsText.get("lbResultAndVatText")
+						.toString());
+				lblFromCurrency.setText(labelsText.get("lbFromCurrencyText")
+						.toString());
+				lblToCurrency.setText(labelsText.get("lbToCurrencyText")
+						.toString());
+			}
+
+		});
+		
+	}
+	
+	private HashMap<String, String> generateLabelsTextMapFromModel(final ConvValutarModel myModel) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("lbResultText",
+				String.valueOf(numberFormat.format(myModel.getResult())));
+		map.put("lbVatText",
+				String.valueOf(numberFormat.format(myModel.getVat())));
+		map.put("lbResultAndVatText",
+				String.valueOf(numberFormat.format(myModel.getResultAndVat())));
+		map.put("lbFromCurrencyText", myModel.getFromCurrencyLabel());
+		map.put("lbToCurrencyText", myModel.getToCurrencyLabel());
+		
+		return map;
+	}
+
+	
+	public void selectCurrencyInFromList(String currencyShortName){
+		selectCurrencyInListAndScroll(currencyShortName,lsFrom);
+	}
+	
+	public void selectCurrencyInToList(String currencyShortName){
+		selectCurrencyInListAndScroll(currencyShortName,lsTo);
+	}
+	
+	private void selectCurrencyInListAndScroll(String currencyShortName,JList list){
+		boolean shouldScroll = true;
+		list.setSelectedValue(new Currency(currencyShortName), shouldScroll);
+	}
+	
+	
+	
+	/**
+	 * Used to call <code>selectAll()</code> on the
+	 * <code>JFormattedTextField</code>'s when they acquire keyboard focus
+	 * 
+	 * @author VlaD
+	 * 
+	 */
+	private class FormattedTextFieldFocusListener implements FocusListener {
+
+		@Override
+		public void focusGained(final FocusEvent e) {
+
+			SwingUtilities.invokeLater(new Runnable() {
+
+				@Override
+				public void run() {
+					((JFormattedTextField) (e.getSource())).selectAll();
+				}
+			});
+
+		}
+
+		@Override
+		public void focusLost(FocusEvent e) {
+		}
+
+	}
+	
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public JLabel getLblData() {
+		return lblData;
+	}
+
+	public JList getLsTo() {
+		return lsTo;
+	}
+
+	public JList getLsFrom() {
+		return lsFrom;
+	}
+
+	public JFormattedTextField getTxtSum() {
+		return txtSum;
+	}
+
+	public JFormattedTextField getTxtRate() {
+		return txtRate;
+	}
+
+	public JMenuItem getMntmIesire() {
+		return mntmIesire;
+	}
+
+	public JMenuItem getMntmGhidUtilizare() {
+		return mntmGhidUtilizare;
+	}
+
+	public JMenuItem getMntmDespre() {
+		return mntmDespre;
+	}
+
+	public JButton getBtnReverse() {
+		return btnReverse;
+	}
+
+	public JLabel getLblResult() {
+		return lblResult;
+	}
+
+	public JLabel getLblResultPlusTva() {
+		return lblResultPlusTva;
+	}
+
+	public JLabel getLblTva() {
+		return lblTva;
+	}
+
+	public JLabel getLblFromCurrency() {
+		return lblFromCurrency;
+	}
+
+	public JLabel getLblToCurrency() {
+		return lblToCurrency;
 	}
 }
