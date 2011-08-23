@@ -27,8 +27,8 @@ public class Main {
 	public static void main(String[] args) {
 		setLookAndFeel();
 		
-		/*System.setProperty("http.proxyHost", "cache.tm.alcatel.ro");
-		System.setProperty("http.proxyPort", "8080");*/
+		//use system proxy settings
+		System.setProperty("java.net.useSystemProxies", "true");
 		
 		Loader loader;
 		ConvValutarModel model = null;
