@@ -27,9 +27,6 @@ public class Main {
 	public static void main(String[] args) {
 		setLookAndFeel();
 		
-		//use system proxy settings
-		System.setProperty("java.net.useSystemProxies", "true");
-		
 		Loader loader;
 		ConvValutarModel model = null;
 		final MainFrame window = new MainFrame();
