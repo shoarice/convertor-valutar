@@ -25,6 +25,7 @@ public class XmlSource {
 	public XmlSource(URL uri, String name) {
 		this.uri = uri;
 		this.name = name;
+		System.setProperty("java.net.useSystemProxies", "true");
 	}
 
 	/**
