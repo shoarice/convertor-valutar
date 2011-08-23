@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="Convertor valutar" default="jar">
+<project name="Convertor valutar" default="dist">
 
 	<property name="src" value="src"/>
 	<property name="build" value="build"/>
 	<property name="dist" value="dist"/>
 	<property name="jar" value="Convertor valutar.jar"/>
 	
-	<target name="jar" depends="build">
-		
+	<target name="dist" depends="clean,build,jar">
+	
 	</target>
 	
 	<target name="build">
 		<mkdir dir="${build}"/>
-		
-		<javac srcdir="${src}" destdir="${build}" includeantruntime="false">
+		<javac sourcepath="" srcdir="${src}" destdir="${build}" includeantruntime="false">
 			<include name="**/*.java"/>
-			<exclude name="**/test/**/*.java"/>
 			<exclude name="**/gui/MainFrame.java"/>
+			<exclude name="**/test/**"/>
 		</javac>
+		
+		<copy todir="${build}" file="res/fullCurrNames.xml"/>
 	</target>
+	
+	<target name="jar" >
+		<jar destfile="${jar}" manifest="${src}/org/baltoaca/conv_valut/manifest.mf">
+			
+			<fileset dir="${build}">
+    			<exclude name="**/test"/>
+			</fileset>
+
+		</jar>	
+	</target>
+	
+	<target name="clean">
+	</target>
+
 </project>
