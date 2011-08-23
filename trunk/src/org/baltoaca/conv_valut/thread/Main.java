@@ -1,20 +1,21 @@
 package org.baltoaca.conv_valut.thread;
 
 
-import java.awt.Component;
+import java.awt.EventQueue;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.baltoaca.conv_valut.gui.Loader;
-import org.baltoaca.conv_valut.gui.MainFrame;
+import org.baltoaca.conv_valut.gui.designer.MainFrame;
 import org.baltoaca.conv_valut.mvc.ConvValutarController;
 import org.baltoaca.conv_valut.mvc.ConvValutarModel;
-import org.baltoaca.conv_valut.mvc.ModelListener;
 import org.baltoaca.conv_valut.xml.XmlInfoBnr;
 import org.baltoaca.conv_valut.xml.XmlSource;
 import org.xml.sax.SAXException;
@@ -24,16 +25,17 @@ public class Main {
 	public static final Locale locale = new Locale("ro");
 	
 	public static void main(String[] args) {
-		MainFrame.installLnF();
-
+		setLookAndFeel();
+		
+		System.setProperty("http.proxyHost", "cache.tm.alcatel.ro");
+		System.setProperty("http.proxyPort", "8080");
+		
 		Loader loader;
 		ConvValutarModel model = null;
-		final ModelListener view = new MainFrame();
+		final MainFrame window = new MainFrame();
 		
-		loader = new Loader((Component) view, "Citire date", "", 0, 6);
+		loader = new Loader(window.getFrame(), "Citire date", "", 0, 6);
 		loader.next();
-		
-		
 		
 		XmlInfoBnr xmlInfoBnr = null;
 		XmlSource xmlSource = null;
@@ -48,47 +50,33 @@ public class Main {
 			
 			model = new ConvValutarModel(xmlInfoBnr);
 			loader.next();
-			model.addModelListener(view);
+			model.addModelListener(window);
 			loader.next();
 			@SuppressWarnings("unused")
-			ConvValutarController controller = new ConvValutarController(model,view);
+			ConvValutarController controller = new ConvValutarController(model,window);
 			loader.next();
-			view.update(model, null);
+			window.update(model, null);
 			loader.next();
 			
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-
-					MainFrame frame = (MainFrame) view;
-
-					selectDefaultsInJLists(frame);
-					setFrameDefaults(frame);
-
+					selectDefaultsInJLists(window);
+					
+					window.getFrame().setVisible(true);
 				}
 
-				private void selectDefaultsInJLists(MainFrame frame) {
-					frame.selectCurrencyInFromList("EUR");
-					frame.selectCurrencyInToList("RON");
-				}
-				
-				private void setFrameDefaults(MainFrame frame) {
-					frame.setDefaultCloseOperation(MainFrame.EXIT_ON_CLOSE);
-					frame.setTitle("Convertor Valutar");
-					frame.getContentPane().setPreferredSize(frame.getSize());
-					frame.pack();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
+				private void selectDefaultsInJLists(MainFrame window) {
+					window.selectCurrencyInFromList("EUR");
+					window.selectCurrencyInToList("RON");
 				}
 
 
 			});
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.exit(0);
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.exit(0);
 		} catch (IOException e) {
@@ -100,6 +88,29 @@ public class Main {
 		
 
 	}
-
+	
+	private static void setLookAndFeel() {
+		try {
+			EventQueue.invokeAndWait(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+					    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+					        if ("Nimbus".equals(info.getName())) {
+					            UIManager.setLookAndFeel(info.getClassName());
+					            break;
+					        }
+					    }
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+	}
 
 }

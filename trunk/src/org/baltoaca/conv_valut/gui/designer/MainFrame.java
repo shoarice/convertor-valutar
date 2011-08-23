@@ -3,8 +3,8 @@ package org.baltoaca.conv_valut.gui.designer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -21,6 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
@@ -39,9 +40,9 @@ public class MainFrame implements ModelListener{
 	private JLabel lblData;
 	private JList lsTo;
 	private JList lsFrom;
-	private JMenuItem mntmIesire;
-	private JMenuItem mntmGhidUtilizare;
-	private JMenuItem mntmDespre;
+	private JMenuItem mntmExit;
+	private JMenuItem mntmGuide;
+	private JMenuItem mntmAbout;
 	private JButton btnReverse;
 	private JLabel lblResult;
 	private JLabel lblResultPlusTva;
@@ -53,43 +54,58 @@ public class MainFrame implements ModelListener{
 
 	private boolean listsNeedToBeUpdated = true;
 	private static final int NR_OF_FRACTION_DIGITS = 2;
-	NumberFormat numberFormat = NumberFormat.getInstance(new Locale("en"));
-	NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
+	private NumberFormatter numberFormatter;
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					MainFrame window = new MainFrame();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		new MainFrame();
 	}
 
 	/**
 	 * Create the application.
 	 */
 	public MainFrame() {
+		numberFormatter = initFormatter();
+		
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					initialize();
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.exit(0);
+				}
+			}
+		});
+		
+	}
+
+	private NumberFormatter initFormatter() {
+		NumberFormat numberFormat = NumberFormat.getInstance(new Locale("en"));
 		numberFormat.setMaximumFractionDigits(NR_OF_FRACTION_DIGITS);
 		numberFormat.setMinimumFractionDigits(0);
+		numberFormat.setGroupingUsed(false);
+		
+		NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
 		numberFormatter.setCommitsOnValidEdit(true);
-		initialize();
+		numberFormatter.setMinimum(new Double(0));
+		numberFormatter.setAllowsInvalid(false);
+		
+		return numberFormatter;
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() {		
 		frame = new JFrame();
 		frame.setTitle("Convertor Valutar");
 		frame.setBounds(100, 100, 939, 392);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -98,9 +114,9 @@ public class MainFrame implements ModelListener{
 		mnFile.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(mnFile);
 		
-		mntmIesire = new JMenuItem("Ie\u015Fire");
-		mntmIesire.setMnemonic(KeyEvent.VK_I);
-		mnFile.add(mntmIesire);
+		mntmExit = new JMenuItem("Ie\u015Fire");
+		mntmExit.setMnemonic(KeyEvent.VK_I);
+		mnFile.add(mntmExit);
 		
 		JMenu mnOptiuni = new JMenu("Op\u0163iuni");
 		mnOptiuni.setMnemonic(KeyEvent.VK_O);
@@ -110,13 +126,13 @@ public class MainFrame implements ModelListener{
 		mnAjutor.setMnemonic(KeyEvent.VK_A);
 		menuBar.add(mnAjutor);
 		
-		mntmGhidUtilizare = new JMenuItem("Ghid utilizare");
-		mntmGhidUtilizare.setMnemonic(KeyEvent.VK_G);
-		mnAjutor.add(mntmGhidUtilizare);
+		mntmGuide = new JMenuItem("Ghid utilizare");
+		mntmGuide.setMnemonic(KeyEvent.VK_G);
+		mnAjutor.add(mntmGuide);
 		
-		mntmDespre = new JMenuItem("Despre");
-		mntmDespre.setMnemonic(KeyEvent.VK_D);
-		mnAjutor.add(mntmDespre);
+		mntmAbout = new JMenuItem("Despre");
+		mntmAbout.setMnemonic(KeyEvent.VK_D);
+		mnAjutor.add(mntmAbout);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -126,11 +142,13 @@ public class MainFrame implements ModelListener{
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		lblData = new JLabel("14 August 2011");
+		lblData.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblData);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBorder(new TitledBorder(null, "Schimb\u0103", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
-		scrollPane.setBounds(25, 89, 228, 184);
+		scrollPane.setBounds(25, 89, 230, 184);
 		frame.getContentPane().add(scrollPane);
 		
 		lsFrom = new JList();
@@ -138,8 +156,9 @@ public class MainFrame implements ModelListener{
 		lsFrom.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane_1.setBorder(new TitledBorder(null, "\u00EEn", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
-		scrollPane_1.setBounds(267, 90, 228, 184);
+		scrollPane_1.setBounds(267, 90, 230, 184);
 		frame.getContentPane().add(scrollPane_1);
 		
 		lsTo = new JList();
@@ -165,7 +184,7 @@ public class MainFrame implements ModelListener{
 		
 		btnReverse = new JButton("Inverseaz\u0103");
 		btnReverse.setMnemonic(KeyEvent.VK_S);
-		btnReverse.setBounds(220, 285, 90, 28);
+		btnReverse.setBounds(215, 285, 102, 28);
 		frame.getContentPane().add(btnReverse);
 		
 		lblTva = new JLabel("tva");
@@ -209,19 +228,20 @@ public class MainFrame implements ModelListener{
 		lblToCurrency.setBounds(853, 298, 55, 16);
 		frame.getContentPane().add(lblToCurrency);
 		
-		txtSum = new JFormattedTextField();
+		txtSum = new JFormattedTextField(numberFormatter);
 		txtSum.setHorizontalAlignment(SwingConstants.CENTER);
-		txtSum.setText("1");
+		txtSum.setValue(new Double(1));
 		txtSum.setBounds(723, 59, 105, 28);
 		txtSum.addFocusListener(new FormattedTextFieldFocusListener());
 		frame.getContentPane().add(txtSum);
 		
-		txtRate = new JFormattedTextField();
+		txtRate = new JFormattedTextField(numberFormatter);
 		txtRate.setHorizontalAlignment(SwingConstants.CENTER);
-		txtRate.setText("0");
+		txtRate.setValue(new Double(0));
 		txtRate.setBounds(723, 105, 105, 28);
 		txtRate.addFocusListener(new FormattedTextFieldFocusListener());
 		frame.getContentPane().add(txtRate);
+		
 	}
 
 	@Override
@@ -277,11 +297,11 @@ public class MainFrame implements ModelListener{
 		HashMap<String, String> map = new HashMap<String, String>();
 		
 		map.put("lbResultText",
-				String.valueOf(numberFormat.format(myModel.getResult())));
+				String.valueOf(numberFormatter.getFormat().format(myModel.getResult())));
 		map.put("lbVatText",
-				String.valueOf(numberFormat.format(myModel.getVat())));
+				String.valueOf(numberFormatter.getFormat().format(myModel.getVat())));
 		map.put("lbResultAndVatText",
-				String.valueOf(numberFormat.format(myModel.getResultAndVat())));
+				String.valueOf(numberFormatter.getFormat().format(myModel.getResultAndVat())));
 		map.put("lbFromCurrencyText", myModel.getFromCurrencyLabel());
 		map.put("lbToCurrencyText", myModel.getToCurrencyLabel());
 		
@@ -298,7 +318,7 @@ public class MainFrame implements ModelListener{
 	}
 	
 	private void selectCurrencyInListAndScroll(String currencyShortName,JList list){
-		boolean shouldScroll = true;
+		boolean shouldScroll = false;
 		list.setSelectedValue(new Currency(currencyShortName), shouldScroll);
 	}
 	
@@ -311,7 +331,7 @@ public class MainFrame implements ModelListener{
 	 * @author VlaD
 	 * 
 	 */
-	private class FormattedTextFieldFocusListener implements FocusListener {
+	private class FormattedTextFieldFocusListener extends FocusAdapter{
 
 		@Override
 		public void focusGained(final FocusEvent e) {
@@ -325,11 +345,6 @@ public class MainFrame implements ModelListener{
 			});
 
 		}
-
-		@Override
-		public void focusLost(FocusEvent e) {
-		}
-
 	}
 	
 	public JFrame getFrame() {
@@ -356,19 +371,19 @@ public class MainFrame implements ModelListener{
 		return txtRate;
 	}
 
-	public JMenuItem getMntmIesire() {
-		return mntmIesire;
+	public JMenuItem getMntmExit() {
+		return mntmExit;
 	}
 
-	public JMenuItem getMntmGhidUtilizare() {
-		return mntmGhidUtilizare;
+	public JMenuItem getMntmGuide() {
+		return mntmGuide;
 	}
 
-	public JMenuItem getMntmDespre() {
-		return mntmDespre;
+	public JMenuItem getMntmAbout() {
+		return mntmAbout;
 	}
 
-	public JButton getBtnReverse() {
+	public JButton getBtnSwitch() {
 		return btnReverse;
 	}
 
