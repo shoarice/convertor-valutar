@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Convertor valutar" default="jar">
+
+	<property name="src" value="src"/>
+	<property name="build" value="build"/>
+	<property name="dist" value="dist"/>
+	<property name="jar" value="Convertor valutar.jar"/>
+	
+	<target name="jar" depends="build">
+		
+	</target>
+	
+	<target name="build">
+		<mkdir dir="${build}"/>
+		
+		<javac srcdir="${src}" destdir="${build}" includeantruntime="false">
+			<include name="**/*.java"/>
+			<exclude name="**/test/**/*.java"/>
+			<exclude name="**/gui/MainFrame.java"/>
+		</javac>
+	</target>
+</project>
