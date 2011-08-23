@@ -88,13 +88,13 @@ public class Main {
 	
 	private static void setLookAndFeel() {
 		try {
-			EventQueue.invokeAndWait(new Runnable() {
+			EventQueue.invokeLater(new Runnable() {
 				
 				@Override
 				public void run() {
 					try {
 					    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-					        if ("Nimbus".equals(info.getName())) {
+					        if ("Metal".equals(info.getName())) {
 					            UIManager.setLookAndFeel(info.getClassName());
 					            break;
 					        }
