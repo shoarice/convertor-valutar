@@ -11,7 +11,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.baltoaca.conv_valut.computer.Currency;
-import org.baltoaca.conv_valut.gui.MainFrame;
+import org.baltoaca.conv_valut.gui.designer.MainFrame;
 
 public class ConvValutarController extends Controller {
 
@@ -26,7 +26,7 @@ public class ConvValutarController extends Controller {
 		// *************** JFormattedTextField`s *******************
 
 		// tfSum
-		myView.getTfSum().addPropertyChangeListener("value",
+		myView.getTxtSum().addPropertyChangeListener("value",
 				new PropertyChangeListener() {
 
 					@Override
@@ -37,7 +37,7 @@ public class ConvValutarController extends Controller {
 				});
 
 		// tfConvRate
-		myView.getTfConvRate().addPropertyChangeListener("value",
+		myView.getTxtRate().addPropertyChangeListener("value",
 				new PropertyChangeListener() {
 
 					@Override
@@ -104,7 +104,7 @@ public class ConvValutarController extends Controller {
 		});
 
 		// buttons
-		myView.getBtSwitch().addActionListener(new ActionListener() {
+		myView.getBtnSwitch().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -118,7 +118,7 @@ public class ConvValutarController extends Controller {
 					@Override
 					public void run() {
 						;
-						myView.getTfConvRate().setValue(new Double(0));
+						myView.getTxtRate().setValue(new Double(0));
 
 					}
 				});
@@ -146,7 +146,7 @@ public class ConvValutarController extends Controller {
 		});
 
 		// Menus
-		myView.getMnItemExit().addActionListener(new ActionListener() {
+		myView.getMntmExit().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -161,7 +161,7 @@ public class ConvValutarController extends Controller {
 	// model
 	private void updateModel() {
 
-		if ((((Number) myView.getTfSum().getValue()).doubleValue() == 0.0)
+		if ((((Number) myView.getTxtSum().getValue()).doubleValue() == 0.0)
 				|| (myView.getLsFrom().getSelectedIndex() == -1)
 				|| (myView.getLsTo().getSelectedIndex() == -1)) {
 			myModel.setResult(0);
@@ -180,15 +180,15 @@ public class ConvValutarController extends Controller {
 		double rate = 0;
 		double result = 0;
 
-		if (((Number) myView.getTfConvRate().getValue()).doubleValue() == 0) {
+		if (((Number) myView.getTxtRate().getValue()).doubleValue() == 0) {
 			rate = ((Currency) myView.getLsFrom().getSelectedValue()).getRate()
 					/ ((Currency) myView.getLsTo().getSelectedValue())
 							.getRate();
 		} else { // use specified convRate
-			rate = ((Number) myView.getTfConvRate().getValue()).doubleValue();
+			rate = ((Number) myView.getTxtRate().getValue()).doubleValue();
 		}
 
-		result = ((Number) myView.getTfSum().getValue()).doubleValue() * rate;
+		result = ((Number) myView.getTxtSum().getValue()).doubleValue() * rate;
 		return result;
 	}
 
