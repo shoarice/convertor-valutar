@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.baltoaca.conv_valut.computer.Currency;
-import org.baltoaca.conv_valut.gui.MainFrame;
+import org.baltoaca.conv_valut.gui.designer.MainFrame;
 import org.baltoaca.conv_valut.mvc.ConvValutarController;
 import org.baltoaca.conv_valut.mvc.ConvValutarModel;
 import org.baltoaca.conv_valut.mvc.ModelListener;
@@ -25,7 +25,7 @@ import org.xml.sax.SAXException;
 public class TestInputOutput {
 
 	private final static ModelListener view = new MainFrame();
-	private static MainFrame frame;
+	private static MainFrame window;
 	
 	private static ConvValutarModel model;
 	private static XmlInfoBnr xmlInfoBnr;
@@ -76,28 +76,22 @@ public class TestInputOutput {
 	
 
 	private static void startGUI() {
-		MainFrame.installLnF();
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 
-				frame = (MainFrame) view;
+				window = (MainFrame) view;
 
 				selectEurAndRon();
-				
-				frame.setDefaultCloseOperation(MainFrame.EXIT_ON_CLOSE);
-				frame.setTitle("Convertor Valutar");
-				frame.getContentPane().setPreferredSize(frame.getSize());
-				frame.pack();
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
+
+				window.getFrame().setVisible(true);
 
 			}
 			
 			public void selectEurAndRon() {
-				frame.selectCurrencyInFromList("EUR");
-				frame.selectCurrencyInToList("RON");
+				window.selectCurrencyInFromList("EUR");
+				window.selectCurrencyInToList("RON");
 			}
 
 
@@ -114,8 +108,8 @@ public class TestInputOutput {
 
 	@Before
 	public void selectEurAndRon() {
-		frame.selectCurrencyInFromList("EUR");
-		frame.selectCurrencyInToList("RON");
+		window.selectCurrencyInFromList("EUR");
+		window.selectCurrencyInToList("RON");
 	}
 	
 	@Test
@@ -124,11 +118,11 @@ public class TestInputOutput {
 		Currency[] currencySet = xmlInfoBnr.getCurrenciesArray();
 		
 		for (Currency currency : currencySet) {
-			frame.selectCurrencyInFromList(currency.getShortName());
+			window.selectCurrencyInFromList(currency.getShortName());
 			waitABit();
 			result = currency.getRate();
 			
-			assertEquals(result,Double.parseDouble(frame.getLbResult().getText()),0.01);
+			assertEquals(result,Double.parseDouble(window.getLblResult().getText()),0.01);
 		}
 		
 	}
@@ -137,10 +131,10 @@ public class TestInputOutput {
 	public void testLabelAllCurrenciesToBaseCurrency() throws InterruptedException{
 		
 		for (Currency currency : currencyArray) {
-			frame.selectCurrencyInFromList(currency.getShortName());
+			window.selectCurrencyInFromList(currency.getShortName());
 			waitABit();
 			
-			assertEquals(currency.getShortName(),frame.getLbFromCurrency().getText());
+			assertEquals(currency.getShortName(),window.getLblFromCurrency().getText());
 		}
 		
 	}
@@ -151,11 +145,11 @@ public class TestInputOutput {
 		Double result = 0.0;
 		
 		for (Currency currency : currencyArray) {
-			frame.selectCurrencyInFromList(currency.getShortName());
+			window.selectCurrencyInFromList(currency.getShortName());
 			waitABit();
 			result = currency.getRate()*(1+ConvValutarModel.VAT);
 			
-			assertEquals(result,Double.parseDouble(frame.getLbResultAndVat().getText()),0.01);
+			assertEquals(result,Double.parseDouble(window.getLblResultPlusTva().getText()),0.01);
 		}
 }
 
@@ -166,11 +160,11 @@ public class TestInputOutput {
 		Double result = 0.0;
 		
 		for (Currency currency : currencyArray) {
-			frame.selectCurrencyInFromList(currency.getShortName());
+			window.selectCurrencyInFromList(currency.getShortName());
 			waitABit();
 			result = currency.getRate()*ConvValutarModel.VAT;
 			
-			assertEquals(result,Double.parseDouble(frame.getLbVat().getText()),0.01);
+			assertEquals(result,Double.parseDouble(window.getLblTva().getText()),0.01);
 		}
 	}
 	
