@@ -42,13 +42,13 @@ public class XmlInfoBnr extends XmlInformation {
 		
 	}
 
+	private void refreshDate(Document doc) {
+		date = readDate(doc);
+	}
+
 	private void refreshCurrencies(Document doc) {
 		currencies.clear();
 		readCurrencies(doc);
-	}
-
-	private void refreshDate(Document doc) {
-		date = readDate(doc);
 	}
 
 	/**
