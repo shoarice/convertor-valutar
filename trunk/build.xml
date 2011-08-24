@@ -2,48 +2,57 @@
 
 <project name="Convertor valutar" default="dist">
 
-	<property name="src" value="src"/>
-	<property name="build" value="build"/>
-	<property name="dist" value="dist-${today}-${tstamp}"/>
-	<property name="jar" value="${ant.project.name}.jar"/>
-	
-	<target name="dist" depends="init,clean,build,jar">
-		<zip destfile="${dist}/${ant.project.name}.zip" file="${dist}/${jar}"/>
+	<target name="dist" depends="clean,init,build,jar,cleanup">
+		<zip destfile="${dist}/${ant.project.name}.zip" basedir="${dist}" level="9"/>
 	</target>
-	
+
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="${basedir}">
+				<include name="dist*/"/>
+				<include name="${build}/"/>
+			</fileset>
+		</delete>
+	</target>
+
 	<target name="init">
-		<tstamp/>
-		<mkdir dir="${dist}"/>
+		<tstamp>
+			<format property="time" pattern="dMMyyyy-HH-mm"/>
+		</tstamp>
+		<property name="src" value="src" />
+		<property name="build" value="build" />
+		<property name="dist" value="dist-${time}" />
+		<property name="jar" value="${ant.project.name}.jar" />
+
+		<mkdir dir="${dist}" />
 		<mkdir dir="${build}"/>
 	</target>
-	
-	<target name="clean">
-		<delete dir="${basedir}" includeemptydirs="true">
-			<include name="${dist}"/>
-			<include name="${build}"/>
-		</delete>	
-	</target>
-	
+
 	<target name="build">
-		
+
 		<javac sourcepath="" srcdir="${src}" destdir="${build}" includeantruntime="false">
 			<include name="**/*.java"/>
 			<exclude name="**/gui/MainFrame.java"/>
 			<exclude name="**/test/**"/>
 		</javac>
-		
+
 		<copy todir="${build}" file="res/fullCurrNames.xml"/>
 	</target>
-	
+
 	<target name="jar" >
 		<jar destfile="${dist}/${jar}" manifest="${src}/org/baltoaca/conv_valut/manifest.mf">
-			
+
 			<fileset dir="${build}">
-    			<exclude name="**/test"/>
+				<exclude name="**/test"/>
 			</fileset>
 
-		</jar>	
+		</jar>
 	</target>
 	
+	<target name="cleanup">
+		<delete dir="${build}" includeemptydirs="true"/>
+	</target>
+	
+
 
 </project>
