@@ -4,15 +4,28 @@
 
 	<property name="src" value="src"/>
 	<property name="build" value="build"/>
-	<property name="dist" value="dist"/>
-	<property name="jar" value="Convertor valutar.jar"/>
+	<property name="dist" value="dist-${today}-${tstamp}"/>
+	<property name="jar" value="${ant.project.name}.jar"/>
 	
-	<target name="dist" depends="clean,build,jar">
+	<target name="dist" depends="init,clean,build,jar">
+		<zip destfile="${dist}/${ant.project.name}.zip" file="${dist}/${jar}"/>
+	</target>
 	
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${dist}"/>
+		<mkdir dir="${build}"/>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${basedir}" includeemptydirs="true">
+			<include name="${dist}"/>
+			<include name="${build}"/>
+		</delete>	
 	</target>
 	
 	<target name="build">
-		<mkdir dir="${build}"/>
+		
 		<javac sourcepath="" srcdir="${src}" destdir="${build}" includeantruntime="false">
 			<include name="**/*.java"/>
 			<exclude name="**/gui/MainFrame.java"/>
@@ -23,7 +36,7 @@
 	</target>
 	
 	<target name="jar" >
-		<jar destfile="${jar}" manifest="${src}/org/baltoaca/conv_valut/manifest.mf">
+		<jar destfile="${dist}/${jar}" manifest="${src}/org/baltoaca/conv_valut/manifest.mf">
 			
 			<fileset dir="${build}">
     			<exclude name="**/test"/>
@@ -32,7 +45,5 @@
 		</jar>	
 	</target>
 	
-	<target name="clean">
-	</target>
 
 </project>
