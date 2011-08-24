@@ -103,7 +103,8 @@ public class ConvValutarController extends Controller {
 			}
 		});
 
-		// buttons
+		// *************** Button's *******************
+		
 		myView.getBtnSwitch().addActionListener(new ActionListener() {
 
 			@Override
@@ -117,7 +118,7 @@ public class ConvValutarController extends Controller {
 
 					@Override
 					public void run() {
-						;
+						
 						myView.getTxtRate().setValue(new Double(0));
 
 					}
@@ -145,7 +146,8 @@ public class ConvValutarController extends Controller {
 			}
 		});
 
-		// Menus
+		// *************** Menu`s *******************
+		
 		myView.getMntmExit().addActionListener(new ActionListener() {
 
 			@Override
