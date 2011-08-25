@@ -23,12 +23,30 @@ public class XmlInfoBnr extends XmlInformation {
 
 	private XmlSource currencyFullNameSource;
 
-	public XmlInfoBnr(XmlSource origin) throws ParserConfigurationException, SAXException, IOException {
+	public XmlInfoBnr(XmlSource origin) throws IOException {
 		super(origin);
 		currencyFullNameSource = new XmlSource(getClass().getClassLoader().getResource("fullCurrNames.xml"),
 				"ISO4217");
 		currencies = new TreeSet<Currency>(new CurrencyBnrComparator());
-		refreshData();
+		try {
+			refreshData();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+			fillWithDefaultData();
+		} catch (SAXException e) {
+			e.printStackTrace();
+			fillWithDefaultData();
+		}
+	}
+	
+	private void fillWithDefaultData(){
+		currencies.clear();
+		Currency eur = new Currency("EUR", "", 4d);
+		
+		currencies.add(eur);
+		addBaseCurrencyIfNeeded();
+		
+		date = Calendar.getInstance();
 	}
 
 	@Override

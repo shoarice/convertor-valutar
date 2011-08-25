@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.baltoaca.conv_valut.gui.Loader;
 import org.baltoaca.conv_valut.gui.designer.MainFrame;
@@ -18,7 +17,6 @@ import org.baltoaca.conv_valut.mvc.ConvValutarController;
 import org.baltoaca.conv_valut.mvc.ConvValutarModel;
 import org.baltoaca.conv_valut.xml.XmlInfoBnr;
 import org.baltoaca.conv_valut.xml.XmlSource;
-import org.xml.sax.SAXException;
 
 public class Main {
 
@@ -70,12 +68,6 @@ public class Main {
 
 
 			});
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-			System.exit(0);
-		} catch (SAXException e) {
-			e.printStackTrace();
-			System.exit(0);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null,"Nu s-a reusit stabilirea unei conexiuni la server:\n"+xmlSource,"Eroare",JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
