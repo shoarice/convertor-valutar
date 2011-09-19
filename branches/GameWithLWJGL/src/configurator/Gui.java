@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,7 +29,6 @@ public class Gui implements ConfigListener{
 	private JButton btnSave;
 	private JButton btnExit;
 
-	private static int i = 0;
 	/**
 	 * Launch the application.
 	 */
@@ -148,6 +148,24 @@ public class Gui implements ConfigListener{
 		});
 		frame.getContentPane().add(btnExit);
 		
+		JButton btnPlay = new JButton("Play");
+		btnPlay.setBounds(359, 194, 65, 23);
+		btnPlay.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Runtime.getRuntime()
+							.exec("java -classpath bin;../../libs/lwjgl-2.7.1/jar/lwjgl.jar -Djava.library.path=../../libs/lwjgl-2.7.1/native/windows game.Main");
+					model.saveInfo(false);
+					frame.dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		frame.getContentPane().add(btnPlay);
+		
 		frame.addWindowListener(new WindowAdapter() {
 			
 			@Override
@@ -166,7 +184,6 @@ public class Gui implements ConfigListener{
 
 	@Override
 	public void update(ConfigModel model) {
-		System.out.println("updated: " + ++i);
 
 		if(list.getModel().getSize() == 0)
 			list.setListData(model.getDisplayModes());
@@ -175,6 +192,7 @@ public class Gui implements ConfigListener{
 		tglbtnVsync.setSelected(model.isVsync());
 		
 		list.setSelectedIndex(model.getSelectedDisplayMode());
+		//list.setSelectedValue(model.getDisplayModes()[model.getSelectedDisplayMode()], true);
 		list.ensureIndexIsVisible(model.getSelectedDisplayMode());
 		
 	}
