@@ -30,7 +30,6 @@ public class ConfigModel implements Serializable {
 	public ConfigModel() {
 		try {
 			displayModes = Display.getAvailableDisplayModes();
-			selectedDisplayMode = findDisplayMode(Display.getDisplayMode());
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
@@ -40,11 +39,11 @@ public class ConfigModel implements Serializable {
 		loadInfo();
 	}
 
-	public int getSelectedDisplayMode() {
+	public int getSelectedDisplayModeIndex() {
 		return selectedDisplayMode;
 	}
 
-	public void setSelectedDisplayMode(int selectedDisplayMode) {
+	public void setSelectedDisplayModeIndex(int selectedDisplayMode) {
 		if (selectedDisplayMode < displayModes.length) {
 			this.selectedDisplayMode = selectedDisplayMode;
 		}
@@ -72,6 +71,10 @@ public class ConfigModel implements Serializable {
 
 	public DisplayMode[] getDisplayModes() {
 		return displayModes;
+	}
+
+	public DisplayMode getSelectedDisplayMode(){
+		return displayModes[selectedDisplayMode];
 	}
 
 	public void saveInfo(boolean b) {
@@ -123,12 +126,14 @@ public class ConfigModel implements Serializable {
 	private void loadInfo() {
 		Properties prop = new Properties();
 
+		FileInputStream fileInputStream = null;
 		try {
-			prop.loadFromXML(new FileInputStream(FILE));
+			fileInputStream = new FileInputStream(FILE);
+			prop.loadFromXML(fileInputStream);
 
 			fullscreen = Boolean.parseBoolean(prop.getProperty("fullscreen",
 					"false"));
-			vsync = Boolean.parseBoolean(prop.getProperty("vsync", "true"));
+			vsync = Boolean.parseBoolean(prop.getProperty("vsync", "false"));
 
 			int width = Integer.parseInt(prop.getProperty("width", "0"));
 			int height = Integer.parseInt(prop.getProperty("height", "0"));
@@ -144,7 +149,21 @@ public class ConfigModel implements Serializable {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}finally{
+			
+			if(selectedDisplayMode == -1){
+				selectedDisplayMode = findDisplayMode(Display.getDisplayMode());
+			}
+
+			if(fileInputStream != null)
+				try {
+					fileInputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 		}
+		
+			
 	}
 
 	private int findDisplayMode(DisplayMode displayMode) {
