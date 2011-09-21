@@ -95,7 +95,7 @@ public class Gui implements ConfigListener{
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				if(!arg0.getValueIsAdjusting())
-					model.setSelectedDisplayModeIndex(arg0.getFirstIndex());
+					model.setSelectedDisplayModeIndex(list.getSelectedIndex());
 			}
 		});
 		
