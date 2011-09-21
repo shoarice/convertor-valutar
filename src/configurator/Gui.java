@@ -8,9 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -31,7 +29,6 @@ public class Gui implements ConfigListener{
 	private JToggleButton tglbtnFullscreen;
 	private JButton btnSave;
 	private JButton btnExit;
-	private ScheduledExecutorService newScheduledThreadPool;
 
 	/**
 	 * Launch the application.
@@ -54,7 +51,6 @@ public class Gui implements ConfigListener{
 	 * Create the application.
 	 */
 	public Gui() {
-		newScheduledThreadPool = Executors.newScheduledThreadPool(1);
 
 		initialize();
 		setLocation();
@@ -193,20 +189,21 @@ public class Gui implements ConfigListener{
 	@Override
 	public void update(final ConfigModel model) {
 
-		if(list.getModel().getSize() == 0)
-			list.setListData(model.getDisplayModes());
-
-		tglbtnFullscreen.setSelected(model.isFullscreen());
-		tglbtnVsync.setSelected(model.isVsync());
-		
-		list.setSelectedIndex(model.getSelectedDisplayModeIndex());
-		newScheduledThreadPool.schedule(new Runnable() {
+		SwingUtilities.invokeLater(new Runnable() {
 			
 			@Override
 			public void run() {
+				if(list.getModel().getSize() == 0)
+					list.setListData(model.getDisplayModes());
+
+				tglbtnFullscreen.setSelected(model.isFullscreen());
+				tglbtnVsync.setSelected(model.isVsync());
+				
+				list.setSelectedIndex(model.getSelectedDisplayModeIndex());
 				list.ensureIndexIsVisible(model.getSelectedDisplayModeIndex());				
 			}
-		}, 500, TimeUnit.MILLISECONDS);
+		});
+		
 		
 	}
 }
