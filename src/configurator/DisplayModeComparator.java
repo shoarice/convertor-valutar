@@ -22,7 +22,7 @@ public class DisplayModeComparator implements Comparator<DisplayMode> {
 			return 1;
 		else if(displayMode1.getFrequency() < displayMode2.getFrequency())
 			return -1;
-		else if(displayMode1.getFrequency() < displayMode2.getFrequency())
+		else if(displayMode1.getFrequency() > displayMode2.getFrequency())
 			return 1;
 		else
 			return 0;
