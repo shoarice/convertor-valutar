@@ -14,7 +14,7 @@ public class DisplayModeComparator implements Comparator<DisplayMode> {
 			return 1;
 		else if(displayMode1.getHeight() < displayMode2.getHeight())
 			return -1;
-		else if(displayMode1.getHeight() < displayMode2.getHeight())
+		else if(displayMode1.getHeight() > displayMode2.getHeight())
 			return 1;
 		else if(displayMode1.getBitsPerPixel() < displayMode2.getBitsPerPixel())
 			return -1;
