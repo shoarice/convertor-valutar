@@ -10,6 +10,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.PixelFormat;
 
 public class GameLoop extends Thread {
 
@@ -44,7 +45,8 @@ public class GameLoop extends Thread {
 			Display.setFullscreen(game.getGameSettings().getFullscreen());
 			Display.setVSyncEnabled(game.getGameSettings().getVsync());
 
-			Display.create();
+			PixelFormat pixelFormat = new PixelFormat().withStencilBits(8);
+			Display.create(pixelFormat);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
@@ -104,41 +106,152 @@ public class GameLoop extends Thread {
 		//glEnable(GL_LINE_STIPPLE);
 		//glLineStipple(5, (short) 0xaaaa);
 		glShadeModel(GL_FLAT);
+		glClearStencil(0);
+		glEnable(GL_STENCIL_TEST);
 		
 	}
 
 	private void render() {
 		// Clear the screen and depth buffer
 		glClearColor(0f, 0f, 0f, 1f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
+		glPushMatrix();
+		glRotatef(xRot, 1f, 0f, 0f);
+		glRotatef(yRot, 0f, 1f, 0f);
+		glRotatef(zRot, 0f, 0f, 1f);
 		/*
 		 * if (rand.nextBoolean() && rand.nextBoolean())
 		 * glColor3f(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
 		 * 
 		 * glRectf(x1, y1,x2, y2);
 		 */
-
-		glPushMatrix();
-		glRotatef(xRot, 1f, 0f, 0f);
-		glRotatef(yRot, 0f, 1f, 0f);
-		glRotatef(zRot, 0f, 0f, 1f);
-
+		//glEnable(GL_CULL_FACE);
+		//glDisable(GL_CULL_FACE);
+		//glEnable(GL_DEPTH_TEST);
+		//glDisable(GL_DEPTH_TEST);
+		//glPolygonMode(GL_BACK, GL_LINE);
+		//glPolygonMode(GL_FRONT, GL_FILL);
+		
+		//drawUsingStencilBuffer();
+		//drawStar(); // some prbls
 		//drawCone();
 		//drawSpokedWheel();
-		// drawLines1();
-		// drawSpiral();
+		//drawLines1();
+		//drawSpiral();
 
 		glPopMatrix();
 	}
 
+	private void drawUsingStencilBuffer() {
+		glStencilFunc(GL_NEVER, 0x0, 0x0);
+		glStencilOp(GL_INCR, GL_INCR, GL_INCR);
+
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glBegin(GL_LINE_STRIP);
+		float dRadius = 1f;
+		for (float dAngle = 0; dAngle < 400.0; dAngle += 0.1) {
+			glVertex2d(dRadius * Math.cos(dAngle), dRadius * Math.sin(dAngle));
+			dRadius *= 1.002;
+		}
+		glEnd();
+		
+		glStencilFunc(GL_NOTEQUAL, 0x1, 0x1);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+		
+		glColor3f(1f, 0f, 0f);
+		glRectf(0f, 0f, 80f, 80f);
+	}
+
+	private void drawStar() {
+		float baseSize = 10f;
+		float baseHeight = 20f;
+		// Begin the triangles
+		glBegin(GL_TRIANGLES);
+		
+			glColor3f(0f, 1f, 0f);
+			
+			glVertex2f(baseSize, baseSize);
+			glVertex2f(-baseSize, -baseSize);
+			glVertex2f(-baseSize, baseSize);
+			
+			glVertex2f(baseSize, baseSize);
+			glVertex2f(baseSize, -baseSize);
+			glVertex2f(-baseSize, -baseSize);
+			
+			glVertex2f(baseSize, baseSize);
+			glVertex2f(-baseSize, baseSize);
+			glVertex2f(0f, 90f);
+			
+			glVertex2f(baseSize, baseSize);
+			glVertex2f(90f, 0f);
+			glVertex2f(baseSize, -baseSize);
+			
+			glVertex2f(baseSize, -baseSize);
+			glVertex2f(0f, -90f);
+			glVertex2f(-baseSize, -baseSize);
+			
+			glVertex2f(-baseSize, -baseSize);
+			glVertex2f(-90f, 0f);
+			glVertex2f(-baseSize, baseSize);
+			
+						
+			glVertex3f(0f, 0f, baseHeight);
+			glVertex3f(-baseSize, baseSize, 0f);
+			glVertex3f(-90f, 0f, 0f);
+			
+			
+			glColor3f(1f, 0f, 0f);
+			
+			glVertex3f(0f, 0f, baseHeight);
+			glVertex3f(-90f, 0f, 0f);
+			glVertex3f(-baseSize, -baseSize, 0f);
+			
+			
+			glColor3f(0f, 1f, 0f);
+			
+			glVertex3f(0f, 0f, baseHeight);
+			glVertex3f(-baseSize, -baseSize, 0f);
+			glVertex3f(0f, -90f, 0f);
+			
+			
+			glColor3f(1f, 0f, 0f);
+
+			glVertex3f(0f, 0f, baseHeight);
+			glVertex3f(0f, -90f, 0f);
+			glVertex3f(baseSize, -baseSize, 0f);
+			
+			
+			glColor3f(0f, 1f, 0f);
+			
+			glVertex3f(0f, 0f, baseHeight);
+			glVertex3f(baseSize, -baseSize, 0f);
+			glVertex3f(90f, 0f, 0f);
+			
+			glColor3f(1f, 0f, 0f);
+			
+			glVertex3f(0f, 0f, baseHeight);
+			glVertex3f(90f, 0f, 0f);
+			glVertex3f(baseSize, baseSize, 0f);
+			
+			glColor3f(0f, 1f, 0f);
+			
+			glVertex3f(0f, 0f, baseHeight);
+			glVertex3f(baseSize, baseSize, 0f);
+			glVertex3f(0f, 90f, 0f);
+			
+			glColor3f(1f, 0f, 0f);
+			
+			glVertex3f(0f, 0f, baseHeight);
+			glVertex3f(0f, 90f, 0f);
+			glVertex3f(-baseSize, baseSize, 0f);
+			
+			
+		glEnd();
+	}
+
 	private void drawCone() {
-		glEnable(GL_CULL_FACE);
-		//glDisable(GL_CULL_FACE);
-		glEnable(GL_DEPTH_TEST);
-		//glDisable(GL_DEPTH_TEST);
-		//glPolygonMode(GL_BACK, GL_LINE);
-		//glPolygonMode(GL_BACK, GL_FILL);
+		
 		
 		float x;
 		float y;
