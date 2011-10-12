@@ -6,19 +6,29 @@ import java.net.Socket;
 
 public class Server {
 	
-	private int port = 49999;
-	private int queueSize = 5;
+	private ServerConfiguration config;
 	private ClientHandler clientHandler;
 	
 	public Server(){
-		port = 49999;
-		queueSize = 5;
+		config = new ServerConfiguration();
 		clientHandler = new DefaultClientHandler();
-		
 	}
 
+	public Server(ClientHandler clientHandler){
+		this.clientHandler = clientHandler;
+	}
+	
+	public Server(ServerConfiguration config){
+		this.config = config;
+	}
+	
+	public Server(ServerConfiguration config, ClientHandler clientHandler){
+		this.config = config;
+		this.clientHandler = clientHandler;
+	}
+	
 	public void startServer() throws IOException{
-		ServerSocket serverSocket = new ServerSocket(port, queueSize);
+		ServerSocket serverSocket = new ServerSocket(config.getPort(), config.getSocketQueueSize());
 		
 		Socket clientSocket = null;
 		while(true){
