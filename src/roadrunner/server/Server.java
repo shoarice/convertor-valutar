@@ -15,10 +15,12 @@ public class Server {
 	}
 
 	public Server(ClientHandler clientHandler){
+		this();
 		this.clientHandler = clientHandler;
 	}
 	
 	public Server(ServerConfiguration config){
+		this();
 		this.config = config;
 	}
 	
