@@ -6,6 +6,7 @@ import java.util.Map;
 
 import roadrunner.server.Server;
 import roadrunner.server.ServerConfiguration;
+import roadrunner.server.logger.Logger;
 
 public class Main {
 
@@ -13,7 +14,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
+		Logger.log = true;
 		ServerConfiguration serverConfiguration = parseArguments(args);
 		try {
 			new Server(serverConfiguration).startServer();
