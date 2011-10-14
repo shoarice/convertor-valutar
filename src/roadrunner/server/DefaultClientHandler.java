@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 public class DefaultClientHandler implements ClientHandler {
 	
 	private ExecutorService executorsPool;
+	private static int id;
 	
 	public DefaultClientHandler(){
 		executorsPool = Executors.newCachedThreadPool();
@@ -14,7 +15,8 @@ public class DefaultClientHandler implements ClientHandler {
 	
 	@Override
 	public void handleClient(Socket clientSocket) {
-		ClientThread clientThread = new ClientThread(clientSocket);
+		
+		ClientThread clientThread = new ClientThread(clientSocket,++id);
 		executorsPool.execute(clientThread);
 	}
 
