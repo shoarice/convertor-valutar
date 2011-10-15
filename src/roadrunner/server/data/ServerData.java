@@ -75,4 +75,20 @@ public class ServerData {
 		
 		topics.get(topicDestination).add(msg);
 	}
+
+	public boolean topicExists(String topic) {
+		return topics.containsKey(topic);
+	}
+
+	public List<String> getTopicMessages(String topic) {
+		List<String> src = topics.get(topic);
+		List<String> msgs = new ArrayList<String>(src.size());
+		
+		synchronized (src) {
+			for(String item: src) 
+				msgs.add(new String(item));		
+		}
+
+		return msgs;
+	}
 }
