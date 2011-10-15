@@ -10,7 +10,7 @@ public class Logger {
 		if(log){
 			StringBuilder sb = logAction(action, id);
 			
-			sb.append(": ");
+			 sb.append(": ");
 			sb.append("***");
 			sb.append(message);
 			sb.append("***");
