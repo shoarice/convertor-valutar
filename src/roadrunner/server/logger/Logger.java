@@ -8,7 +8,7 @@ public class Logger {
 	
 	public static void log(String action, Object message, int id){
 		if(log){
-			StringBuilder sb = logAction(action, id);
+			StringBuilder sb = buildActionLog(action, id);
 			
 			sb.append(": ");
 			sb.append("***");
@@ -20,11 +20,12 @@ public class Logger {
 	}
 
 	public static void log(String action, int id){
-		if(log)
-			logAction(action, id);
+		if(log){
+			System.out.println(buildActionLog(action, id));
+		}
 	}
 
-	private static StringBuilder logAction(String action, int id) {
+	private static StringBuilder buildActionLog(String action, int id) {
 		Calendar calendar = Calendar.getInstance(new Locale("en"));
 		StringBuilder sb = new StringBuilder(calendar.getTime().toString());
 		sb.append("[").append(id).append("]");
