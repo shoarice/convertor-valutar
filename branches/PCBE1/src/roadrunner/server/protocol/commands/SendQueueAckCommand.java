@@ -22,8 +22,8 @@ public class SendQueueAckCommand extends SendAckCommand {
 
 	@Override
 	public Command generateSendMsgCommand(String msg) {
-		// TODO Auto-generated method stub
-		return null;
+		Command command = new SendQueueMsgCommand(destination,msg);
+		return command;
 	}
 	
 	@Override
