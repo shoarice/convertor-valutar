@@ -16,9 +16,13 @@ public class ServerData {
 	private List<String> namesTaken; //numele de clienti ocupate
 	private Map<Integer, String> clients; //asta va contine informatiile despre client (nume, queue etc). momentan doar numele
 	
+	private Map<String,List<String>> topics;
+	
 	private ServerData(){
 		namesTaken = Collections.synchronizedList(new ArrayList<String>());
 		clients = Collections.synchronizedMap(new HashMap<Integer, String>());
+		
+		topics = Collections.synchronizedMap(new HashMap<String, List<String>>());
 	}
 	
 	public void addClient(int id, String name){
@@ -61,5 +65,14 @@ public class ServerData {
 			
 			namesTaken.remove(i);			
 		}
+	}
+
+	public void publishTopicMessage(String topicDestination, String msg) {
+		if(!topics.containsKey(topicDestination)){
+			List<String> list = Collections.synchronizedList(new ArrayList<String>());
+			topics.put(topicDestination, list);
+		}
+		
+		topics.get(topicDestination).add(msg);
 	}
 }
