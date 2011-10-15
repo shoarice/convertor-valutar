@@ -109,7 +109,7 @@ public class Unmarshaller {
 				String client = split[2];
 				command = sendAckCommand = new SendQueueAckCommand(client);
 			}else if(messageType.equalsIgnoreCase("TOPIC")){
-				String topic = split[1];
+				String topic = split[2];
 				command = sendAckCommand = new SendTopicAckCommand(topic);
 			}
 		}
