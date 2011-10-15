@@ -1,6 +1,11 @@
 package roadrunner.server.protocol.commands;
 
+import java.util.List;
+
+import roadrunner.server.data.ServerData;
 import roadrunner.server.protocol.responses.Response;
+import roadrunner.server.protocol.responses.SendTopicResponse;
+import roadrunner.server.protocol.responses.TopicDoesNotExistRepsonse;
 
 public class ReadFromTopicCommand implements Command {
 
@@ -12,7 +17,11 @@ public class ReadFromTopicCommand implements Command {
 
 	@Override
 	public Response execute() {
-		return null;
+		if(ServerData.instance().topicExists(topic)){
+			List<String> msgs = ServerData.instance().getTopicMessages(topic);
+			return new SendTopicResponse(msgs);
+		}else
+			return new TopicDoesNotExistRepsonse(topic);
 	}
 
 	@Override
