@@ -13,7 +13,7 @@ public class ServerData {
 	}
 	
 	
-	private List<String> namesTaken;
+	private List<String> namesTaken; //numele de clienti ocupate
 	private Map<Integer, String> clients; //asta va contine informatiile despre client (nume, queue etc). momentan doar numele
 	
 	private ServerData(){
