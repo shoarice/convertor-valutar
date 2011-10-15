@@ -1,5 +1,6 @@
 package roadrunner.server.protocol.commands;
 
+import roadrunner.server.protocol.responses.OkResponse;
 import roadrunner.server.protocol.responses.Response;
 
 public class SendTopicAckCommand extends SendAckCommand {
@@ -10,14 +11,13 @@ public class SendTopicAckCommand extends SendAckCommand {
 
 	@Override
 	public Response execute() {
-		// TODO Auto-generated method stub
-		return null;
+		success = true;
+		return new OkResponse();
 	}
 
 	@Override
 	public boolean wasExecutedSuccesfully() {
-		// TODO Auto-generated method stub
-		return false;
+		return success;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class SendTopicAckCommand extends SendAckCommand {
 
 	@Override
 	public String toString() {
-		return "Send Topic Ack Command success: " + success;
+		return "Send Topic Ack Command";
 	}
 	
 	

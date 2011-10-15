@@ -3,7 +3,7 @@ package roadrunner.server.protocol.responses;
 public abstract class Response {
 
 	private int code;
-	private String description;
+	protected String description;
 	private boolean closeConnection;
 	
 	public Response(int code, String description){

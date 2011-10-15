@@ -1,5 +1,7 @@
 package roadrunner.server.protocol.commands;
 
+import roadrunner.server.data.ServerData;
+import roadrunner.server.protocol.responses.OkResponse;
 import roadrunner.server.protocol.responses.Response;
 
 public class SendTopicMsgCommand implements Command {
@@ -14,8 +16,13 @@ public class SendTopicMsgCommand implements Command {
 
 	@Override
 	public Response execute() {
-		// TODO Auto-generated method stub
-		return null;
+		ServerData.instance().publishTopicMessage(topicDestination, msg);
+		return new OkResponse();
+	}
+
+	@Override
+	public String toString() {
+		return "Send message topic command: "+ topicDestination +" -> " + msg; 
 	}
 
 }
