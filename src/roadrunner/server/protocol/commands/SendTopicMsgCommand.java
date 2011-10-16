@@ -8,15 +8,17 @@ public class SendTopicMsgCommand implements Command {
 
 	private String msg;
 	private String topicDestination;
+	private int expireTime;
 	
-	public SendTopicMsgCommand(String destination, String msg) {
+	public SendTopicMsgCommand(String destination, String msg, int expireTime) {
 		this.msg = msg;
 		this.topicDestination = destination;
+		this.expireTime = expireTime;
 	}
 
 	@Override
 	public Response execute() {
-		ServerData.instance().publishTopicMessage(topicDestination, msg);
+		ServerData.instance().publishTopicMessage(topicDestination, msg, expireTime);
 		return new OkResponse();
 	}
 

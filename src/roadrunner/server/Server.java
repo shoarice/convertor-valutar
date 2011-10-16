@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import roadrunner.server.data.ServerData;
+
 public class Server {
 	
 	private ServerConfiguration config;
@@ -12,6 +14,7 @@ public class Server {
 	public Server(){
 		config = new ServerConfiguration();
 		clientHandler = new DefaultClientHandler();
+		ServerData.instance().setGlobalTopicExpireTime(config.getGlobalExpireTime());
 	}
 
 	public Server(ClientHandler clientHandler){
@@ -27,6 +30,7 @@ public class Server {
 	public Server(ServerConfiguration config, ClientHandler clientHandler){
 		this.config = config;
 		this.clientHandler = clientHandler;
+		ServerData.instance().setGlobalTopicExpireTime(config.getGlobalExpireTime());
 	}
 	
 	public void startServer() throws IOException{
