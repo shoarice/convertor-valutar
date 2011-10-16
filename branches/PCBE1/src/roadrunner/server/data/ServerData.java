@@ -3,6 +3,7 @@ package roadrunner.server.data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -112,16 +113,20 @@ public class ServerData extends Thread{
 				for (String topicName : topics.keySet()) {
 					List<Message> msgs = topics.get(topicName);
 					
-					for(int i=0; i<msgs.size();i++){
-						if(msgs.get(i).isExpired(globalExpireTime)){
-							Message msg = msgs.remove(i);
-							Logger.log("Message expired", msg, -1);
-							i = i-1;
+					synchronized (msgs) {
+						Iterator<Message> it = msgs.iterator();
+						while(it.hasNext()){
+							Message msg = it.next();
+							
+							if(msg.isExpired(globalExpireTime)){
+								it.remove();
+								Logger.log("Message expired", msg, -1);
+							}
 						}
+						
+						if(msgs.size() == 0)
+							topics.remove(topicName);
 					}
-					
-					if(msgs.size() == 0)
-						topics.remove(topicName);
 				}
 			}
 		}
