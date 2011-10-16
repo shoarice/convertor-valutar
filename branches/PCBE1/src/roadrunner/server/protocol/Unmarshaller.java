@@ -102,15 +102,23 @@ public class Unmarshaller {
 				sendAckCommand = null;
 			}
 		}else
-		if(len == 3){
+		if(len >= 3){
 			String messageType = split[1];
 			
 			if(messageType.equalsIgnoreCase("QUEUE")){
 				String client = split[2];
 				command = sendAckCommand = new SendQueueAckCommand(client);
 			}else if(messageType.equalsIgnoreCase("TOPIC")){
-				String topic = split[2];
-				command = sendAckCommand = new SendTopicAckCommand(topic);
+				if(len == 4){
+					String topic = split[2];
+					try{
+						int expireTime = Integer.parseInt(split[3]);
+						command = sendAckCommand = new SendTopicAckCommand(topic, expireTime);
+					}
+					catch (NumberFormatException e) {
+						//se returneaza automat null
+					}
+				}
 			}
 		}
 		return command;

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import roadrunner.server.Server;
 import roadrunner.server.ServerConfiguration;
+import roadrunner.server.data.ServerData;
 import roadrunner.server.logger.Logger;
 
 public class Main {
@@ -15,6 +16,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Logger.log = true;
+		ServerData.instance().start();
 		ServerConfiguration serverConfiguration = parseArguments(args);
 		try {
 			new Server(serverConfiguration).startServer();
@@ -22,6 +24,7 @@ public class Main {
 			e.printStackTrace();
 			System.exit(1);
 		}
+		ServerData.instance().setRun(false);
 	}
 	
 	private static ServerConfiguration parseArguments(String[] args) {
@@ -55,8 +58,23 @@ public class Main {
 				Integer socketQueueSize = Integer.parseInt(argsMap.get("-sq"));
 				if(socketQueueSize < 1)
 					throw new NumberFormatException();
+				
+				config.setSocketQueueSize(socketQueueSize);
 			}catch(NumberFormatException e){
 				System.out.println("Socket queue size invalid. Default value was used!");
+			}
+		}
+		
+		//****** GLOBAL TOPIC EXPIRE TIME ***********
+		if(argsMap.containsKey("-e")){
+			try{
+				Integer globalExpireInterval = Integer.parseInt(argsMap.get("-e"));
+				if(globalExpireInterval < 1)
+					throw new NumberFormatException();
+				
+				config.setGlobalExpireTime(globalExpireInterval);
+			}catch(NumberFormatException e){
+				System.out.println("Global expire interval invalid. Default value was used!");
 			}
 		}
 		

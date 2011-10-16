@@ -3,11 +3,14 @@ package roadrunner.server;
 public class ServerConfiguration{
 	private int port;
 	private int socketQueueSize;
+	private int globalExpireTime;
 	//altele
 	
+	//DEFAULT VALUES
 	public ServerConfiguration(){
 		port = 49999;
 		socketQueueSize = 5;
+		globalExpireTime = 120;
 	}
 
 	public int getSocketQueueSize() {
@@ -17,6 +20,10 @@ public class ServerConfiguration{
 	public int getPort() {
 		return port;
 	}
+	
+	public int getGlobalExpireTime() {
+		return globalExpireTime;
+	}
 
 	public void setPort(int port) {
 		this.port = port;
@@ -25,6 +32,12 @@ public class ServerConfiguration{
 	public void setSocketQueueSize(int socketQueueSize) {
 		this.socketQueueSize = socketQueueSize;
 	}
+	
+	public void setGlobalExpireTime(int expireTime) {
+		globalExpireTime = expireTime; 
+	}
+
+
 	
 	
 	
