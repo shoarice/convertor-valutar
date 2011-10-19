@@ -14,7 +14,7 @@ public class Server {
 	public Server(){
 		config = new ServerConfiguration();
 		clientHandler = new DefaultClientHandler();
-		ServerData.instance().setGlobalTopicExpireTime(config.getGlobalExpireTime());
+		init();
 	}
 
 	public Server(ClientHandler clientHandler){
@@ -25,11 +25,16 @@ public class Server {
 	public Server(ServerConfiguration config){
 		this();
 		this.config = config;
+		init();
 	}
 	
 	public Server(ServerConfiguration config, ClientHandler clientHandler){
 		this.config = config;
 		this.clientHandler = clientHandler;
+		init();
+	}
+	
+	public void init(){
 		ServerData.instance().setGlobalTopicExpireTime(config.getGlobalExpireTime());
 	}
 	
