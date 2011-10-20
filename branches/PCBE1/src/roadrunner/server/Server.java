@@ -43,7 +43,7 @@ public class Server {
 		
 		Socket clientSocket = null;
 		while(true){
-			clientSocket = serverSocket.accept();
+			clientSocket = serverSocket.accept(); 
 			clientHandler.handleClient(clientSocket);
 		}
 		

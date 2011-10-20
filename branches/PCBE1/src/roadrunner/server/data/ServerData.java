@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import roadrunner.server.logger.Logger;
 
@@ -20,6 +21,7 @@ public class ServerData extends Thread{
 	private Map<Integer, String> clients; //asta va contine informatiile despre client (nume, queue etc). momentan doar numele
 	
 	private Map<String,List<Message>> topics;
+	private Map<String, ConcurrentLinkedQueue<Mail>> queues;
 	private boolean run = true;
 	private int globalExpireTime;
 	
@@ -28,10 +30,12 @@ public class ServerData extends Thread{
 		clients = Collections.synchronizedMap(new HashMap<Integer, String>());
 		
 		topics = Collections.synchronizedMap(new HashMap<String, List<Message>>());
+		queues = new HashMap<String, ConcurrentLinkedQueue<Mail>>();
 	}
 	
 	public void addClient(int id, String name){
 		clients.put(id, name);
+		queues.put(name, new ConcurrentLinkedQueue<Mail>());
 		addNameTaken(name);
 	}
 	
@@ -41,6 +45,7 @@ public class ServerData extends Thread{
 	
 	public void removeClient(int id){
 		String name = clients.remove(id);
+		queues.remove(name);
 		
 		if(name != null)
 			removeNameTaken(name);
