@@ -17,7 +17,7 @@ public class ReadFromQueueCommand implements Command {
 	
 	@Override
 	public String toString() {
-		return "Read from queue command";
+		return "Read from queue " + id + " command";
 	}
 
 }
