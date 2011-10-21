@@ -4,8 +4,11 @@ import roadrunner.server.protocol.responses.Response;
 
 public class SendQueueAckCommand extends SendAckCommand {
 
-	public SendQueueAckCommand(String client) {
+	private int sender_id;
+	
+	public SendQueueAckCommand(int sender_id, String client) {
 		super(client);
+		this.sender_id = sender_id;
 	}
 
 	@Override
@@ -22,7 +25,7 @@ public class SendQueueAckCommand extends SendAckCommand {
 
 	@Override
 	public Command generateSendMsgCommand(String msg) {
-		Command command = new SendQueueMsgCommand(destination,msg);
+		Command command = new SendQueueMsgCommand(sender_id, destination,msg);
 		return command;
 	}
 	

@@ -100,6 +100,11 @@ public class ServerData extends Thread{
 		Mail mail = new Mail(sender, msg);
 		queues.get(owner).offer(mail);
 	}
+	
+	public boolean ownerExists(String destination)
+	{
+		return queues.containsKey(destination);
+	}
 
 	public boolean topicExists(String topic) {
 		return topics.containsKey(topic);
