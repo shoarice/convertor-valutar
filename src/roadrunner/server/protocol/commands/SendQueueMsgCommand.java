@@ -1,6 +1,8 @@
 package roadrunner.server.protocol.commands;
 
 import roadrunner.server.data.ServerData;
+import roadrunner.server.protocol.responses.InexistentClientResponse;
+import roadrunner.server.protocol.responses.OkResponse;
 import roadrunner.server.protocol.responses.Response;
 
 public class SendQueueMsgCommand implements Command {
@@ -17,8 +19,16 @@ public class SendQueueMsgCommand implements Command {
 
 	@Override
 	public Response execute() {
-		ServerData.instance().deliverMailMessage(clientDestination, msg, sender_id);
-		return null;
+		if (ServerData.instance().ownerExists(clientDestination))
+		{
+			ServerData.instance().deliverMailMessage(clientDestination, msg, sender_id);
+			return new OkResponse();
+		}
+		else
+		{
+			return new InexistentClientResponse();
+		}
+		
 	}
 	
 	@Override
