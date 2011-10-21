@@ -32,9 +32,15 @@ public class StressTestClients {
 								in.readLine();
 								out.println("sendmsg mesaj");
 								in.readLine();
+								out.println("sendmsg queue "+"ionel");
+								in.readLine();
+								out.println("sendmsg mail_mail_mail");
+								in.readLine();
 							}
 							else{
 								out.println("readmsg topic "+rand.nextInt(5));
+								in.readLine();
+								out.println("readmsg queue ionel");
 								in.readLine();
 							}
 						}
