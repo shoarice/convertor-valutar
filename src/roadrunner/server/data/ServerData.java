@@ -83,7 +83,7 @@ public class ServerData extends Thread{
 		 * sa se adauge un topic cu o lista goala, threadul curent se opreste
 		 * vine thread-ul care se ocupa de mesajele expirate, vede un topic cu lista goala
 		 * il sterge, apoi threadul care vrea sa publice mesajul, nu mai are unde 
-		 * sa il publica
+		 * sa il publice
 		 */
 		synchronized (topics) {
 			if(!topics.containsKey(topicDestination)){
@@ -92,6 +92,14 @@ public class ServerData extends Thread{
 			}
 			
 			topics.get(topicDestination).add(new Message(msg, expireTime));			
+		}
+	}
+	
+	public void deliverMailMessage(int id_owner, String msg, String sender) {
+		synchronized (queues) {
+			if (!queues.containsKey(msg)) {
+				
+			}
 		}
 	}
 
