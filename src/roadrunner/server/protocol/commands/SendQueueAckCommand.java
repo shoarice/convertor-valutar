@@ -1,5 +1,8 @@
 package roadrunner.server.protocol.commands;
 
+import roadrunner.server.data.ServerData;
+import roadrunner.server.protocol.responses.InexistentClientResponse;
+import roadrunner.server.protocol.responses.OkResponse;
 import roadrunner.server.protocol.responses.Response;
 
 public class SendQueueAckCommand extends SendAckCommand {
@@ -13,14 +16,21 @@ public class SendQueueAckCommand extends SendAckCommand {
 
 	@Override
 	public Response execute() {
-		// TODO Auto-generated method stub
-		return null;
+		if (ServerData.instance().ownerExists(destination))
+		{
+			success = true;
+			return new OkResponse();
+		}
+		else
+		{
+			success = false;
+			return new InexistentClientResponse();
+		}
 	}
 
 	@Override
 	public boolean wasExecutedSuccesfully() {
-		// TODO Auto-generated method stub
-		return false;
+		return success;
 	}
 
 	@Override
