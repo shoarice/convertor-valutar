@@ -95,12 +95,10 @@ public class ServerData extends Thread{
 		}
 	}
 	
-	public void deliverMailMessage(int id_owner, String msg, String sender) {
-		synchronized (queues) {
-			if (!queues.containsKey(msg)) {
-				
-			}
-		}
+	public void deliverMailMessage(String owner, String msg, int senderId) {
+		String sender = clients.get(senderId);
+		Mail mail = new Mail(sender, msg);
+		queues.get(owner).offer(mail);
 	}
 
 	public boolean topicExists(String topic) {
