@@ -110,12 +110,12 @@ public class ServerData extends Thread{
 	public boolean topicExists(String topic) {
 		return topics.containsKey(topic);
 	}
-	
+
 	public boolean ownerExists(String destination)
 	{
 		return queues.containsKey(destination);
 	}
-
+	
 	public List<String> getTopicMessages(String topic) {
 		List<Message> src = topics.get(topic);
 		List<String> msgs = new ArrayList<String>(src.size());
@@ -126,6 +126,15 @@ public class ServerData extends Thread{
 		}
 
 		return msgs;
+	}
+	
+	public Mail getOldestMailMessage(int ownerId) {
+		Mail mail;
+		String me = clients.get(ownerId);
+		ConcurrentLinkedQueue<Mail> mails = queues.get(me);
+		mail = mails.poll();
+		
+		return mail;
 	}
 
 	@Override
