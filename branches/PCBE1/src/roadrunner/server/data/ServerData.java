@@ -30,7 +30,7 @@ public class ServerData extends Thread{
 		clients = Collections.synchronizedMap(new HashMap<Integer, String>());
 		
 		topics = Collections.synchronizedMap(new HashMap<String, List<Message>>());
-		queues = new HashMap<String, ConcurrentLinkedQueue<Mail>>();
+		queues = Collections.synchronizedMap(new HashMap<String, ConcurrentLinkedQueue<Mail>>());
 	}
 	
 	public void addClient(int id, String name){
@@ -95,15 +95,16 @@ public class ServerData extends Thread{
 		}
 	}
 	
-	public void deliverMailMessage(String owner, String msg, int senderId) {
+	public boolean deliverMailMessage(String owner, String msg, int senderId) {
 		String sender = clients.get(senderId);
 		Mail mail = new Mail(sender, msg);
-		queues.get(owner).offer(mail);
-	}
-	
-	public boolean ownerExists(String destination)
-	{
-		return queues.containsKey(destination);
+		ConcurrentLinkedQueue<Mail> queue = queues.get(owner);
+		if (queue != null) {
+			queue.offer(mail);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public boolean topicExists(String topic) {
