@@ -17,5 +17,9 @@ public class SendQueueMsgCommand implements Command {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Send message queue command: "+ clientDestination +" -> " + msg; 
+	}
 }
