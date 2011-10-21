@@ -110,6 +110,11 @@ public class ServerData extends Thread{
 	public boolean topicExists(String topic) {
 		return topics.containsKey(topic);
 	}
+	
+	public boolean ownerExists(String destination)
+	{
+		return queues.containsKey(destination);
+	}
 
 	public List<String> getTopicMessages(String topic) {
 		List<Message> src = topics.get(topic);
