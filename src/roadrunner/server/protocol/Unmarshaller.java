@@ -107,7 +107,7 @@ public class Unmarshaller {
 			
 			if(messageType.equalsIgnoreCase("QUEUE")){
 				String client = split[2];
-				command = sendAckCommand = new SendQueueAckCommand(client);
+				command = sendAckCommand = new SendQueueAckCommand(id, client);
 			}else if(messageType.equalsIgnoreCase("TOPIC")){
 				if(len == 4){
 					String topic = split[2];
