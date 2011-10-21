@@ -2,6 +2,7 @@ package roadrunner.server.protocol.commands;
 
 import roadrunner.server.data.Mail;
 import roadrunner.server.data.ServerData;
+import roadrunner.server.protocol.responses.EmptyQueueResponse;
 import roadrunner.server.protocol.responses.Response;
 import roadrunner.server.protocol.responses.SendQueueResponse;
 
@@ -16,7 +17,10 @@ public class ReadFromQueueCommand implements Command {
 	@Override
 	public Response execute() {
 		Mail mail = ServerData.instance().getOldestMailMessage(id);
-		return new SendQueueResponse(mail);
+		if (mail != null) {
+			return new SendQueueResponse(mail);
+		}
+		return new EmptyQueueResponse();
 	}
 	
 	@Override
