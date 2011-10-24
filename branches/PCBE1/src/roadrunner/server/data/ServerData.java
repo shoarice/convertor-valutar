@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import roadrunner.server.logger.Logger;
@@ -140,23 +141,25 @@ public class ServerData extends Thread{
 	@Override
 	public void run() {
 		while(run){
-			synchronized (topics) {
-				for (String topicName : topics.keySet()) {
-					List<Message> msgs = topics.get(topicName);
-					
-					synchronized (msgs) {
-						Iterator<Message> it = msgs.iterator();
-						while(it.hasNext()){
-							Message msg = it.next();
-							
-							if(msg.isExpired(globalExpireTime)){
-								it.remove();
-								Logger.log("Message expired", msg, -1);
-							}
-						}
+			if(!topics.isEmpty()){
+				synchronized (topics) {
+					for (Entry<String, List<Message>> topic : topics.entrySet()) {
+						List<Message> msgs = topic.getValue();
 						
-						if(msgs.size() == 0)
-							topics.remove(topicName);
+						synchronized (msgs) {
+							Iterator<Message> it = msgs.iterator();
+							while(it.hasNext()){
+								Message msg = it.next();
+								
+								if(msg.isExpired(globalExpireTime)){
+									it.remove();
+									Logger.log("Message expired", msg, -1);
+								}
+							}
+							
+							if(msgs.size() == 0)
+								topics.remove(topic.getKey());
+						}
 					}
 				}
 			}
