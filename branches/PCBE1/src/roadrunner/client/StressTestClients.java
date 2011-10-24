@@ -12,14 +12,16 @@ public class StressTestClients {
 
 	/**
 	 * @param args
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
 		for(int i=0;i < 100;i++){
 			new Thread(){
 
 				@Override
 				public void run() {
+					
 					try {
 						Socket sock = new Socket("127.0.0.1", 49999);
 						BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
@@ -52,6 +54,7 @@ public class StressTestClients {
 				}
 				
 			}.start();
+			Thread.sleep(3000);
 		}
 			
 	}
