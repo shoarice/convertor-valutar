@@ -8,13 +8,13 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Random;
 
-public class StressTestClients {
+public class StressTestClientsTopics {
 
 	/**
 	 * @param args
 	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) throws InterruptedException {
+	public static void testTopics() throws InterruptedException {
 		
 		for(int i=0;i < 100;i++){
 			new Thread(){
@@ -23,7 +23,7 @@ public class StressTestClients {
 				public void run() {
 					
 					try {
-						Socket sock = new Socket("127.0.0.1", 49999);
+						Socket sock = new Socket("127.0.0.1", 49989);
 						BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 						PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
 						Random rand = new Random();
@@ -34,15 +34,10 @@ public class StressTestClients {
 								in.readLine();
 								out.println("sendmsg mesaj");
 								in.readLine();
-								out.println("sendmsg queue "+"ionel");
-								in.readLine();
-								out.println("sendmsg mail_mail_mail");
-								in.readLine();
-							}
+						
+								}
 							else{
 								out.println("readmsg topic "+rand.nextInt(5));
-								in.readLine();
-								out.println("readmsg queue ionel");
 								in.readLine();
 							}
 						}
@@ -54,7 +49,7 @@ public class StressTestClients {
 				}
 				
 			}.start();
-			Thread.sleep(3000);
+			Thread.sleep(500);
 		}
 			
 	}
