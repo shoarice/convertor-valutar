@@ -94,8 +94,8 @@ public class Unmarshaller {
 	 */
 	private Command unmarshallSendCommand(String line, String[] split, int len) {
 		Command command = null;
-		if(sendAckCommand != null){
-			if(sendAckCommand.wasExecutedSuccesfully()){
+		if(sendAckCommand != null && sendAckCommand.wasExecutedSuccesfully()){
+			{
 				String[] newSplit = line.split(" ", 2);
 				if(newSplit.length == 2)
 					command = sendAckCommand.generateSendMsgCommand(newSplit[1]);
