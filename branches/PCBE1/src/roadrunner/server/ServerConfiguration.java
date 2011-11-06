@@ -8,7 +8,7 @@ public class ServerConfiguration{
 	
 	//DEFAULT VALUES
 	public ServerConfiguration(){
-		port = 49999;
+		port = 49989;
 		socketQueueSize = 5;
 		globalExpireTime = 120;
 	}
