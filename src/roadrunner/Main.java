@@ -16,6 +16,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Logger.log = true;
+		ServerData.instance().setDaemon(true);
 		ServerData.instance().start();
 		ServerConfiguration serverConfiguration = parseArguments(args);
 		try {
