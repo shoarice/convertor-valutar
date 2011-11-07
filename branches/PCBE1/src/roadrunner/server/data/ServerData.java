@@ -23,7 +23,6 @@ public class ServerData extends Thread{
 	
 	private Map<String,List<Message>> topics;
 	private Map<String, ConcurrentLinkedQueue<Mail>> queues;
-	private boolean run = true;
 	private int globalExpireTime;
 	
 	private ServerData(){
@@ -92,7 +91,8 @@ public class ServerData extends Thread{
 				topics.put(topicDestination, list);
 			}
 			
-			topics.get(topicDestination).add(new Message(msg, expireTime));			
+			topics.get(topicDestination).add(new Message(msg, expireTime));	
+			topics.notifyAll();
 		}
 	}
 	
@@ -140,34 +140,36 @@ public class ServerData extends Thread{
 
 	@Override
 	public void run() {
-		while(run){
-			if(!topics.isEmpty()){
-				synchronized (topics) {
-					for (Entry<String, List<Message>> topic : topics.entrySet()) {
-						List<Message> msgs = topic.getValue();
-						
-						synchronized (msgs) {
-							Iterator<Message> it = msgs.iterator();
-							while(it.hasNext()){
-								Message msg = it.next();
-								
-								if(msg.isExpired(globalExpireTime)){
-									it.remove();
-									Logger.log("Message expired", msg, -1);
-								}
-							}
-							
-							if(msgs.size() == 0)
-								topics.remove(topic.getKey());
-						}
-					}
+		while(true){
+		synchronized (topics) {
+			while (topics.isEmpty()) {
+				try {
+					topics.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
-		}
-	}
+			for (Entry<String, List<Message>> topic : topics.entrySet()) {
+				List<Message> msgs = topic.getValue();
 
-	public void setRun(boolean run) {
-		this.run = run;
+				synchronized (msgs) {
+					Iterator<Message> it = msgs.iterator();
+					while (it.hasNext()) {
+						Message msg = it.next();
+
+						if (msg.isExpired(globalExpireTime)) {
+							it.remove();
+							Logger.log("Message expired", msg, -1);
+						}
+					}
+
+					if (msgs.size() == 0)
+						topics.remove(topic.getKey());
+				}
+			
+			}
+		}
+		}
 	}
 
 	public void setGlobalTopicExpireTime(int globalExpireTime) {
