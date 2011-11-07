@@ -25,7 +25,6 @@ public class Main {
 			e.printStackTrace();
 			System.exit(1);
 		}
-		ServerData.instance().setRun(false);
 	}
 	
 	private static ServerConfiguration parseArguments(String[] args) {
