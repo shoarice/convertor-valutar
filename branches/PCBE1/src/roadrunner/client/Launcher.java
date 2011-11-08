@@ -7,7 +7,7 @@ public class Launcher {
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) throws InterruptedException {
-		//StressTestClientsQueue.testQueue();
+		StressTestClientsQueue.testQueue();
 		StressTestClientsTopics.testTopics();
 
 	}
