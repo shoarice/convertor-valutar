@@ -4,10 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JSeparator;
 import java.awt.Color;
-import javax.swing.JEditorPane;
 import javax.swing.JCheckBox;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
@@ -140,6 +137,9 @@ public class Reader {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(214, 49, 457, 315);
 		frmReader.getContentPane().add(scrollPane);
+		
+		JList list = new JList();
+		scrollPane.setViewportView(list);
 		
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.setBounds(278, 400, 117, 29);
