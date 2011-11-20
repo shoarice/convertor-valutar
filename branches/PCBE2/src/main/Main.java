@@ -1,16 +1,27 @@
 package main;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
+
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
-import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.ExceptionListener;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
+import javax.jms.MessageListener;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import model.Stire;
+import model.UnmarshallerStiri;
+import actori.AscultatorDeStiri;
+import actori.PublicatorStiri;
+import actori.ReceptorStiri;
 
 
 
@@ -20,37 +31,33 @@ public class Main implements ExceptionListener{
 	 * @param args
 	 * @throws JMSException 
 	 * @throws InterruptedException 
+	 * @throws NamingException 
 	 */
-	public static void main(String[] args) throws JMSException, InterruptedException {
+	public static void main(String[] args) throws JMSException, InterruptedException, NamingException {
 		
 		new Prod().start();
-		new Cons().start();
-		
+		new Cons(1).start();
+		new Cons(2).start();
 		
 	}
 
 	static class Prod extends Thread{
-
+		private static PublicatorStiri p = new PublicatorStiri();
+		
 		@Override
 		public void run() {
 			try {
-				Context ctx = new InitialContext();
-				ConnectionFactory cf2 = (ConnectionFactory) ctx.lookup("topicConnectionFactory");
 				
-				Connection conn = cf2.createConnection();
-				conn.start();
-				
-				Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-				
-				Destination topicDest = (Destination) ctx.lookup("dynamicTopics/FOO.BAR");
-				
-				MessageProducer producer = session.createProducer(topicDest);
-				producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
-				
-				Message m = session.createTextMessage("haha");
+				Stire s = new Stire();
+				s.setAutor("autor2");
+				s.setStire("text stire");
+				s.setSursa("sursa");
 				
 				while(true){
-					producer.send(m);
+					s.setDataCreat(Calendar.getInstance().getTime());
+					s.setDataModificat(Calendar.getInstance().getTime());
+					
+					p.publicaStire(s, "meteo");
 					Thread.sleep(5000);
 				}
 			}
@@ -63,26 +70,26 @@ public class Main implements ExceptionListener{
 	}
 	
 	static class Cons extends Thread{
+		private int i;
+		private static UnmarshallerStiri um= new UnmarshallerStiri();
+		
+		public Cons(int i) {
+			this.i = i;
+		}
+
 		@Override
 		public void run() {
 			try {
-				Context ctx = new InitialContext();
-				ConnectionFactory cf2 = (ConnectionFactory) ctx.lookup("topicConnectionFactory");
-								
-				Connection conn = cf2.createConnection();
-				conn.start();
 				
-				Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+				ReceptorStiri r = new ReceptorStiri();
+				r.inregistreazaAscultatorDeMesaje("meteo", new AscultatorDeStiri() {
+					
+					@Override
+					public void laStire(Stire stire) {
+						System.out.println(i+" "+stire);
+					}
+				});
 				
-				Destination topicDest = (Destination) ctx.lookup("dynamicTopics/FOO.BAR");
-				
-				MessageConsumer consumer = session.createConsumer(topicDest);
-				
-				while(true){
-					Message m = consumer.receive();
-					System.out.println(m.toString());
-					Thread.sleep(5000);
-				}
 			}
 			catch (Exception e) {
                 System.out.println("Caught: " + e);
