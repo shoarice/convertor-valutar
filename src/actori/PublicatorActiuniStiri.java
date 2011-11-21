@@ -16,21 +16,20 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import model.MarshallerStiri;
-import model.Stire;
 
-public class PublicatorStiri {
+public class PublicatorActiuniStiri {
 	private Context ctx;
 	private Connection conn;
 	private Session session;
 	private MarshallerStiri marshaller;
 	
-	private Map<String, MessageProducer> cache;
+	private Map<Integer, MessageProducer> cache;
 	
-	public PublicatorStiri(){
+	public PublicatorActiuniStiri(){
 		try {
 			
 			ctx = new InitialContext();
-			ConnectionFactory cf2 = (ConnectionFactory) ctx.lookup("topicConnectionFactory");
+			ConnectionFactory cf2 = (ConnectionFactory) ctx.lookup("queueConnectionFactory");
 			Connection conn = cf2.createConnection();
 			conn.start();
 			Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -38,7 +37,7 @@ public class PublicatorStiri {
 			this.conn = conn;
 			this.session = session;
 			marshaller = new MarshallerStiri(session);
-			cache = new HashMap<String, MessageProducer>();
+			cache = new HashMap<Integer, MessageProducer>();
 			
 		} catch (NamingException e) {
 			e.printStackTrace();
@@ -47,45 +46,36 @@ public class PublicatorStiri {
 		}
 	}
 	
-	public void publicareStire(Stire stire, String topic){
-		trimiteEveniment(stire, topic, "publicare");
-	}
-
-	public void modificareStire(Stire stire, String topic){
-		trimiteEveniment(stire, topic, "modificare");
+	public void trimiteStireDeschisa(int stireId,int autorId){
+		trimiteEveniment(stireId,autorId,"deschis");
 	}
 	
-	public void stergereStire(Stire stire, String topic){
-		trimiteEveniment(stire, topic, "stergere");
+	public void trimiteStireInchisa(int stireId,int autorId){
+		trimiteEveniment(stireId,autorId, "inchis");
 	}
 
-	private void trimiteEveniment(Stire stire, String topic, String tipEveniment) {
+	private void trimiteEveniment(int stireId,int autorId,String tipEveniment) {
 		try {
-			TextMessage msg = marshaller.marshall(stire);
-			msg.setStringProperty("tip", tipEveniment);
-			
-			MessageProducer producer = cache.get(topic);
+			MessageProducer producer = cache.get(autorId);
 			if(producer == null){
-				Destination topicDest = (Destination) ctx.lookup("dynamicTopics/"+topic);
-				producer = session.createProducer(topicDest);
+				Destination dest = (Destination) ctx.lookup("dynamicQueues/"+autorId);
+				producer = session.createProducer(dest);
 				producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 				
-				cache.put(topic, producer);
+				cache.put(autorId, producer);
 			}
-				
+			
+			TextMessage msg = session.createTextMessage();
+			msg.setStringProperty("tip", tipEveniment);
+			msg.setIntProperty("stireId", stireId);
+			
 			producer.send(msg);
-		} catch (JMSException e) {
-			e.printStackTrace();
+			
 		} catch (NamingException e) {
 			e.printStackTrace();
-		}
-	}
-
-	public void inchideConn(){
-		try {
-			conn.close();
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
 	}
+	
 }
