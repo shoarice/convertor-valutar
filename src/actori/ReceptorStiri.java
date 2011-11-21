@@ -45,11 +45,11 @@ public class ReceptorStiri {
 		}
 	}
 	
-	public void inregistreazaAscultatorDeMesaje(String topic, final AscultatorDeStiri asc) {
+	public void inregistreazaAscultatorStiri(String topic, final AscultatorStiri asc) {
 		inregistreazaAscultatorDeMesaje(topic, null, asc);
 	}
 	
-	public void inregistreazaAscultatorDeMesaje(String topic, String filter, final AscultatorDeStiri asc) {
+	public void inregistreazaAscultatorDeMesaje(String topic, String filter, final AscultatorStiri asc) {
 		try {
 			MessageConsumer mc = consumers.get(topic);
 			
