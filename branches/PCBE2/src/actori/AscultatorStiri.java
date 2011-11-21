@@ -2,6 +2,6 @@ package actori;
 
 import model.Stire;
 
-public interface AscultatorDeStiri {
+public interface AscultatorStiri {
 	void laStire(Stire stire, String tipEveniment);
 }

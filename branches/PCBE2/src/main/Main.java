@@ -6,9 +6,8 @@ import javax.jms.JMSException;
 import javax.naming.NamingException;
 
 import model.Stire;
-import model.UnmarshallerStiri;
 import actori.AscultatorActiuniStiri;
-import actori.AscultatorDeStiri;
+import actori.AscultatorStiri;
 import actori.PublicatorActiuniStiri;
 import actori.PublicatorStiri;
 import actori.ReceptorActiuniStiri;
@@ -77,7 +76,6 @@ public class Main implements ExceptionListener{
 	
 	static class Cons extends Thread{
 		private int i;
-		private static UnmarshallerStiri um= new UnmarshallerStiri();
 		
 		public Cons(int i) {
 			this.i = i;
@@ -89,7 +87,7 @@ public class Main implements ExceptionListener{
 				
 				final PublicatorActiuniStiri p = new PublicatorActiuniStiri();
 				ReceptorStiri r = new ReceptorStiri();
-				r.inregistreazaAscultatorDeMesaje("meteo", new AscultatorDeStiri() {
+				r.inregistreazaAscultatorStiri("meteo", new AscultatorStiri() {
 					
 					@Override
 					public void laStire(Stire stire, String tip) {
