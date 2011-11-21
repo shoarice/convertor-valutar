@@ -8,13 +8,19 @@ public class Stire {
 	public static DateFormat df = new SimpleDateFormat("HH:mm:ss d MMM yyyy");
 	
 	private int autorId;
+	private int stireId;
 	private String sursa;
 	private String dataModificat;
 	private String dataCreat;
 	private String autor;
 	private String stire;
 	
-	
+	public int getStireId() {
+		return stireId;
+	}
+	public void setStireId(int stireId) {
+		this.stireId = stireId;
+	}
 	public int getAutorId() {
 		return autorId;
 	}
@@ -58,13 +64,14 @@ public class Stire {
 		this.stire = stire;
 	}
 	
-	
 	@Override
 	public String toString() {
-		return "Stire [autorId=" + autorId + ", sursa=" + sursa
-				+ ", dataModificat=" + dataModificat + ", dataCreat="
-				+ dataCreat + ", autor=" + autor + ", stire=" + stire + "]";
+		return "Stire [autorId=" + autorId + ", stireId=" + stireId
+				+ ", sursa=" + sursa + ", dataModificat=" + dataModificat
+				+ ", dataCreat=" + dataCreat + ", autor=" + autor + ", stire="
+				+ stire + "]";
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -117,6 +124,4 @@ public class Stire {
 			return false;
 		return true;
 	}
-	
-	
 }
