@@ -71,7 +71,7 @@ public class ReceptorStiri {
 				@Override
 				public void onMessage(Message arg0) {
 					try {
-						asc.laStire(unmarshaller.unmarshall((TextMessage) arg0));
+						asc.laStire(unmarshaller.unmarshall((TextMessage) arg0), arg0.getStringProperty("tip"));
 					} catch (JMSException e) {
 						e.printStackTrace();
 					}
