@@ -1,26 +1,17 @@
 package main;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.Destination;
 import javax.jms.ExceptionListener;
 import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
-import javax.jms.Session;
-import javax.jms.TextMessage;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import model.Stire;
 import model.UnmarshallerStiri;
+import actori.AscultatorActiuniStiri;
 import actori.AscultatorDeStiri;
+import actori.PublicatorActiuniStiri;
 import actori.PublicatorStiri;
+import actori.ReceptorActiuniStiri;
 import actori.ReceptorStiri;
 
 
@@ -49,15 +40,30 @@ public class Main implements ExceptionListener{
 			try {
 				
 				Stire s = new Stire();
-				s.setAutor("autor2");
+				s.setAutor("autor");
 				s.setStire("text stire");
 				s.setSursa("sursa");
+				s.setAutorId(1);
+				
+				ReceptorActiuniStiri rec = new ReceptorActiuniStiri(1);
+				rec.inregistreazaActiuneStire(new AscultatorActiuniStiri() {
+					
+					@Override
+					public void stireInchisa(int stireId) {
+						System.out.println("1 - Stire "+stireId+" inchisa");
+					}
+					
+					@Override
+					public void stireDeschisa(int stireId) {
+						System.out.println("1 - Stire "+stireId+" deschisa");
+					}
+				});
 				
 				while(true){
 					s.setDataCreat(Calendar.getInstance().getTime());
 					s.setDataModificat(Calendar.getInstance().getTime());
 					
-					p.publicaStire(s, "meteo");
+					p.publicareStire(s, "meteo");
 					Thread.sleep(5000);
 				}
 			}
@@ -81,12 +87,15 @@ public class Main implements ExceptionListener{
 		public void run() {
 			try {
 				
+				final PublicatorActiuniStiri p = new PublicatorActiuniStiri();
 				ReceptorStiri r = new ReceptorStiri();
 				r.inregistreazaAscultatorDeMesaje("meteo", new AscultatorDeStiri() {
 					
 					@Override
-					public void laStire(Stire stire) {
-						System.out.println(i+" "+stire);
+					public void laStire(Stire stire, String tip) {
+						p.trimiteStireDeschisa(stire.getStireId(),stire.getAutorId());
+						System.out.println(i+" "+tip+""+stire);
+						p.trimiteStireInchisa(stire.getStireId(),stire.getAutorId());
 					}
 				});
 				
