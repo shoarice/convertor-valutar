@@ -13,7 +13,8 @@ public class UnmarshallerStiri {
 		stire.setSursa(txtMsg.getStringProperty("sursa"));
 		stire.setDataCreat(txtMsg.getStringProperty("creat"));
 		stire.setDataModificat(txtMsg.getStringProperty("modificat"));
-		
+		stire.setAutorId(txtMsg.getIntProperty("autorId"));
+		stire.setStireId(txtMsg.getIntProperty("stireId"));
 		return stire;
 	}
 }
