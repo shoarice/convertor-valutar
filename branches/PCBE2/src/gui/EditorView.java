@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.EventQueue;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -9,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -35,6 +38,8 @@ public class EditorView implements Observer{
 	private JTree tree;
 	private JList list;
 	private JTextArea txtrEditDocument;
+	
+	private long id;
 
 	/**
 	 * Launch the application.
@@ -88,6 +93,20 @@ public class EditorView implements Observer{
 		
 		txtrEditDocument = new JTextArea();
 		txtrEditDocument.setText("Your text here...");
+		txtrEditDocument.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(txtrEditDocument.getText().equals("Your text here..."))
+					txtrEditDocument.selectAll();
+			}
+		});
 		scrollPane_1.setViewportView(txtrEditDocument);
 		
 		JLabel lblAuthor = new JLabel("Author:");
@@ -170,6 +189,11 @@ public class EditorView implements Observer{
 		scrollPane_2.setViewportView(tree);
 	}
 
+	public void showErrorMsg(String msg) {
+		JOptionPane.showMessageDialog(frmWritersCenter, msg,
+				"Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
 	public JFrame getFrmWritersCenter() {
 		return frmWritersCenter;
 	}
@@ -221,7 +245,15 @@ public class EditorView implements Observer{
 	public JTextArea getTxtrEditDocument() {
 		return txtrEditDocument;
 	}
+	
+	public void setStireIncarcataId(long id){
+		this.id = id;
+	}
 
+	public long getStireIncarcataId(){
+		return id;
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		final EditorModel model = (EditorModel) o;
