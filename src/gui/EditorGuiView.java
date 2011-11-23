@@ -73,7 +73,7 @@ public class EditorGuiView implements Observer{
 		frmWritersCenter.setTitle("Writer's Center");
 		frmWritersCenter.setResizable(false);
 		frmWritersCenter.setBounds(100, 100, 714, 513);
-		frmWritersCenter.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmWritersCenter.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmWritersCenter.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
