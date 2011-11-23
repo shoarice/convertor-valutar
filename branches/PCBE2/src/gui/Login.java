@@ -1,23 +1,30 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import java.awt.Font;
-import java.awt.Color;
+
+import main.ManipulantEditor;
 
 public class Login {
-
+	private Random rand;
 	private JFrame frmLogin;
+	
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					Login window = new Login();
@@ -33,6 +40,7 @@ public class Login {
 	 * Create the application.
 	 */
 	public Login() {
+		rand = new Random();
 		initialize();
 	}
 
@@ -67,6 +75,19 @@ public class Login {
 		frmLogin.getContentPane().add(btnReadButton);
 		
 		JButton btnWriteButton = new JButton("Write");
+		btnWriteButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Thread(){
+
+					@Override
+					public void run() {
+						new ManipulantEditor(rand.nextInt(2000000000));
+					}
+				}.start();
+			}
+		});
 		btnWriteButton.setBounds(59, 159, 158, 29);
 		frmLogin.getContentPane().add(btnWriteButton);
 	}
