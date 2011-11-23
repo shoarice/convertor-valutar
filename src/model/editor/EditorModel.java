@@ -14,16 +14,19 @@ public class EditorModel extends Observable{
 	
 	private Map<Long,Stire> stiri;
 	private Map<Long,Integer> cititori;
+	private Map<Long,String> domenii;
 	
 	public EditorModel(){
 		stiri = new HashMap<Long,Stire>();
 		cititori = Collections.synchronizedMap(new HashMap<Long,Integer>());
+		domenii = new HashMap<Long, String>();
 	}
 	
-	public void adaugaStire(Stire stire){
+	public void adaugaStire(Stire stire, String domeniu){
 		synchronized (cititori) {
 			stiri.put(idStireCurent, stire);
 			cititori.put(idStireCurent, 0);
+			domenii.put(idStireCurent, domeniu);
 			idStireCurent++;
 		}
 		
@@ -36,6 +39,7 @@ public class EditorModel extends Observable{
 			for (long stireId : stireIds) {
 				stiri.remove(stireId);
 				cititori.remove(stireId);
+				domenii.remove(stireId);
 			}
 		}
 		
