@@ -6,11 +6,13 @@ public class StireWrapper {
 	private long id;
 	private Stire stire;
 	private int numarCititori;
+	private Object[] domenii;
 	
-	public StireWrapper(long id, Stire stire, int numarCititori) {
+	public StireWrapper(long id, Stire stire, int numarCititori, Object[] domenii) {
 		this.id = id;
 		this.stire = stire;
 		this.numarCititori = numarCititori;
+		this.domenii = domenii;
 	}
 
 	public long getId() {
@@ -25,6 +27,11 @@ public class StireWrapper {
 		return numarCititori;
 	}
 	
+	
+	public Object[] getDomenii() {
+		return domenii;
+	}
+
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();

@@ -14,19 +14,19 @@ public class EditorModel extends Observable{
 	
 	private Map<Long,Stire> stiri;
 	private Map<Long,Integer> cititori;
-	private Map<Long,String> domenii;
+	private Map<Long, Object[]> domenii;
 	
 	public EditorModel(){
 		stiri = new HashMap<Long,Stire>();
 		cititori = Collections.synchronizedMap(new HashMap<Long,Integer>());
-		domenii = new HashMap<Long, String>();
+		domenii = new HashMap<Long, Object[]>();
 	}
 	
-	public void adaugaStire(Stire stire, String domeniu){
+	public void adaugaStire(Stire stire, Object[] domenii){
 		synchronized (cititori) {
 			stiri.put(idStireCurent, stire);
 			cititori.put(idStireCurent, 0);
-			domenii.put(idStireCurent, domeniu);
+			this.domenii.put(idStireCurent, domenii);
 			idStireCurent++;
 		}
 		
@@ -34,6 +34,21 @@ public class EditorModel extends Observable{
 		notifyObservers();
 	}
 	
+	
+	
+	public void adaugaStire(Stire stire, Object[] domenii, long stireId) {
+		synchronized (cititori) {
+			stiri.put(stireId, stire);
+			cititori.put(stireId, 0);
+			this.domenii.put(stireId, domenii);
+			idStireCurent++;
+		}
+		
+		setChanged();
+		notifyObservers();
+
+	}
+
 	public void stergeStiri(long[] stireIds){
 		synchronized (cititori) {
 			for (long stireId : stireIds) {
@@ -53,7 +68,7 @@ public class EditorModel extends Observable{
 		long id=0;
 		for (Entry<Long,Stire> entry : stiri.entrySet()) {
 			id = entry.getKey();
-			tablou[i] = new StireWrapper(id, entry.getValue(), cititori.get(id));
+			tablou[i] = new StireWrapper(id, entry.getValue(), cititori.get(id),domenii.get(id));
 			i++;
 		}
 		
