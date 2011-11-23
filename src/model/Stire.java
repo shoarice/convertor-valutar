@@ -14,6 +14,7 @@ public class Stire {
 	private String dataCreat;
 	private String autor;
 	private String stire;
+	private String titlu;
 	
 	public int getStireId() {
 		return stireId;
@@ -37,7 +38,7 @@ public class Stire {
 		return dataModificat;
 	}
 	public void setDataModificat(Date date) {
-		this.dataModificat = df.format(date);;
+		this.dataModificat = df.format(date);
 	}
 	public void setDataModificat(String date) {
 		this.dataModificat = date;
@@ -64,12 +65,19 @@ public class Stire {
 		this.stire = stire;
 	}
 	
+	
+	public String getTitlu() {
+		return titlu;
+	}
+	public void setTitlu(String titlu) {
+		this.titlu = titlu;
+	}
 	@Override
 	public String toString() {
 		return "Stire [autorId=" + autorId + ", stireId=" + stireId
 				+ ", sursa=" + sursa + ", dataModificat=" + dataModificat
 				+ ", dataCreat=" + dataCreat + ", autor=" + autor + ", stire="
-				+ stire + "]";
+				+ stire + ", titlu=" + titlu + "]";
 	}
 	
 	@Override
@@ -83,7 +91,9 @@ public class Stire {
 		result = prime * result
 				+ ((dataModificat == null) ? 0 : dataModificat.hashCode());
 		result = prime * result + ((stire == null) ? 0 : stire.hashCode());
+		result = prime * result + stireId;
 		result = prime * result + ((sursa == null) ? 0 : sursa.hashCode());
+		result = prime * result + ((titlu == null) ? 0 : titlu.hashCode());
 		return result;
 	}
 	@Override
@@ -117,10 +127,17 @@ public class Stire {
 				return false;
 		} else if (!stire.equals(other.stire))
 			return false;
+		if (stireId != other.stireId)
+			return false;
 		if (sursa == null) {
 			if (other.sursa != null)
 				return false;
 		} else if (!sursa.equals(other.sursa))
+			return false;
+		if (titlu == null) {
+			if (other.titlu != null)
+				return false;
+		} else if (!titlu.equals(other.titlu))
 			return false;
 		return true;
 	}

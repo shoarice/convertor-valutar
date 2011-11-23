@@ -21,6 +21,7 @@ public class MarshallerStiri {
 		txtMsg.setStringProperty("modificat", stire.getDataModificat());
 		txtMsg.setIntProperty("stireId", stire.getStireId());
 		txtMsg.setIntProperty("autorId", stire.getAutorId());
+		txtMsg.setStringProperty("titlu", stire.getTitlu());
 		return txtMsg;
 	}
 }
