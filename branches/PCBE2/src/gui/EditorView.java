@@ -2,30 +2,37 @@ package gui;
 
 import java.awt.EventQueue;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JList;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
 
-public class Writer {
+public class EditorView {
 
 	private JFrame frmWritersCenter;
 	private JTextField txtFldAuthor;
 	private JTextField txtFldTitle;
 	private JTextField txtFldSource;
+	private JComboBox comboBoxCat;
+	private JComboBox comboBoxSubCat;
+	private JButton btnPublish;
+	private JButton btnEdit;
+	private JButton btnDelete;
+	private JButton btnClose;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
-					Writer window = new Writer();
+					EditorView window = new EditorView();
 					window.frmWritersCenter.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,7 +44,7 @@ public class Writer {
 	/**
 	 * Create the application.
 	 */
-	public Writer() {
+	public EditorView() {
 		initialize();
 	}
 
@@ -53,7 +60,7 @@ public class Writer {
 		frmWritersCenter.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(477, 20, 212, 448);
+		scrollPane.setBounds(477, 20, 212, 354);
 		frmWritersCenter.getContentPane().add(scrollPane);
 		
 		JList list = new JList();
@@ -98,7 +105,7 @@ public class Writer {
 		lblCategory.setBounds(254, 40, 68, 16);
 		frmWritersCenter.getContentPane().add(lblCategory);
 		
-		JComboBox comboBoxCat = new JComboBox();
+		comboBoxCat = new JComboBox();
 		comboBoxCat.setBounds(347, 36, 118, 27);
 		frmWritersCenter.getContentPane().add(comboBoxCat);
 		
@@ -106,24 +113,24 @@ public class Writer {
 		lblSubcategory.setBounds(254, 75, 81, 16);
 		frmWritersCenter.getContentPane().add(lblSubcategory);
 		
-		JComboBox comboBoxSubCat = new JComboBox();
+		comboBoxSubCat = new JComboBox();
 		comboBoxSubCat.setBounds(347, 71, 118, 27);
 		frmWritersCenter.getContentPane().add(comboBoxSubCat);
 		
-		JButton btnPublish = new JButton("Publish");
-		btnPublish.setBounds(35, 386, 117, 29);
+		btnPublish = new JButton("Publish");
+		btnPublish.setBounds(48, 386, 378, 29);
 		frmWritersCenter.getContentPane().add(btnPublish);
 		
-		JButton btnEdit = new JButton("Edit");
-		btnEdit.setBounds(181, 386, 117, 29);
+		btnEdit = new JButton("Edit");
+		btnEdit.setBounds(477, 386, 212, 29);
 		frmWritersCenter.getContentPane().add(btnEdit);
 		
-		JButton btnDelete = new JButton("Delete");
-		btnDelete.setBounds(322, 386, 117, 29);
+		btnDelete = new JButton("Delete");
+		btnDelete.setBounds(477, 425, 212, 29);
 		frmWritersCenter.getContentPane().add(btnDelete);
 		
-		JButton btnClose = new JButton("Close");
-		btnClose.setBounds(45, 425, 381, 29);
+		btnClose = new JButton("Close");
+		btnClose.setBounds(48, 425, 378, 29);
 		frmWritersCenter.getContentPane().add(btnClose);
 	}
 }
