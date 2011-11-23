@@ -55,7 +55,7 @@ public class ReceptorActiuniStiri {
 			public void onMessage(Message arg0) {
 				try {
 					String tip = arg0.getStringProperty("tip");
-					int stireId = arg0.getIntProperty("stireId");
+					long stireId = arg0.getLongProperty("stireId");
 					
 					if(tip.equals("deschis"))
 						asc.stireDeschisa(stireId);

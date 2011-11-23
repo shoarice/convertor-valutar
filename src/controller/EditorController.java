@@ -16,7 +16,7 @@ import model.editor.EditorModel;
 import model.editor.StireWrapper;
 
 public class EditorController {
-
+	
 	private EditorModel model;
 	private EditorGuiView view;
 	
@@ -54,6 +54,7 @@ public class EditorController {
 }
 
 class PublishActionListener implements ActionListener {
+	private long stireId;
 	
 	private EditorModel model;
 	private EditorGuiView view;
@@ -115,6 +116,7 @@ class PublishActionListener implements ActionListener {
 		stire.setSursa(sursa);
 		stire.setTitlu(titlu);
 		stire.setAutorId(id);
+		stire.setStireId(stireId++);
 		
 		Date time = Calendar.getInstance().getTime();
 		stire.setDataCreat(time);
