@@ -25,7 +25,8 @@ public class Main implements ExceptionListener{
 	 */
 	public static void main(String[] args) throws JMSException, InterruptedException, NamingException {
 		
-		new Prod().start();
+		//new Prod().start();
+		new ManipulantEditor(1);
 		new Cons(1).start();
 		new Cons(2).start();
 		
@@ -87,12 +88,17 @@ public class Main implements ExceptionListener{
 				
 				final PublicatorActiuniStiri p = new PublicatorActiuniStiri();
 				ReceptorStiri r = new ReceptorStiri();
-				r.inregistreazaAscultatorStiri("meteo", new AscultatorStiri() {
+				r.inregistreazaAscultatorStiri("P&C", new AscultatorStiri() {
 					
 					@Override
 					public void laStire(Stire stire, String tip) {
 						p.trimiteStireDeschisa(stire.getStireId(),stire.getAutorId());
 						System.out.println(i+" "+tip+""+stire);
+						try {
+							Thread.sleep(10000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 						p.trimiteStireInchisa(stire.getStireId(),stire.getAutorId());
 					}
 				});

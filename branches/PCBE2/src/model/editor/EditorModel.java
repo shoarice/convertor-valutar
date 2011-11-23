@@ -1,5 +1,6 @@
 package model.editor;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +44,7 @@ public class EditorModel extends Observable{
 	public void adaugaStire(Stire stire, Object[] domenii, long stireId) {
 		
 		synchronized (cititori) {
+			stire.setDataModificat(Calendar.getInstance().getTime());
 			stiri.put(stireId, stire);
 			cititori.put(stireId, 0);
 			this.domenii.put(stireId, domenii);
@@ -77,18 +79,28 @@ public class EditorModel extends Observable{
 	
 	public void incrementeazaCititor(long id){
 		synchronized (cititori) {
-			int nr = cititori.get(id);
+			Integer nr = cititori.get(id);
+			if(nr == null)
+				return;
 			nr++;
 			cititori.put(id, nr);
 		}
+		
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void decrementeazaCititor(long id){
 		synchronized (cititori) {
-			int nr = cititori.get(id);
+			Integer nr = cititori.get(id);
+			if(nr == null)
+				return;
 			nr--;
 			cititori.put(id, nr);
 		}
+		
+		setChanged();
+		notifyObservers();
 	}
 	
 	public StireWrapper[] getStiriWrappers(){
