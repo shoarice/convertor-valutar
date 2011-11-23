@@ -7,6 +7,10 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+
 import model.Stire;
 import model.editor.EditorModel;
 import model.editor.StireWrapper;
@@ -58,7 +62,20 @@ class PublishActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Stire stire = buildStire();
-		model.adaugaStire(stire);
+		if(stire != null){
+			TreePath selection = view.getTree().getSelectionPath();
+			if(selection == null){
+				showErrorMsg("Make sure you select a domain");
+				return;
+			}
+			TreeNode node = (TreeNode) selection.getLastPathComponent();
+			if(!node.isLeaf()){
+				showErrorMsg("Make sure you selected a domain with no further subdomains");
+				return;
+			}
+			String domeniu = node.toString();
+			model.adaugaStire(stire,domeniu);
+		}
 	}
 
 	public Stire buildStire() {
@@ -67,7 +84,13 @@ class PublishActionListener implements ActionListener {
 		String titlu = view.getTxtFldTitle().getText();
 		String text = view.getTxtrEditDocument().getText();
 		int id = model.getId();
-		
+
+		if(autor.equals("")
+				|| titlu.equals("null")){
+			showErrorMsg("Make sure all the fields are filled");
+			return null;
+		}
+				
 		Stire stire = new Stire();
 		stire.setAutor(autor);
 		stire.setStire(text);
@@ -79,6 +102,11 @@ class PublishActionListener implements ActionListener {
 		stire.setDataCreat(time);
 		stire.setDataModificat(time);
 		return stire;
+	}
+
+	public void showErrorMsg(String msg) {
+		JOptionPane.showMessageDialog(view.getFrmWritersCenter(), msg,
+				"Error", JOptionPane.ERROR_MESSAGE);
 	}
 }
 
@@ -94,6 +122,9 @@ class DeleteActionListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object[] selected = view.getList().getSelectedValues();
+		if(selected.length == 0)
+			return;
+		
 		StireWrapper[] stireWrappers = new StireWrapper[selected.length];
 		
 		for (int i = 0;i<selected.length; i++) {
