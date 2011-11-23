@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import java.util.Observable;
 
 import model.Stire;
+import model.TipEveniment;
 
 public class EditorModel extends Observable{
 	private int idAutor;
@@ -17,11 +18,12 @@ public class EditorModel extends Observable{
 	private Map<Long,Integer> cititori;
 	private Map<Long, Object[]> domenii;
 	
-	public EditorModel(){
+	public EditorModel(int id){
 		stiri = new HashMap<Long,Stire>();
 		cititori = Collections.synchronizedMap(new HashMap<Long,Integer>());
 		domenii = new HashMap<Long, Object[]>();
 		idStireIncarcata = -1;
+		this.idAutor = id;
 	}
 	
 	public void adaugaStire(Stire stire, Object[] domenii){
@@ -33,12 +35,13 @@ public class EditorModel extends Observable{
 		}
 		
 		setChanged();
-		notifyObservers();
+		notifyObservers(new EvenimentStire(new long[]{idStireCurent-1}, TipEveniment.PUBLISH));
 	}
 	
 	
 	
 	public void adaugaStire(Stire stire, Object[] domenii, long stireId) {
+		
 		synchronized (cititori) {
 			stiri.put(stireId, stire);
 			cititori.put(stireId, 0);
@@ -47,11 +50,14 @@ public class EditorModel extends Observable{
 		}
 		
 		setChanged();
-		notifyObservers();
+		notifyObservers(new EvenimentStire(new long[] {stireId}, TipEveniment.EDIT));
 
 	}
 
 	public void stergeStiri(long[] stireIds){
+		setChanged();
+		notifyObservers(new EvenimentStire(stireIds, TipEveniment.DELETE));
+		
 		synchronized (cititori) {
 			for (long stireId : stireIds) {
 				stiri.remove(stireId);
@@ -64,6 +70,25 @@ public class EditorModel extends Observable{
 		
 		setChanged();
 		notifyObservers();
+	}
+	public Stire getStire(long idStire){
+		return stiri.get(idStire);
+	}
+	
+	public void incrementeazaCititor(long id){
+		synchronized (cititori) {
+			int nr = cititori.get(id);
+			nr++;
+			cititori.put(id, nr);
+		}
+	}
+	
+	public void decrementeazaCititor(long id){
+		synchronized (cititori) {
+			int nr = cititori.get(id);
+			nr--;
+			cititori.put(id, nr);
+		}
 	}
 	
 	public StireWrapper[] getStiriWrappers(){
@@ -82,10 +107,6 @@ public class EditorModel extends Observable{
 		return idAutor;
 	}
 
-	public void setIdAutor(int id) {
-		this.idAutor = id;
-	}
-
 	public long getIdStireIncarcata() {
 		return idStireIncarcata;
 	}
@@ -96,5 +117,10 @@ public class EditorModel extends Observable{
 	
 	public void resetIdStireIncarcata(){
 		setIdStireIncarcata(-1);
+	}
+
+	public String getDomeniu(long idStire) {
+		Object[] objects = domenii.get(idStire);
+		return objects[objects.length - 1].toString();
 	}
 }

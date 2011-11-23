@@ -46,15 +46,15 @@ public class PublicatorActiuniStiri {
 		}
 	}
 	
-	public void trimiteStireDeschisa(int stireId,int autorId){
+	public void trimiteStireDeschisa(long stireId,int autorId){
 		trimiteEveniment(stireId,autorId,"deschis");
 	}
 	
-	public void trimiteStireInchisa(int stireId,int autorId){
+	public void trimiteStireInchisa(long stireId,int autorId){
 		trimiteEveniment(stireId,autorId, "inchis");
 	}
 
-	private void trimiteEveniment(int stireId,int autorId,String tipEveniment) {
+	private void trimiteEveniment(long stireId,int autorId,String tipEveniment) {
 		try {
 			MessageProducer producer = cache.get(autorId);
 			if(producer == null){
@@ -67,7 +67,7 @@ public class PublicatorActiuniStiri {
 			
 			TextMessage msg = session.createTextMessage();
 			msg.setStringProperty("tip", tipEveniment);
-			msg.setIntProperty("stireId", stireId);
+			msg.setLongProperty("stireId", stireId);
 			
 			producer.send(msg);
 			

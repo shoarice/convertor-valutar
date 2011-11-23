@@ -4,11 +4,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Stire {
+public class Stire implements Cloneable{
 	public static DateFormat df = new SimpleDateFormat("HH:mm:ss d MMM yyyy");
 	
 	private int autorId;
-	private int stireId;
+	private long stireId;
 	private String sursa;
 	private String dataModificat;
 	private String dataCreat;
@@ -16,10 +16,10 @@ public class Stire {
 	private String stire;
 	private String titlu;
 	
-	public int getStireId() {
+	public long getStireId() {
 		return stireId;
 	}
-	public void setStireId(int stireId) {
+	public void setStireId(long stireId) {
 		this.stireId = stireId;
 	}
 	public int getAutorId() {
@@ -91,7 +91,7 @@ public class Stire {
 		result = prime * result
 				+ ((dataModificat == null) ? 0 : dataModificat.hashCode());
 		result = prime * result + ((stire == null) ? 0 : stire.hashCode());
-		result = prime * result + stireId;
+		result = prime * result + (int) (stireId ^ (stireId >>> 32));
 		result = prime * result + ((sursa == null) ? 0 : sursa.hashCode());
 		result = prime * result + ((titlu == null) ? 0 : titlu.hashCode());
 		return result;
@@ -140,5 +140,20 @@ public class Stire {
 		} else if (!titlu.equals(other.titlu))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public Stire clone(){
+		Stire stire = new Stire();
+		stire.autor = autor;
+		stire.autorId = autorId;
+		stire.dataCreat = dataCreat.toString();
+		stire.dataModificat = dataModificat.toString();
+		stire.stire = stire.toString();
+		stire.stireId = stireId;
+		stire.sursa = sursa.toString();
+		stire.titlu = titlu.toString();
+		return stire;
+		
 	}
 }

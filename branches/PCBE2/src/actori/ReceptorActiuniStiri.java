@@ -40,40 +40,41 @@ public class ReceptorActiuniStiri {
 			e.printStackTrace();
 		}
 	}
-	
-	public void inregistreazaActiuneStire(final AscultatorActiuniStiri asc){
+	public void inregistreazaActiuneStire(final AscultatorActiuniStiri asc) throws JMSException, NamingException{
 		Destination dest;
-		try {
-			if(consumer != null)
-				consumer.close();
-				
-			dest = (Destination) ctx.lookup("dynamicQueues/"+autorId);
-			consumer = session.createConsumer(dest);
+		
+		if(consumer != null)
+			consumer.close();
+		
+		dest = (Destination) ctx.lookup("dynamicQueues/"+autorId);
+		consumer = session.createConsumer(dest);
+		
+		consumer.setMessageListener(new MessageListener() {
 			
-			consumer.setMessageListener(new MessageListener() {
-				
-				@Override
-				public void onMessage(Message arg0) {
-					try {
-						String tip = arg0.getStringProperty("tip");
-						int stireId = arg0.getIntProperty("stireId");
-						
-						if(tip.equals("deschis"))
-							asc.stireDeschisa(stireId);
-						else if(tip.equals("inchis"))
-							asc.stireInchisa(stireId);
-							
-					} catch (JMSException e) {
-						e.printStackTrace();
-					}	
-				}
-			});
-		} catch (NamingException e) {
-			e.printStackTrace();
+			@Override
+			public void onMessage(Message arg0) {
+				try {
+					String tip = arg0.getStringProperty("tip");
+					int stireId = arg0.getIntProperty("stireId");
+					
+					if(tip.equals("deschis"))
+						asc.stireDeschisa(stireId);
+					else if(tip.equals("inchis"))
+						asc.stireInchisa(stireId);
+					
+				} catch (JMSException e) {
+					e.printStackTrace();
+				}	
+			}
+		});
+	}
+	public void inchideConn(){
+		try {
+			conn.close();
 		} catch (JMSException e) {
 			e.printStackTrace();
-		}
 		
+		}
 	}
 	
 	
