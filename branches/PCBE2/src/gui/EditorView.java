@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.EventQueue;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -10,8 +12,15 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.SwingUtilities;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
-public class EditorView {
+import model.editor.EditorModel;
+import controller.EditorController;
+
+public class EditorView implements Observer{
 
 	private JFrame frmWritersCenter;
 	private JTextField txtFldAuthor;
@@ -23,6 +32,9 @@ public class EditorView {
 	private JButton btnEdit;
 	private JButton btnDelete;
 	private JButton btnClose;
+	private JTree tree;
+	private JList list;
+	private JTextArea txtrEditDocument;
 
 	/**
 	 * Launch the application.
@@ -32,7 +44,11 @@ public class EditorView {
 			@Override
 			public void run() {
 				try {
+					EditorModel model = new EditorModel();
 					EditorView window = new EditorView();
+					EditorController.getInstance(model, window);
+					
+					model.addObserver(window);
 					window.frmWritersCenter.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,17 +76,17 @@ public class EditorView {
 		frmWritersCenter.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(477, 20, 212, 354);
+		scrollPane.setBounds(477, 16, 212, 358);
 		frmWritersCenter.getContentPane().add(scrollPane);
 		
-		JList list = new JList();
+		list = new JList();
 		scrollPane.setViewportView(list);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(25, 126, 440, 248);
 		frmWritersCenter.getContentPane().add(scrollPane_1);
 		
-		JTextArea txtrEditDocument = new JTextArea();
+		txtrEditDocument = new JTextArea();
 		txtrEditDocument.setText("Your text here...");
 		scrollPane_1.setViewportView(txtrEditDocument);
 		
@@ -101,22 +117,6 @@ public class EditorView {
 		txtFldSource.setBounds(85, 88, 157, 28);
 		frmWritersCenter.getContentPane().add(txtFldSource);
 		
-		JLabel lblCategory = new JLabel("Category:");
-		lblCategory.setBounds(254, 40, 68, 16);
-		frmWritersCenter.getContentPane().add(lblCategory);
-		
-		comboBoxCat = new JComboBox();
-		comboBoxCat.setBounds(347, 36, 118, 27);
-		frmWritersCenter.getContentPane().add(comboBoxCat);
-		
-		JLabel lblSubcategory = new JLabel("Subcategory:");
-		lblSubcategory.setBounds(254, 75, 81, 16);
-		frmWritersCenter.getContentPane().add(lblSubcategory);
-		
-		comboBoxSubCat = new JComboBox();
-		comboBoxSubCat.setBounds(347, 71, 118, 27);
-		frmWritersCenter.getContentPane().add(comboBoxSubCat);
-		
 		btnPublish = new JButton("Publish");
 		btnPublish.setBounds(48, 386, 378, 29);
 		frmWritersCenter.getContentPane().add(btnPublish);
@@ -132,5 +132,105 @@ public class EditorView {
 		btnClose = new JButton("Close");
 		btnClose.setBounds(48, 425, 378, 29);
 		frmWritersCenter.getContentPane().add(btnClose);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(252, 16, 213, 99);
+		frmWritersCenter.getContentPane().add(scrollPane_2);
+		
+		tree = new JTree();
+		tree.setModel(new DefaultTreeModel(
+			new DefaultMutableTreeNode("Domenii") {
+				{
+					DefaultMutableTreeNode node_1;
+					node_1 = new DefaultMutableTreeNode("Finance");
+						node_1.add(new DefaultMutableTreeNode("Stocks"));
+						node_1.add(new DefaultMutableTreeNode("Economy"));
+						node_1.add(new DefaultMutableTreeNode("Business"));
+					add(node_1);
+					node_1 = new DefaultMutableTreeNode("Sports");
+						node_1.add(new DefaultMutableTreeNode("Football"));
+						node_1.add(new DefaultMutableTreeNode("Tenis"));
+						node_1.add(new DefaultMutableTreeNode("Hockey"));
+						node_1.add(new DefaultMutableTreeNode("Basketball"));
+					add(node_1);
+					node_1 = new DefaultMutableTreeNode("Lifestyle");
+						node_1.add(new DefaultMutableTreeNode("Health"));
+						node_1.add(new DefaultMutableTreeNode("Diet"));
+						node_1.add(new DefaultMutableTreeNode("Fashion"));
+					add(node_1);
+					node_1 = new DefaultMutableTreeNode("Fashionable");
+						node_1.add(new DefaultMutableTreeNode("P&C"));
+						node_1.add(new DefaultMutableTreeNode("Celebrities"));
+					add(node_1);
+				}
+			}
+		));
+		tree.setShowsRootHandles(true);
+		tree.setRootVisible(false);
+		scrollPane_2.setViewportView(tree);
+	}
+
+	public JFrame getFrmWritersCenter() {
+		return frmWritersCenter;
+	}
+
+	public JTextField getTxtFldAuthor() {
+		return txtFldAuthor;
+	}
+
+	public JTextField getTxtFldTitle() {
+		return txtFldTitle;
+	}
+
+	public JTextField getTxtFldSource() {
+		return txtFldSource;
+	}
+
+	public JComboBox getComboBoxCat() {
+		return comboBoxCat;
+	}
+
+	public JComboBox getComboBoxSubCat() {
+		return comboBoxSubCat;
+	}
+
+	public JButton getBtnPublish() {
+		return btnPublish;
+	}
+
+	public JButton getBtnEdit() {
+		return btnEdit;
+	}
+
+	public JButton getBtnDelete() {
+		return btnDelete;
+	}
+
+	public JButton getBtnClose() {
+		return btnClose;
+	}
+
+	public JTree getTree() {
+		return tree;
+	}
+
+	public JList getList() {
+		return list;
+	}
+
+	public JTextArea getTxtrEditDocument() {
+		return txtrEditDocument;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		final EditorModel model = (EditorModel) o;
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				list.setListData(model.getStiriWrappers());
+			}
+		});
 	}
 }
