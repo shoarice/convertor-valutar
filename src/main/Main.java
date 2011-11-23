@@ -48,12 +48,12 @@ public class Main implements ExceptionListener{
 				rec.inregistreazaActiuneStire(new AscultatorActiuniStiri() {
 					
 					@Override
-					public void stireInchisa(int stireId) {
+					public void stireInchisa(long stireId) {
 						System.out.println("1 - Stire "+stireId+" inchisa");
 					}
 					
 					@Override
-					public void stireDeschisa(int stireId) {
+					public void stireDeschisa(long stireId) {
 						System.out.println("1 - Stire "+stireId+" deschisa");
 					}
 				});

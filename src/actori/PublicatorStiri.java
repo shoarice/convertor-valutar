@@ -47,38 +47,32 @@ public class PublicatorStiri {
 		}
 	}
 	
-	public void publicareStire(Stire stire, String topic){
+	public void publicareStire(Stire stire, String topic) throws JMSException, NamingException{
 		trimiteEveniment(stire, topic, "publicare");
 	}
 
-	public void modificareStire(Stire stire, String topic){
+	public void modificareStire(Stire stire, String topic) throws JMSException, NamingException{
 		trimiteEveniment(stire, topic, "modificare");
 	}
 	
-	public void stergereStire(Stire stire, String topic){
+	public void stergereStire(Stire stire, String topic) throws JMSException, NamingException{
 		trimiteEveniment(stire, topic, "stergere");
 	}
 
-	private void trimiteEveniment(Stire stire, String topic, String tipEveniment) {
-		try {
-			TextMessage msg = marshaller.marshall(stire);
-			msg.setStringProperty("tip", tipEveniment);
+	private void trimiteEveniment(Stire stire, String topic, String tipEveniment) throws JMSException, NamingException {
+		TextMessage msg = marshaller.marshall(stire);
+		msg.setStringProperty("tip", tipEveniment);
+		
+		MessageProducer producer = cache.get(topic);
+		if(producer == null){
+			Destination topicDest = (Destination) ctx.lookup("dynamicTopics/"+topic);
+			producer = session.createProducer(topicDest);
+			producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 			
-			MessageProducer producer = cache.get(topic);
-			if(producer == null){
-				Destination topicDest = (Destination) ctx.lookup("dynamicTopics/"+topic);
-				producer = session.createProducer(topicDest);
-				producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
-				
-				cache.put(topic, producer);
-			}
-				
-			producer.send(msg);
-		} catch (JMSException e) {
-			e.printStackTrace();
-		} catch (NamingException e) {
-			e.printStackTrace();
+			cache.put(topic, producer);
 		}
+		
+		producer.send(msg);
 	}
 
 	public void inchideConn(){

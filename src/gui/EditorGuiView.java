@@ -20,10 +20,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import main.ManipulantEditor;
 import model.editor.EditorModel;
-import controller.EditorController;
 
-public class EditorView implements Observer{
+public class EditorGuiView implements Observer{
 
 	private JFrame frmWritersCenter;
 	private JTextField txtFldAuthor;
@@ -47,12 +47,7 @@ public class EditorView implements Observer{
 			@Override
 			public void run() {
 				try {
-					EditorModel model = new EditorModel();
-					EditorView window = new EditorView();
-					EditorController.getInstance(model, window);
-					
-					model.addObserver(window);
-					window.frmWritersCenter.setVisible(true);
+					new ManipulantEditor(1);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,10 +58,13 @@ public class EditorView implements Observer{
 	/**
 	 * Create the application.
 	 */
-	public EditorView() {
+	public EditorGuiView() {
 		initialize();
 	}
 
+	public void show(){
+		frmWritersCenter.setVisible(true);
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */

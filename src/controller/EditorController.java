@@ -1,9 +1,10 @@
 package controller;
 
-import gui.EditorView;
+import gui.EditorGuiView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -17,9 +18,9 @@ import model.editor.StireWrapper;
 public class EditorController {
 
 	private EditorModel model;
-	private EditorView view;
+	private EditorGuiView view;
 	
-	public static EditorController getInstance(EditorModel model, final EditorView view){
+	public static EditorController getInstance(WindowAdapter adapter,EditorModel model, final EditorGuiView view){
 		EditorController c = new EditorController(model, view);
 		
 		//adauga functionalitate la view;
@@ -42,10 +43,11 @@ public class EditorController {
 			}
 		});
 		
+		view.getFrmWritersCenter().addWindowListener(adapter);
 		return c;
 	}
 	
-	private EditorController(EditorModel model, EditorView view){
+	private EditorController(EditorModel model, EditorGuiView view){
 		this.model = model;
 		this.view = view;
 	}
@@ -54,9 +56,9 @@ public class EditorController {
 class PublishActionListener implements ActionListener {
 	
 	private EditorModel model;
-	private EditorView view;
+	private EditorGuiView view;
 
-	public PublishActionListener(EditorView view, EditorModel model) {
+	public PublishActionListener(EditorGuiView view, EditorModel model) {
 		this.view = view;
 		this.model = model;
 	}
@@ -86,7 +88,7 @@ class PublishActionListener implements ActionListener {
 			view.getTxtFldSource().setText("");
 			view.getTxtFldTitle().setText("");
 			view.getTxtrEditDocument().setText("Your text here...");
-			view.getTree().setSelectionRow(0);
+			view.getTree().setSelectionPath(null);
 		}
 		
 		
@@ -123,9 +125,9 @@ class PublishActionListener implements ActionListener {
 
 class DeleteActionListener implements ActionListener{
 	private EditorModel model;
-	private EditorView view;
+	private EditorGuiView view;
 
-	public DeleteActionListener(EditorView view, EditorModel model) {
+	public DeleteActionListener(EditorGuiView view, EditorModel model) {
 		this.view = view;
 		this.model = model;
 	}
@@ -163,9 +165,9 @@ class DeleteActionListener implements ActionListener{
 class EditActionListener implements ActionListener {
 	
 	private EditorModel model;
-	private EditorView view;
+	private EditorGuiView view;
 
-	public EditActionListener(EditorView view, EditorModel model) {
+	public EditActionListener(EditorGuiView view, EditorModel model) {
 		this.view = view;
 		this.model = model;
 	}
