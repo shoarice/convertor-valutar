@@ -38,8 +38,6 @@ public class EditorView implements Observer{
 	private JTree tree;
 	private JList list;
 	private JTextArea txtrEditDocument;
-	
-	private long id;
 
 	/**
 	 * Launch the application.
@@ -244,14 +242,6 @@ public class EditorView implements Observer{
 
 	public JTextArea getTxtrEditDocument() {
 		return txtrEditDocument;
-	}
-	
-	public void setStireIncarcataId(long id){
-		this.id = id;
-	}
-
-	public long getStireIncarcataId(){
-		return id;
 	}
 	
 	@Override

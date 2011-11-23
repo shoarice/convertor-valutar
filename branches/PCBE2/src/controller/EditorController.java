@@ -76,9 +76,8 @@ class PublishActionListener implements ActionListener {
 				return;
 			}
 			long stireId;
-			if((stireId = view.getStireIncarcataId()) > 0){
+			if((stireId = model.getIdStireIncarcata()) >= 0){
 				model.adaugaStire(stire, selection.getPath(),stireId);
-				view.setStireIncarcataId(-1);
 			}
 			else
 				model.adaugaStire(stire,selection.getPath());
@@ -100,7 +99,7 @@ class PublishActionListener implements ActionListener {
 		String sursa = view.getTxtFldSource().getText();
 		String titlu = view.getTxtFldTitle().getText();
 		String text = view.getTxtrEditDocument().getText();
-		int id = model.getId();
+		int id = model.getIdAutor();
 
 		if(autor.equals("")
 				|| titlu.equals("null")){
@@ -147,7 +146,7 @@ class DeleteActionListener implements ActionListener{
 		boolean stireIncarcata = false;
 		for (int i =0; i<stireWrappers.length;i++) {
 			stiriIds[i] = stireWrappers[i].getId();
-			if(stiriIds[i] == view.getStireIncarcataId())
+			if(stiriIds[i] == model.getIdStireIncarcata())
 				stireIncarcata = true;
 		}
 		model.stergeStiri(stiriIds);
@@ -157,7 +156,6 @@ class DeleteActionListener implements ActionListener{
 			view.getTxtFldTitle().setText("");
 			view.getTxtrEditDocument().setText("Your text here...");
 			view.getTree().setSelectionRow(0);
-			view.setStireIncarcataId(-1);
 		}
 	}
 }
@@ -190,6 +188,6 @@ class EditActionListener implements ActionListener {
 		view.getTxtFldTitle().setText(stire.getTitlu());
 		view.getTxtrEditDocument().setText(stire.getStire());
 		view.getTree().setSelectionPath(new TreePath(wrapper.getDomenii()));
-		view.setStireIncarcataId(wrapper.getId());
+		model.setIdStireIncarcata(wrapper.getId());
 	}
 }

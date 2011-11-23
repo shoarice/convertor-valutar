@@ -9,8 +9,9 @@ import java.util.Observable;
 import model.Stire;
 
 public class EditorModel extends Observable{
-	private int id;
+	private int idAutor;
 	private long idStireCurent;
+	private long idStireIncarcata;
 	
 	private Map<Long,Stire> stiri;
 	private Map<Long,Integer> cititori;
@@ -20,6 +21,7 @@ public class EditorModel extends Observable{
 		stiri = new HashMap<Long,Stire>();
 		cititori = Collections.synchronizedMap(new HashMap<Long,Integer>());
 		domenii = new HashMap<Long, Object[]>();
+		idStireIncarcata = -1;
 	}
 	
 	public void adaugaStire(Stire stire, Object[] domenii){
@@ -41,7 +43,7 @@ public class EditorModel extends Observable{
 			stiri.put(stireId, stire);
 			cititori.put(stireId, 0);
 			this.domenii.put(stireId, domenii);
-			idStireCurent++;
+			resetIdStireIncarcata();
 		}
 		
 		setChanged();
@@ -55,6 +57,8 @@ public class EditorModel extends Observable{
 				stiri.remove(stireId);
 				cititori.remove(stireId);
 				domenii.remove(stireId);
+				if(stireId == idStireIncarcata)
+					resetIdStireIncarcata();
 			}
 		}
 		
@@ -74,11 +78,23 @@ public class EditorModel extends Observable{
 		
 		return tablou;
 	}
-	public int getId() {
-		return id;
+	public int getIdAutor() {
+		return idAutor;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdAutor(int id) {
+		this.idAutor = id;
+	}
+
+	public long getIdStireIncarcata() {
+		return idStireIncarcata;
+	}
+
+	public void setIdStireIncarcata(long idStireIncarcata) {
+		this.idStireIncarcata = idStireIncarcata;
+	}
+	
+	public void resetIdStireIncarcata(){
+		setIdStireIncarcata(-1);
 	}
 }
