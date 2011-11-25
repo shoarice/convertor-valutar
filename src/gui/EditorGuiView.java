@@ -47,7 +47,9 @@ public class EditorGuiView implements Observer{
 			@Override
 			public void run() {
 				try {
-					new ManipulantEditor(1);
+					//new ManipulantEditor(1);
+					EditorGuiView view = new EditorGuiView();
+					view.frmWritersCenter.show();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
