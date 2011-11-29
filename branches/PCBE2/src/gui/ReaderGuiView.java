@@ -8,11 +8,15 @@ import java.awt.Color;
 import javax.swing.JCheckBox;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class ReaderGuiView {
 
@@ -36,6 +40,10 @@ public class ReaderGuiView {
 	private JButton btnSubmit;
 	private JButton btnClose;
     private ArrayList<JCheckBox> checkBoxList;
+    private ArrayList<JCheckBox> financeList;
+    private ArrayList<JCheckBox> sportsList;
+    private ArrayList<JCheckBox> lifestyleList;
+    private ArrayList<JCheckBox> fashionableList;
     
 	/**
 	 * @return the checkBoxList
@@ -209,6 +217,11 @@ public class ReaderGuiView {
 	 */
 	private void initialize() {
 		checkBoxList = new ArrayList<JCheckBox>();
+		financeList = new ArrayList<JCheckBox>();
+		sportsList = new ArrayList<JCheckBox>();
+		lifestyleList = new ArrayList<JCheckBox>();
+		fashionableList = new ArrayList<JCheckBox>();
+		
 		frmReader = new JFrame();
 		frmReader.setResizable(false);
 		frmReader.setTitle("Reader's Center");
@@ -225,20 +238,55 @@ public class ReaderGuiView {
 		chckbxStocks.setBounds(26, 74, 128, 23);
 		frmReader.getContentPane().add(chckbxStocks);
 		checkBoxList.add(chckbxStocks);
+		financeList.add(chckbxStocks);
+		chckbxStocks.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!chckbxStocks.isSelected()) {
+					chckbxFinance.setSelected(chckbxStocks.isSelected());
+				}
+			}
+		});
 		
 		chckbxEconomy = new JCheckBox("Economy");
 		chckbxEconomy.setForeground(new Color(0, 0, 205));
 		chckbxEconomy.setBounds(26, 99, 128, 23);
 		frmReader.getContentPane().add(chckbxEconomy);
 		checkBoxList.add(chckbxEconomy);
+		financeList.add(chckbxEconomy);
+		chckbxEconomy.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!chckbxEconomy.isSelected()) {
+					chckbxFinance.setSelected(chckbxEconomy.isSelected());
+				}
+			}
+		});
 		
 		chckbxBusiness = new JCheckBox("Business");
 		chckbxBusiness.setForeground(new Color(0, 0, 205));
 		chckbxBusiness.setBounds(26, 124, 128, 23);
 		frmReader.getContentPane().add(chckbxBusiness);
 		checkBoxList.add(chckbxBusiness);
+		financeList.add(chckbxBusiness);
+		chckbxBusiness.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!chckbxBusiness.isSelected()) {
+					chckbxFinance.setSelected(chckbxBusiness.isSelected());
+				}
+			}
+		});
 		
 		chckbxFinance = new JCheckBox("Finance");
+		chckbxFinance.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				for (JCheckBox jcb : financeList) {
+					jcb.setSelected(chckbxFinance.isSelected());
+				}
+			}
+		});
 		chckbxFinance.setForeground(new Color(0, 0, 205));
 		chckbxFinance.setBounds(16, 49, 128, 23);
 		frmReader.getContentPane().add(chckbxFinance);
@@ -248,69 +296,175 @@ public class ReaderGuiView {
 		chckbxFootball.setBounds(26, 182, 128, 23);
 		frmReader.getContentPane().add(chckbxFootball);
 		checkBoxList.add(chckbxFootball);
+		sportsList.add(chckbxFootball);
+		chckbxFootball.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!chckbxFootball.isSelected()) {
+					chckbxSports.setSelected(chckbxFootball.isSelected());
+				}
+			}
+		});
 		
 		chckbxTenis = new JCheckBox("Tenis");
 		chckbxTenis.setForeground(new Color(50, 205, 50));
 		chckbxTenis.setBounds(26, 207, 128, 23);
 		frmReader.getContentPane().add(chckbxTenis);
 		checkBoxList.add(chckbxTenis);
+		sportsList.add(chckbxTenis);
+		chckbxTenis.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!chckbxTenis.isSelected()) {
+					chckbxSports.setSelected(chckbxTenis.isSelected());
+				}
+			}
+		});
 		
 		chckbxHockey = new JCheckBox("Hockey");
 		chckbxHockey.setForeground(new Color(50, 205, 50));
 		chckbxHockey.setBounds(26, 232, 128, 23);
 		frmReader.getContentPane().add(chckbxHockey);
 		checkBoxList.add(chckbxHockey);
+		sportsList.add(chckbxHockey);
+		chckbxHockey.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!chckbxHockey.isSelected()) {
+					chckbxSports.setSelected(chckbxHockey.isSelected());
+				}
+			}
+		});
 		
 		chckbxSports = new JCheckBox("Sports");
 		chckbxSports.setForeground(new Color(50, 205, 50));
 		chckbxSports.setBounds(16, 157, 128, 23);
 		frmReader.getContentPane().add(chckbxSports);
+		chckbxSports.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				for (JCheckBox jcb : sportsList) {
+					jcb.setSelected(chckbxSports.isSelected());
+				}
+			}
+		});
 		
 		chckbxBasketball = new JCheckBox("Basketball");
 		chckbxBasketball.setForeground(new Color(50, 205, 50));
 		chckbxBasketball.setBounds(26, 257, 128, 23);
 		frmReader.getContentPane().add(chckbxBasketball);
 		checkBoxList.add(chckbxBasketball);
+		sportsList.add(chckbxBasketball);
+		chckbxBasketball.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!chckbxBasketball.isSelected()) {
+					chckbxSports.setSelected(chckbxBasketball.isSelected());
+				}
+			}
+		});
 		
 		chckbxHealth = new JCheckBox("Health");
 		chckbxHealth.setForeground(new Color(255, 0, 0));
 		chckbxHealth.setBounds(26, 316, 128, 23);
 		frmReader.getContentPane().add(chckbxHealth);
 		checkBoxList.add(chckbxHealth);
+		lifestyleList.add(chckbxHealth);
+		chckbxHealth.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!chckbxHealth.isSelected()) {
+					chckbxLifestyle.setSelected(chckbxHealth.isSelected());
+				}
+			}
+		});
 		
 		chckbxDiet = new JCheckBox("Diet");
 		chckbxDiet.setForeground(new Color(255, 0, 0));
 		chckbxDiet.setBounds(26, 341, 128, 23);
 		frmReader.getContentPane().add(chckbxDiet);
 		checkBoxList.add(chckbxDiet);
+		lifestyleList.add(chckbxDiet);
+		chckbxDiet.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!chckbxDiet.isSelected()) {
+					chckbxLifestyle.setSelected(chckbxDiet.isSelected());
+				}
+			}
+		});
 		
 		chckbxFashion = new JCheckBox("Fashion");
 		chckbxFashion.setForeground(new Color(255, 0, 0));
 		chckbxFashion.setBounds(26, 366, 128, 23);
 		frmReader.getContentPane().add(chckbxFashion);
 		checkBoxList.add(chckbxFashion);
+		lifestyleList.add(chckbxFashion);
+		chckbxFashion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!chckbxFashion.isSelected()) {
+					chckbxLifestyle.setSelected(chckbxFashion.isSelected());
+				}
+			}
+		});
 		
 		chckbxLifestyle = new JCheckBox("Lifestyle");
 		chckbxLifestyle.setForeground(new Color(255, 0, 0));
 		chckbxLifestyle.setBounds(16, 291, 128, 23);
 		frmReader.getContentPane().add(chckbxLifestyle);
+		chckbxLifestyle.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				for (JCheckBox jcb : lifestyleList) {
+					jcb.setSelected(chckbxLifestyle.isSelected());
+				}
+			}
+		});
 		
 		chckbxPc = new JCheckBox("P&C");
 		chckbxPc.setForeground(new Color(255, 0, 255));
 		chckbxPc.setBounds(26, 426, 128, 23);
 		frmReader.getContentPane().add(chckbxPc);
 		checkBoxList.add(chckbxPc);
+		fashionableList.add(chckbxPc);
+		chckbxPc.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!chckbxPc.isSelected()) {
+					chckbxMondane.setSelected(chckbxPc.isSelected());
+				}
+			}
+		});
 		
 		chckbxCelebrities = new JCheckBox("Celebrities");
 		chckbxCelebrities.setForeground(new Color(255, 0, 255));
 		chckbxCelebrities.setBounds(26, 451, 128, 23);
 		frmReader.getContentPane().add(chckbxCelebrities);
 		checkBoxList.add(chckbxCelebrities);
+		fashionableList.add(chckbxCelebrities);
+		chckbxCelebrities.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!chckbxCelebrities.isSelected()) {
+					chckbxMondane.setSelected(chckbxCelebrities.isSelected());
+				}
+			}
+		});
+		
 		
 		chckbxMondane = new JCheckBox("Fashionable");
 		chckbxMondane.setForeground(new Color(255, 0, 255));
 		chckbxMondane.setBounds(16, 401, 128, 23);
 		frmReader.getContentPane().add(chckbxMondane);
+		chckbxMondane.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				for (JCheckBox jcb : fashionableList) {
+					jcb.setSelected(chckbxMondane.isSelected());
+				}
+			}
+		});
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(214, 49, 457, 315);
