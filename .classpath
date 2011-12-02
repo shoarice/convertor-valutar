@@ -3,7 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
-	<classpathentry kind="lib" path="/Users/ciprian/Downloads/apache-activemq-5.4.3/lib/optional/log4j-1.2.14.jar"/>
-	<classpathentry kind="lib" path="/Users/ciprian/Downloads/apache-activemq-5.4.3/activemq-all-5.4.3.jar"/>
+	<classpathentry kind="lib" path="activemq-all-5.5.1.jar"/>
+	<classpathentry kind="lib" path="D:/andrei/workspace/apache-activemq-5.5.1/lib/optional/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="D:/andrei/workspace/apache-activemq-5.5.1/lib/optional/slf4j-log4j12-1.5.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

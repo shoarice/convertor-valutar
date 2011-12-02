@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import main.ManipulantEditor;
+import main.ManipulantReader;
 
 public class Login {
 	private Random rand;
@@ -71,6 +72,20 @@ public class Login {
 		frmLogin.getContentPane().add(lblWhatDoYou);
 		
 		JButton btnReadButton = new JButton("Read");
+		btnReadButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Thread() {
+					
+					@Override
+					public void run() {
+						new ManipulantReader(rand.nextInt(2000000000));
+					}
+				}.start();
+				
+			}
+		});
 		btnReadButton.setBounds(59, 118, 158, 29);
 		frmLogin.getContentPane().add(btnReadButton);
 		

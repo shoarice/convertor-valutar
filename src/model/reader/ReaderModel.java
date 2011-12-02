@@ -13,6 +13,10 @@ public class ReaderModel extends Observable{
 		 notifyObservers();
 	}
 	
+	public ReaderModel(int id) {
+		//don't know if we need id but this way there are no errors and I can commit
+	}
+	
 	
 
 }
