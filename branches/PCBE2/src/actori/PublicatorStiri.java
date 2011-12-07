@@ -65,7 +65,7 @@ public class PublicatorStiri {
 		
 		MessageProducer producer = cache.get(topic);
 		if(producer == null){
-			Destination topicDest = (Destination) ctx.lookup("dynamicTopics/"+topic);
+			Destination topicDest = (Destination) ctx.lookup("dynamicTopics/"+topic.toLowerCase());
 			producer = session.createProducer(topicDest);
 			producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 			

@@ -1,22 +1,29 @@
 package gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.awt.Color;
-import javax.swing.JCheckBox;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JButton;
+import javax.swing.ListSelectionModel;
 
-public class ReaderGuiView {
+import model.Stire;
+import model.reader.ReaderModel;
+
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+public class ReaderGuiView implements Observer{
 
 	private JFrame frmReader;
 	private JCheckBox chckbxStocks;
@@ -42,6 +49,7 @@ public class ReaderGuiView {
     private ArrayList<JCheckBox> sportsList;
     private ArrayList<JCheckBox> lifestyleList;
     private ArrayList<JCheckBox> fashionableList;
+	private JList list;
     
 	/**
 	 * @return the checkBoxList
@@ -69,6 +77,14 @@ public class ReaderGuiView {
 	 */
 	public JCheckBox getChckbxEconomy() {
 		return chckbxEconomy;
+	}
+
+	public JList getList() {
+		return list;
+	}
+
+	public void setList(JList list) {
+		this.list = list;
 	}
 
 	/**
@@ -188,6 +204,7 @@ public class ReaderGuiView {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					ReaderGuiView window = new ReaderGuiView();
@@ -224,7 +241,7 @@ public class ReaderGuiView {
 		frmReader.setResizable(false);
 		frmReader.setTitle("Reader's Center");
 		frmReader.setBounds(100, 100, 713, 512);
-		frmReader.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmReader.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmReader.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Choose your category");
@@ -468,7 +485,8 @@ public class ReaderGuiView {
 		scrollPane.setBounds(214, 49, 457, 315);
 		frmReader.getContentPane().add(scrollPane);
 		
-		JList list = new JList();
+		list = new JList();
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(list);
 		
 		btnSubmit = new JButton("Submit");
@@ -480,7 +498,14 @@ public class ReaderGuiView {
 		frmReader.getContentPane().add(btnClose);
 		frmReader.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNewLabel, chckbxFinance, chckbxStocks, chckbxEconomy, chckbxBusiness, chckbxSports, chckbxFootball, chckbxTenis, chckbxHockey, chckbxBasketball}));
 	}
-	
-	//public void update()
-	
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if(arg == null){
+			ReaderModel model = (ReaderModel) o;
+			List<Stire> l = model.getStiri();
+			
+			list.setListData(l.toArray());
+		}
+	}
 }
