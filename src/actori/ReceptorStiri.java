@@ -2,6 +2,7 @@ package actori;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -49,7 +50,11 @@ public class ReceptorStiri {
 		inregistreazaAscultatorDeMesaje(topic, null, asc);
 	}
 	
-	public void inregistreazaAscultatorDeMesaje(String topic, String filter, final AscultatorStiri asc) {
+	public void inregistreazaAscultatorStiri(String topic,String filter, final AscultatorStiri asc) {
+		inregistreazaAscultatorDeMesaje(topic, filter, asc);
+	}
+	
+	private void inregistreazaAscultatorDeMesaje(String topic, String filter, final AscultatorStiri asc) {
 		try {
 			MessageConsumer mc = consumers.get(topic);
 			
@@ -85,6 +90,13 @@ public class ReceptorStiri {
 	}
 	
 	public void nuMaiRecepta(){
+		for (Entry<String,MessageConsumer> c : consumers.entrySet()) {
+			try {
+				c.getValue().close();
+			} catch (JMSException e) {
+				e.printStackTrace();
+			}
+		}
 		consumers.clear();
 	}
 }

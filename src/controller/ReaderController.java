@@ -1,15 +1,19 @@
 package controller;
 
+import gui.ReaderGuiView;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
-
-import model.reader.ReaderModel;
-import gui.EditorGuiView;
-import gui.ReaderGuiView;
 import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
+import javax.swing.JList;
+
+import model.Stire;
+import model.reader.ReaderModel;
 
 
 public class ReaderController {
@@ -18,7 +22,6 @@ public class ReaderController {
 	
 	public ReaderController (WindowAdapter adapter,final ReaderModel model, final ReaderGuiView view){
 		
-		ReaderController r = new ReaderController(model, view);
 		view.getBtnSubmit().addActionListener(new ActionListener () {
 			
 			@Override
@@ -30,9 +33,24 @@ public class ReaderController {
 					if (checkbox.isSelected()) {
 						stringList.add(checkbox.getText().toLowerCase());
 					}
-			    model.setDomains(stringList);
+				}
+				model.setDomains(stringList);
+			}
+		});
+		
+		view.getList().addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2){
+					//open stire
+					JList list = (JList) e.getSource();
+					Stire s = (Stire) list.getSelectedValue();
+					
+					model.deschideStire(s.getStireId(), s.getAutorId());
 				}
 			}
+			
 		});
 		
 		view.getBtnClose().addActionListener(new ActionListener () {
@@ -43,11 +61,6 @@ public class ReaderController {
 			}
 		});
 	
-	}
-	
-	private ReaderController(ReaderModel model, ReaderGuiView view){
-		this.model = model;
-		this.view = view;
 	}
 }
 
