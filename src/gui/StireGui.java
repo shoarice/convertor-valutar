@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+
+import model.Stire;
 
 public class StireGui {
 
@@ -23,7 +27,6 @@ public class StireGui {
 	private JLabel lblCreata;
 	private JLabel lblModified;
 	private JLabel lblModificata;
-	private JButton btnClose;
 
 	public JFrame getFrame() {
 		return frame;
@@ -69,10 +72,6 @@ public class StireGui {
 		return lblModificata;
 	}
 
-	public JButton getBtnClose() {
-		return btnClose;
-	}
-
 	/**
 	 * Launch the application.
 	 */
@@ -81,7 +80,7 @@ public class StireGui {
 			@Override
 			public void run() {
 				try {
-					StireGui window = new StireGui();
+					StireGui window = new StireGui(new Stire());
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -93,8 +92,14 @@ public class StireGui {
 	/**
 	 * Create the application.
 	 */
-	public StireGui() {
+	public StireGui(Stire s) {
 		initialize();
+		textArea.setText(s.getStire());
+		lblTitlu.setText(s.getTitlu());
+		lblAutor.setText(s.getAutor());
+		lblCreata.setText(s.getDataCreat());
+		lblModificata.setText(s.getDataModificat());
+		lblSursa.setText(s.getSursa());
 	}
 	
 	public void show(){
@@ -140,7 +145,7 @@ public class StireGui {
 		frame.getContentPane().add(lblCreated);
 		
 		lblCreata = new JLabel("creata");
-		lblCreata.setBounds(88, 377, 102, 14);
+		lblCreata.setBounds(88, 377, 150, 14);
 		frame.getContentPane().add(lblCreata);
 		
 		lblModified = new JLabel("Modified:");
@@ -148,11 +153,7 @@ public class StireGui {
 		frame.getContentPane().add(lblModified);
 		
 		lblModificata = new JLabel("modificata");
-		lblModificata.setBounds(88, 402, 102, 14);
+		lblModificata.setBounds(88, 402, 150, 14);
 		frame.getContentPane().add(lblModificata);
-		
-		btnClose = new JButton("Close");
-		btnClose.setBounds(354, 362, 102, 44);
-		frame.getContentPane().add(btnClose);
 	}
 }

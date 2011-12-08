@@ -24,11 +24,8 @@ public class ReaderModel extends Observable{
 	public void setDomains(List<String> stringList) {
 		 domains = stringList;
 		 
-		 Stire s = new Stire();
-		 s.setAutorId(-1);
-		 
 		 setChanged();
-		 notifyObservers(s);
+		 notifyObservers(new StireReaderEveniment(new Stire(), 0));
 	}
 	
 	public void addStire(Stire s){
@@ -54,7 +51,7 @@ public class ReaderModel extends Observable{
 		Stire s = stiri.get(new IdPair(stireId, autorId));
 		
 		setChanged();
-		notifyObservers(s);
+		notifyObservers(new StireReaderEveniment(s, 1));
 		
 		return s;
 	}
@@ -63,7 +60,7 @@ public class ReaderModel extends Observable{
 		Stire s = stiri.get(new IdPair(stireId, autorId));
 		
 		setChanged();
-		notifyObservers(s);
+		notifyObservers(new StireReaderEveniment(s,-1));
 	}
 	
 	public List<String> getDomains() {

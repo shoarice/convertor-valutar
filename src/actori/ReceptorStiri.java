@@ -17,6 +17,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import model.TipEveniment;
 import model.UnmarshallerStiri;
 
 public class ReceptorStiri {
@@ -76,7 +77,18 @@ public class ReceptorStiri {
 				@Override
 				public void onMessage(Message arg0) {
 					try {
-						asc.laStire(unmarshaller.unmarshall((TextMessage) arg0), arg0.getStringProperty("tip"));
+						String tip = arg0.getStringProperty("tip");
+						TipEveniment tipE = null;
+						if(tip.equals("publicare")){
+							tipE = TipEveniment.PUBLISH;
+						}
+						if(tip.equals("modificare")){
+							tipE = TipEveniment.EDIT;
+						}
+						if(tip.equals("stergere")){
+							tipE = TipEveniment.DELETE;
+						}
+						asc.laStire(unmarshaller.unmarshall((TextMessage) arg0), tipE);
 					} catch (JMSException e) {
 						e.printStackTrace();
 					}

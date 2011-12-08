@@ -144,16 +144,16 @@ public class Stire implements Cloneable{
 	
 	@Override
 	public Stire clone(){
-		Stire stire = new Stire();
-		stire.autor = autor;
-		stire.autorId = autorId;
-		stire.dataCreat = dataCreat.toString();
-		stire.dataModificat = dataModificat.toString();
-		stire.stire = stire.toString();
-		stire.stireId = stireId;
-		stire.sursa = sursa.toString();
-		stire.titlu = titlu.toString();
-		return stire;
+		Stire s = new Stire();
+		s.autor = autor;
+		s.autorId = autorId;
+		s.dataCreat = dataCreat.toString();
+		s.dataModificat = dataModificat.toString();
+		s.stire = stire.toString();
+		s.stireId = stireId;
+		s.sursa = sursa.toString();
+		s.titlu = titlu.toString();
+		return s;
 		
 	}
 }
