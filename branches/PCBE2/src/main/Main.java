@@ -6,6 +6,7 @@ import javax.jms.JMSException;
 import javax.naming.NamingException;
 
 import model.Stire;
+import model.TipEveniment;
 import actori.AscultatorActiuniStiri;
 import actori.AscultatorStiri;
 import actori.PublicatorActiuniStiri;
@@ -89,17 +90,18 @@ public class Main implements ExceptionListener{
 				final PublicatorActiuniStiri p = new PublicatorActiuniStiri();
 				ReceptorStiri r = new ReceptorStiri();
 				r.inregistreazaAscultatorStiri("P&C", new AscultatorStiri() {
-					
+
 					@Override
-					public void laStire(Stire stire, String tip) {
+					public void laStire(Stire stire, TipEveniment tipE) {
 						p.trimiteStireDeschisa(stire.getStireId(),stire.getAutorId());
-						System.out.println(i+" "+tip+""+stire);
+						System.out.println(i+" "+tipE+""+stire);
 						try {
 							Thread.sleep(10000);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
 						p.trimiteStireInchisa(stire.getStireId(),stire.getAutorId());
+						
 					}
 				});
 				
