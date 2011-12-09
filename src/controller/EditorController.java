@@ -67,7 +67,6 @@ class PublishActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Stire stire = buildStire();
-		stireId--;
 		if(stire != null){
 			TreePath selection = view.getTree().getSelectionPath();
 			if(selection == null){
@@ -82,6 +81,7 @@ class PublishActionListener implements ActionListener {
 			long stireId;
 			if((stireId = model.getIdStireIncarcata()) >= 0){
 				stire.setStireId(stireId);
+				this.stireId--;
 				model.adaugaStire(stire, selection.getPath(),stireId);
 				
 			}

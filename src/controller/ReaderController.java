@@ -38,6 +38,22 @@ public class ReaderController {
 						stringList.add(checkbox.getText().toLowerCase());
 					}
 				}
+				StringBuilder filter = new StringBuilder();
+				if (!view.getTfAutor().getText().equals("")) {
+					filter.append("autor = '")
+						.append(view.getTfAutor().getText()).append("' AND ");
+				}
+			    
+				if (!view.getTfSursa().getText().equals("")) {					
+					filter.append("sursa = '")
+						.append(view.getTfSursa().getText()).append("' AND ");
+				}
+				if (!view.getTfTitlu().getText().equals("")) {
+					filter.append("titlu = '")
+						.append(view.getTfTitlu().getText()).append("'");
+				}
+				
+				model.setFilter(filter.toString());
 				model.setDomains(stringList);
 			}
 		});

@@ -14,6 +14,7 @@ public class ReaderModel extends Observable{
 	private List<String> domains;
 	private List<Integer> allowed;
 	private Map<IdPair, StireReaderEveniment> stiri;
+	private String filter;
 	
 	public ReaderModel(int id) {
 		//don't know if we need id but this way there are no errors and I can commit
@@ -84,5 +85,12 @@ public class ReaderModel extends Observable{
 	
 	public List<String> getDomains() {
 		return domains;
+	}
+	public void setFilter(String filter) {
+		this.filter = filter;
+	}
+
+	public String getFilter() {
+		return filter;
 	}
 }
