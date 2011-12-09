@@ -133,7 +133,7 @@ public class StireGui {
 		lblTitlu = new JLabel("titlu");
 		lblTitlu.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitlu.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTitlu.setBounds(119, 11, 229, 27);
+		lblTitlu.setBounds(119, 11, 78, 27);
 		frame.getContentPane().add(lblTitlu);
 		
 		lblAutor = new JLabel("autor");

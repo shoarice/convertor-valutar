@@ -67,7 +67,6 @@ public class ReaderGuiView implements Observer{
 	}
 
 	public JLabel lblReceiveNewsThat;
-	public JLabel lblNewLabel_1;
 	private JTextField tfTitlu;
 	private JTextField tfAutor;
 	private JTextField tfSursa;
@@ -531,27 +530,23 @@ public class ReaderGuiView implements Observer{
 		frmReader.getContentPane().add(btnClose);
 		
 		chckbxPublished = new JCheckBox("Published");
-		chckbxPublished.setBounds(313, 18, 97, 23);
+		chckbxPublished.setBounds(419, 18, 71, 23);
 		chckbxPublished.setSelected(true);
 		frmReader.getContentPane().add(chckbxPublished);
 		
 		chckbxEdited = new JCheckBox("Edited");
-		chckbxEdited.setBounds(432, 18, 97, 23);
+		chckbxEdited.setBounds(515, 18, 63, 23);
 		chckbxEdited.setSelected(true);
 		frmReader.getContentPane().add(chckbxEdited);
 		
 		chckbxDeleted = new JCheckBox("Deleted");
-		chckbxDeleted.setBounds(531, 18, 97, 23);
+		chckbxDeleted.setBounds(600, 18, 71, 23);
 		chckbxDeleted.setSelected(true);
 		frmReader.getContentPane().add(chckbxDeleted);
 		
-		lblReceiveNewsThat = new JLabel("Receive news that");
-		lblReceiveNewsThat.setBounds(195, 11, 97, 14);
+		lblReceiveNewsThat = new JLabel("Receive news that have been: ");
+		lblReceiveNewsThat.setBounds(214, 22, 168, 14);
 		frmReader.getContentPane().add(lblReceiveNewsThat);
-		
-		lblNewLabel_1 = new JLabel("have been :");
-		lblNewLabel_1.setBounds(195, 22, 97, 14);
-		frmReader.getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblFilterOn = new JLabel("Filter on:");
 		lblFilterOn.setBounds(214, 380, 46, 14);

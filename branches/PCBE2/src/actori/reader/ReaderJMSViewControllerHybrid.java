@@ -36,7 +36,8 @@ public class ReaderJMSViewControllerHybrid implements Observer{
 				
 				receptorStiri.nuMaiRecepta();
 				for (String string : domains) {
-					receptorStiri.inregistreazaAscultatorStiri(string, asc);
+					//receptorStiri.inregistreazaAscultatorStiri(string, asc);
+					receptorStiri.inregistreazaAscultatorStiri(string, model.getFilter(), asc);
 				}
 			}else if(e.tip == 1){
 				publicatorActiuniStiri.trimiteStireDeschisa(e.s.getStireId(), e.s.getAutorId());
