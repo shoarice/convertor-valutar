@@ -100,6 +100,14 @@ public class StireGui {
 		lblCreata.setText(s.getDataCreat());
 		lblModificata.setText(s.getDataModificat());
 		lblSursa.setText(s.getSursa());
+		
+		JLabel lblTitlu_1 = new JLabel("Titlu: ");
+		lblTitlu_1.setBounds(33, 17, 61, 16);
+		frame.getContentPane().add(lblTitlu_1);
+		
+		JLabel lblAutor_1 = new JLabel("Autor:");
+		lblAutor_1.setBounds(33, 42, 61, 16);
+		frame.getContentPane().add(lblAutor_1);
 	}
 	
 	public void show(){
@@ -125,11 +133,11 @@ public class StireGui {
 		lblTitlu = new JLabel("titlu");
 		lblTitlu.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitlu.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTitlu.setBounds(10, 11, 229, 27);
+		lblTitlu.setBounds(119, 11, 229, 27);
 		frame.getContentPane().add(lblTitlu);
 		
 		lblAutor = new JLabel("autor");
-		lblAutor.setBounds(246, 45, 102, 14);
+		lblAutor.setBounds(119, 43, 102, 14);
 		frame.getContentPane().add(lblAutor);
 		
 		lblSource = new JLabel("Source:");
@@ -137,23 +145,23 @@ public class StireGui {
 		frame.getContentPane().add(lblSource);
 		
 		lblSursa = new JLabel("sursa");
-		lblSursa.setBounds(88, 352, 114, 14);
+		lblSursa.setBounds(106, 352, 114, 14);
 		frame.getContentPane().add(lblSursa);
 		
 		lblCreated = new JLabel("Created:");
-		lblCreated.setBounds(32, 377, 46, 14);
+		lblCreated.setBounds(32, 377, 62, 14);
 		frame.getContentPane().add(lblCreated);
 		
 		lblCreata = new JLabel("creata");
-		lblCreata.setBounds(88, 377, 150, 14);
+		lblCreata.setBounds(106, 378, 150, 14);
 		frame.getContentPane().add(lblCreata);
 		
 		lblModified = new JLabel("Modified:");
-		lblModified.setBounds(32, 402, 46, 14);
+		lblModified.setBounds(32, 402, 62, 14);
 		frame.getContentPane().add(lblModified);
 		
 		lblModificata = new JLabel("modificata");
-		lblModificata.setBounds(88, 402, 150, 14);
+		lblModificata.setBounds(106, 402, 150, 14);
 		frame.getContentPane().add(lblModificata);
 	}
 }
