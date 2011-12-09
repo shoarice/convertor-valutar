@@ -3,7 +3,6 @@ package controller;
 import gui.ReaderGuiView;
 import gui.StireGui;
 
-import java.awt.AWTEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,11 +11,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+import javax.swing.AbstractButton;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
 
 import model.Stire;
 import model.reader.ReaderModel;
+import model.reader.StireReaderEveniment;
 
 
 public class ReaderController {
@@ -48,7 +49,8 @@ public class ReaderController {
 				if(e.getClickCount() == 2){
 					//open stire
 					JList list = (JList) e.getSource();
-					final Stire s = (Stire) list.getSelectedValue();
+					StireReaderEveniment ss = (StireReaderEveniment) list.getSelectedValue();
+					final Stire s = ss.s;
 					
 					model.deschideStire(s.getStireId(), s.getAutorId());
 					StireGui sg = new StireGui(s);
@@ -73,7 +75,43 @@ public class ReaderController {
 				view.getFrmReader().dispose();
 			}
 		});
-	
+		
+		view.getChckbxPublished().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				AbstractButton abstractButton = (AbstractButton)actionEvent.getSource();
+				boolean selected = abstractButton.getModel().isSelected();
+				
+				if(selected)
+					model.addAllowed(0);
+				else
+					model.removeAllowed(0);
+			}
+		});
+		view.getChckbxEdited().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				AbstractButton abstractButton = (AbstractButton)actionEvent.getSource();
+				boolean selected = abstractButton.getModel().isSelected();
+				
+				if(selected)
+					model.addAllowed(1);
+				else
+					model.removeAllowed(1);
+			}
+		});
+		view.getChckbxDeleted().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				AbstractButton abstractButton = (AbstractButton)actionEvent.getSource();
+				boolean selected = abstractButton.getModel().isSelected();
+				
+				if(selected)
+					model.addAllowed(2);
+				else
+					model.removeAllowed(2);
+			}
+		});
 	}
 }
 

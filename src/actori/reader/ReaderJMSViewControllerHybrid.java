@@ -56,8 +56,18 @@ class SuperAscultatorDeStiri implements AscultatorStiri{
 
 	@Override
 	public void laStire(Stire stire, TipEveniment tipEveniment) {
-		if(tipEveniment == TipEveniment.PUBLISH){
-				m.addStire(stire);
+		switch (tipEveniment) {
+		case PUBLISH:
+			m.addStire(stire,0);
+			break;
+		case EDIT:
+			m.addStire(stire,1);
+			break;
+		case DELETE:
+			m.addStire(stire,2);
+		break;
+		default:
+			break;
 		}
 	}
 	
