@@ -18,8 +18,8 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import model.Stire;
 import model.reader.ReaderModel;
+import model.reader.StireReaderEveniment;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
@@ -50,6 +50,23 @@ public class ReaderGuiView implements Observer{
     private ArrayList<JCheckBox> lifestyleList;
     private ArrayList<JCheckBox> fashionableList;
 	private JList list;
+	public JCheckBox chckbxPublished;
+	public JCheckBox chckbxEdited;
+	public JCheckBox chckbxDeleted;
+	public JCheckBox getChckbxPublished() {
+		return chckbxPublished;
+	}
+
+	public JCheckBox getChckbxEdited() {
+		return chckbxEdited;
+	}
+
+	public JCheckBox getChckbxDeleted() {
+		return chckbxDeleted;
+	}
+
+	public JLabel lblReceiveNewsThat;
+	public JLabel lblNewLabel_1;
     
 	/**
 	 * @return the checkBoxList
@@ -496,16 +513,37 @@ public class ReaderGuiView implements Observer{
 		btnClose = new JButton("Close");
 		btnClose.setBounds(508, 400, 117, 29);
 		frmReader.getContentPane().add(btnClose);
+		
+		chckbxPublished = new JCheckBox("Published");
+		chckbxPublished.setBounds(313, 18, 97, 23);
+		chckbxPublished.setSelected(true);
+		frmReader.getContentPane().add(chckbxPublished);
+		
+		chckbxEdited = new JCheckBox("Edited");
+		chckbxEdited.setBounds(432, 18, 97, 23);
+		chckbxEdited.setSelected(true);
+		frmReader.getContentPane().add(chckbxEdited);
+		
+		chckbxDeleted = new JCheckBox("Deleted");
+		chckbxDeleted.setBounds(531, 18, 97, 23);
+		chckbxDeleted.setSelected(true);
+		frmReader.getContentPane().add(chckbxDeleted);
+		
+		lblReceiveNewsThat = new JLabel("Receive news that");
+		lblReceiveNewsThat.setBounds(195, 11, 97, 14);
+		frmReader.getContentPane().add(lblReceiveNewsThat);
+		
+		lblNewLabel_1 = new JLabel("have been :");
+		lblNewLabel_1.setBounds(195, 22, 97, 14);
+		frmReader.getContentPane().add(lblNewLabel_1);
 		frmReader.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNewLabel, chckbxFinance, chckbxStocks, chckbxEconomy, chckbxBusiness, chckbxSports, chckbxFootball, chckbxTenis, chckbxHockey, chckbxBasketball}));
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if(arg == null){
 			ReaderModel model = (ReaderModel) o;
-			List<Stire> l = model.getStiri();
+			List<StireReaderEveniment> l = model.getStiri();
 			
 			list.setListData(l.toArray());
-		}
 	}
 }

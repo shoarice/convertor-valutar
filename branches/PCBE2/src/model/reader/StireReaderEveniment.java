@@ -9,4 +9,23 @@ public class StireReaderEveniment {
 	}
 	public Stire s;
 	public int tip;
+	
+	@Override
+	public String toString() {
+		String str = "";
+		switch(tip){
+		case 0:
+			str = " ** PUBLISHED **";
+			break;
+		case 1:
+			str = " ** EDITED **";
+			break;
+		case 2:
+			str = " ** DELETED **";
+			break;
+		}
+		return s.toString()+str;
+	}
+	
+	
 }

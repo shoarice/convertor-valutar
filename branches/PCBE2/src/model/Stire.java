@@ -74,10 +74,7 @@ public class Stire implements Cloneable{
 	}
 	@Override
 	public String toString() {
-		return "Stire [autorId=" + autorId + ", stireId=" + stireId
-				+ ", sursa=" + sursa + ", dataModificat=" + dataModificat
-				+ ", dataCreat=" + dataCreat + ", autor=" + autor + ", stire="
-				+ stire + ", titlu=" + titlu + "]";
+		return titlu + " - " + autor;
 	}
 	
 	@Override
