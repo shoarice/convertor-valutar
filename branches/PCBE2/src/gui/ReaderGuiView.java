@@ -22,6 +22,7 @@ import model.reader.ReaderModel;
 import model.reader.StireReaderEveniment;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+import javax.swing.JTextField;
 
 public class ReaderGuiView implements Observer{
 
@@ -67,6 +68,9 @@ public class ReaderGuiView implements Observer{
 
 	public JLabel lblReceiveNewsThat;
 	public JLabel lblNewLabel_1;
+	private JTextField tfTitlu;
+	private JTextField tfAutor;
+	private JTextField tfSursa;
     
 	/**
 	 * @return the checkBoxList
@@ -214,6 +218,18 @@ public class ReaderGuiView implements Observer{
 	 */
 	public JButton getBtnClose() {
 		return btnClose;
+	}
+	
+	public JTextField getTfTitlu() {
+		return tfTitlu;
+	}
+
+	public JTextField getTfAutor() {
+		return tfAutor;
+	}
+
+	public JTextField getTfSursa() {
+		return tfSursa;
 	}
 
 	/**
@@ -503,15 +519,15 @@ public class ReaderGuiView implements Observer{
 		frmReader.getContentPane().add(scrollPane);
 		
 		list = new JList();
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(list);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(278, 400, 117, 29);
+		btnSubmit.setBounds(280, 444, 117, 29);
 		frmReader.getContentPane().add(btnSubmit);
 		
 		btnClose = new JButton("Close");
-		btnClose.setBounds(508, 400, 117, 29);
+		btnClose.setBounds(509, 448, 117, 29);
 		frmReader.getContentPane().add(btnClose);
 		
 		chckbxPublished = new JCheckBox("Published");
@@ -536,6 +552,37 @@ public class ReaderGuiView implements Observer{
 		lblNewLabel_1 = new JLabel("have been :");
 		lblNewLabel_1.setBounds(195, 22, 97, 14);
 		frmReader.getContentPane().add(lblNewLabel_1);
+		
+		JLabel lblFilterOn = new JLabel("Filter on:");
+		lblFilterOn.setBounds(214, 380, 46, 14);
+		frmReader.getContentPane().add(lblFilterOn);
+		
+		JLabel lblTitlu = new JLabel("Titlu");
+		lblTitlu.setBounds(268, 380, 46, 14);
+		frmReader.getContentPane().add(lblTitlu);
+		
+		JLabel lblAutor = new JLabel("Autor");
+		lblAutor.setBounds(268, 405, 46, 14);
+		frmReader.getContentPane().add(lblAutor);
+		
+		JLabel lblSursa = new JLabel("Sursa");
+		lblSursa.setBounds(483, 405, 46, 14);
+		frmReader.getContentPane().add(lblSursa);
+		
+		tfTitlu = new JTextField();
+		tfTitlu.setBounds(324, 375, 302, 20);
+		frmReader.getContentPane().add(tfTitlu);
+		tfTitlu.setColumns(10);
+		
+		tfAutor = new JTextField();
+		tfAutor.setBounds(324, 402, 146, 20);
+		frmReader.getContentPane().add(tfAutor);
+		tfAutor.setColumns(10);
+		
+		tfSursa = new JTextField();
+		tfSursa.setBounds(531, 402, 95, 20);
+		frmReader.getContentPane().add(tfSursa);
+		tfSursa.setColumns(10);
 		frmReader.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNewLabel, chckbxFinance, chckbxStocks, chckbxEconomy, chckbxBusiness, chckbxSports, chckbxFootball, chckbxTenis, chckbxHockey, chckbxBasketball}));
 	}
 
