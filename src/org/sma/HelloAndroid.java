@@ -1,4 +1,4 @@
-package org.baltoaca.test;
+package org.sma;
 
 import android.app.Activity;
 import android.os.Bundle;

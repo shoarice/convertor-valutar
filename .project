@@ -30,13 +30,6 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>avd</name>
-			<type>2</type>
-			<locationURI>HOME/.android/avd</locationURI>
-		</link>
-	</linkedResources>
 	<variableList>
 		<variable>
 			<name>HOME</name>
