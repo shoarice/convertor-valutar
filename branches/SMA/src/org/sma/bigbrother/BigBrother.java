@@ -19,6 +19,8 @@ import android.widget.ProgressBar;
 public class BigBrother extends Activity {
     private static final String TAG = "BigBrother";
     private List<Sensor> sensors = new ArrayList<Sensor>();
+    BroadcastReceiver batteryReceiver;
+	IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
     private SensorManagerSimulator mSensorManager;
     //private SensorManager mSensorManager;
     
@@ -49,7 +51,7 @@ public class BigBrother extends Activity {
     }
 
 	private void doBattery() {
-		BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
+		batteryReceiver = new BroadcastReceiver() {
             private int lvl = 0;
             private int scl = 0;
             ProgressBar bar = (ProgressBar) findViewById(R.id.progressBar);
@@ -63,13 +65,13 @@ public class BigBrother extends Activity {
 				bar.setProgress(lvl);
 			}
 		};
-		IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 		registerReceiver(batteryReceiver, filter);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		unregisterReceiver(batteryReceiver);
 		//for each listener
 		//mSensorManager.unregisterListener(listener);
 	}
@@ -77,6 +79,7 @@ public class BigBrother extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		registerReceiver(batteryReceiver, filter);
 		//for each sensor
 		//mSensorManager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 	}
