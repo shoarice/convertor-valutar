@@ -1,4 +1,4 @@
-package org.sma;
+package org.sma.bigbrother;
 
 import android.app.Activity;
 import android.os.Bundle;
