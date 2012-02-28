@@ -3,14 +3,13 @@ package org.sma.bigbrother;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openintents.sensorsimulator.hardware.Sensor;
-import org.openintents.sensorsimulator.hardware.SensorManagerSimulator;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,8 +20,8 @@ public class BigBrother extends Activity {
     private List<Sensor> sensors = new ArrayList<Sensor>();
     BroadcastReceiver batteryReceiver;
 	IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-    private SensorManagerSimulator mSensorManager;
-    //private SensorManager mSensorManager;
+    //private SensorManagerSimulator mSensorManager;
+    private SensorManager mSensorManager;
     
 	/** Called when the activity is first created. */
     @Override
@@ -31,18 +30,16 @@ public class BigBrother extends Activity {
         setContentView(R.layout.main);
         
         
-        //PE DEVICE REAL
-        //mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        //List<Sensor> deviceSensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        List<Sensor> deviceSensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
         
-        //PE DEVICE VIRTUAL
-        mSensorManager = SensorManagerSimulator.getSystemService(this, SENSOR_SERVICE);
+        //CU SensorSimulator
+       /* mSensorManager = SensorManagerSimulator.getSystemService(this, SENSOR_SERVICE);
         mSensorManager.connectSimulator();
-        List<Integer> deviceSensors = mSensorManager.getSensors();
+        List<Integer> deviceSensors = mSensorManager.getSensors();*/
         
         Log.d(TAG, deviceSensors.toString());
-        for (Integer sensorType : deviceSensors) {
-        	Sensor s = mSensorManager.getDefaultSensor(sensorType);
+        for (Sensor s : deviceSensors) {
         	sensors.add(s);
 		}
         
