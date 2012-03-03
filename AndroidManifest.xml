@@ -14,11 +14,17 @@
         <activity
             android:name=".BigBrother"
             android:label="@string/app_name" >
-            <intent-filter><action android:name="android.intent.action.MAIN" /><category android:name="android.intent.category.LAUNCHER" />
+            <intent-filter><category android:name="android.intent.category.LAUNCHER" /><action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".Battery"><intent-filter>
-            </intent-filter></activity>
+        <activity android:name=".Battery"></activity>
+        <activity android:name="Network"></activity>
+        
+        <activity android:name="Processes"></activity>
+        <activity android:name="Telephony"></activity><activity android:name="Sensors"></activity>
+        <activity android:name="Location"></activity>
+        <activity android:name="Log"></activity>
+        <activity android:name="About"></activity>
     </application>
 
 </manifest>
