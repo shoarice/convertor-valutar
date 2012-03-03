@@ -48,8 +48,8 @@ public class Battery extends Activity {
 				bar.setMax(scl);
 				bar.setProgress(lvl);
 				textLevel.setText(String.valueOf(lvl));
-				textTemp.setText(String.valueOf(temp) + " C");
-				textVolt.setText(String.valueOf(volt) + " V");
+				textTemp.setText(String.valueOf(temp/10) + " C");
+				textVolt.setText(String.valueOf(volt) + " mV");
 				
 				switch (status) {
 				case BatteryManager.BATTERY_STATUS_CHARGING:
