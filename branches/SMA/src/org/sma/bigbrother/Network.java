@@ -41,6 +41,17 @@ public class Network extends Activity {
 		total_tx_bytes.setText(String.valueOf(TrafficStats.getTotalTxBytes()));
 		total_rx_packets.setText(String.valueOf(TrafficStats.getTotalRxPackets()));
 		total_tx_packets.setText(String.valueOf(TrafficStats.getTotalTxPackets()));
+		
+		
+		TextView total_rx_bytes_mobile = (TextView) findViewById(R.id.TextView15);
+		TextView total_tx_bytes_mobile = (TextView) findViewById(R.id.TextView12);
+		TextView total_rx_packets_mobile = (TextView) findViewById(R.id.TextView13);
+		TextView total_tx_packets_mobile = (TextView) findViewById(R.id.TextView11);
+		
+		total_rx_bytes_mobile.setText(String.valueOf(TrafficStats.getMobileRxBytes()));
+		total_tx_bytes_mobile.setText(String.valueOf(TrafficStats.getMobileTxBytes()));
+		total_rx_packets_mobile.setText(String.valueOf(TrafficStats.getMobileRxPackets()));
+		total_tx_packets_mobile.setText(String.valueOf(TrafficStats.getMobileTxPackets()));
 	}
 }
 
