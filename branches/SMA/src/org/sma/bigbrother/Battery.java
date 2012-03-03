@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class Battery extends Activity {
             TextView textStatus = (TextView) findViewById(R.id.textViewBatteryStatus);
             TextView textTemp = (TextView) findViewById(R.id.textViewBatteryTemperature);
             TextView textVolt = (TextView) findViewById(R.id.textViewBatteryVoltage);
+            ImageView img = (ImageView) findViewById(R.id.imageViewBattery);
             
 			@Override
 			public void onReceive(Context context, Intent intent) {
@@ -87,6 +89,14 @@ public class Battery extends Activity {
 					textHealth.setText("UNKNOWN");
 					break;
 				}
+				if(lvl > 75)
+					img.setImageResource(R.drawable.batt_full);
+				else if(lvl > 50)
+					img.setImageResource(R.drawable.batt_afull);
+				else if(lvl > 25)
+					img.setImageResource(R.drawable.batt_aempty);
+				else if(lvl <= 25)
+					img.setImageResource(R.drawable.batt_empty);
 			}
 		};
 		registerReceiver(batteryReceiver, filter);
@@ -107,7 +117,7 @@ public class Battery extends Activity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		unregisterReceiver(batteryReceiver);
+		//unregisterReceiver(batteryReceiver);
 	}
 	
 
