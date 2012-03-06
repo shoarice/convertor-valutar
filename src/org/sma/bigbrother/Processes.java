@@ -30,6 +30,24 @@ public class Processes extends Activity {
 		
 		layout = (LinearLayout) findViewById(R.id.processes_layout);
 		
+		doStuff();
+		
+	}
+
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		//doStuff();
+	}
+
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		layout.removeAllViews();
+	}
+	private void doStuff() {
 		am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 		am.getMemoryInfo(mi);
 		
@@ -54,7 +72,6 @@ public class Processes extends Activity {
 		for (RunningTaskInfo runningTaskInfo : tasks) {
 			addTaskInfo(runningTaskInfo);
 		}
-		
 	}
 	
 	public void addTaskInfo(ActivityManager.RunningTaskInfo ti) {
