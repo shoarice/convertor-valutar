@@ -114,6 +114,7 @@ public class Telephony extends Activity {
 				int asu = n.getRssi();
 				int s = -113 + 2*asu;
 				addRow("Signal strength (dBm): ", s);
+				addRow("", "");
 			}
 		}
 
