@@ -86,7 +86,7 @@ public class Network extends Activity {
 		total_rx_bytes_wifi.setText(String.valueOf(TrafficStats.getTotalRxBytes() - TrafficStats.getMobileRxBytes()));
 		total_tx_bytes_wifi.setText(String.valueOf(TrafficStats.getTotalTxBytes() - TrafficStats.getMobileTxBytes()));
 		total_rx_packets_wifi.setText(String.valueOf(TrafficStats.getTotalRxPackets() - TrafficStats.getMobileRxPackets()));
-		total_tx_packets_wifi.setText(String.valueOf(TrafficStats.getTotalTxBytes() - TrafficStats.getMobileTxPackets()));
+		total_tx_packets_wifi.setText(String.valueOf(TrafficStats.getTotalTxPackets() - TrafficStats.getMobileTxPackets()));
 	}
 	
 	public void addRow(String label, String value) {
