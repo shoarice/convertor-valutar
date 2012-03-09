@@ -83,7 +83,7 @@ public class Processes extends Activity {
 		if(ti.description != null)
 			addRow("Description:", ti.description.toString());
 		addRow("# of Activities:", String.valueOf(ti.numActivities));
-		addRow("# of Running Acctivities: ", String.valueOf(ti.numRunning));
+		addRow("# of Running Activities: ", String.valueOf(ti.numRunning));
 		addRow(" ", " ");
 	}
 	

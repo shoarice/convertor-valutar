@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -61,6 +62,8 @@ public class Log extends Activity {
 			ArrayList<String> commandLine = new ArrayList<String>();
 			commandLine.add("logcat");//$NON-NLS-1$
 			commandLine.add("-d");//$NON-NLS-1$
+			commandLine.add("-v");
+			commandLine.add("time");
 			/*ArrayList<String> arguments = ((params != null) && (params.length > 0)) ? params[0] : null;
 	         if (null != arguments){
 	             commandLine.addAll(arguments);
@@ -74,6 +77,8 @@ public class Log extends Activity {
 				String line;
 				while ((line = bufferedReader.readLine()) != null){
 					int i = line.indexOf(':');
+					i = line.indexOf(':', i+4);
+					
 					String line1 = line.substring(0, i+1);
 					String line2 = line.substring(i+1);
 					ret.add(line1);
@@ -110,7 +115,24 @@ public class Log extends Activity {
 			
 			TextView textName = new TextView(getApplicationContext());
 			
+			int i = value.indexOf('/');
 			textName.setText(value);
+			if(i != -1){
+				switch (value.charAt(i-1)) {
+				case 'I':
+					textName.setTextColor(Color.GREEN);
+					break;
+				case 'D':
+					textName.setTextColor(Color.CYAN);
+					break;
+				case 'W':
+					textName.setTextColor(Color.YELLOW);
+					break;
+				case 'E':
+					textName.setTextColor(Color.RED);
+					break;
+				}
+			}
 			
 			linearLayout.addView(textLabelName);
 			linearLayout.addView(textName);
