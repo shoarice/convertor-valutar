@@ -1,5 +1,9 @@
 package org.sma.bigbrother;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +17,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -432,7 +440,114 @@ public class Sensors extends Activity{
 	}
 */
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		 MenuInflater inflater = getMenuInflater();
+		 inflater.inflate(R.menu.main_menu, menu);
+		 return true;
 
-	
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.save:
+	        	save();
+	        	return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+
+
+	private void save() {
+		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+			String path = Environment.getExternalStorageDirectory().getPath();
+			Environment.getExternalStorageDirectory();
+			path = path + File.separatorChar + "bb_info.txt";
+			String type = "";
+			String unit = "";
+			try {
+				BufferedWriter out = new BufferedWriter(new FileWriter(path));
+				for (Sensor s : deviceSensors) {
+					switch (s.getType()) {
+					case Sensor.TYPE_ACCELEROMETER:
+						type = "ACCELEROMETER";
+						unit = "m/s^2";
+						break;
+					case Sensor.TYPE_GRAVITY:
+						type = "GRAVITY";
+						unit = "m/s^2";
+						break;
+					case Sensor.TYPE_GYROSCOPE:
+						type = "GYROSCOPE";
+						unit = "rad/s";
+						break;
+					case Sensor.TYPE_LIGHT:
+						type = "LIGHT";
+						unit = "lux";
+						break;
+					case Sensor.TYPE_LINEAR_ACCELERATION:
+						type = "ACCELERATION";
+						unit = "m/s^2";
+						break;
+					case Sensor.TYPE_MAGNETIC_FIELD:
+						type = "MAGNETIC FIELD";
+						unit = "uT";
+						break;
+					case Sensor.TYPE_ORIENTATION:
+						type = "ORIENTATION";
+						unit = "degrees";
+						break;
+					case Sensor.TYPE_PRESSURE:
+						type = "PRESSURE";
+						unit = "hPa";
+						break;
+					case Sensor.TYPE_PROXIMITY:
+						type = "PROXIMITY";
+						unit = "cm";
+						break;
+					case Sensor.TYPE_ROTATION_VECTOR:
+						type = "ROTATION";
+						break;
+					case Sensor.TYPE_TEMPERATURE:
+						type = "TEMPERATURE";
+						unit = "degrees C";
+						break;
+					default:
+						type = "UNKOWN";
+						break;
+					}//end switch
+					
+					saveInfo(s,type,unit, out);
+					
+				}//end for
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void saveInfo(Sensor s, String type, String unit, BufferedWriter out) throws IOException {
+		out.write("Type:"+ type);
+		out.newLine();
+		out.write("Name:"+ s.getName());
+		out.newLine();
+		out.write("Power:"+ s.getPower()+" "+ "mA");
+		out.newLine();
+		out.write("Max Range:"+ s.getMaximumRange()+" "+ unit);
+		out.newLine();
+		out.write("Resolution:"+ s.getResolution()+" "+ unit);
+		out.newLine();
+		out.write("Vendor:"+ s.getVendor());
+		out.newLine();
+		out.write("Version:"+ s.getVersion());
+		out.newLine();
+		out.newLine();
+
+	}
 	
 }
