@@ -62,7 +62,7 @@ public class Battery extends Activity {
 					textStatus.setText("FULL");
 					break;
 				case BatteryManager.BATTERY_STATUS_NOT_CHARGING:
-					textStatus.setText("CHARGING");
+					textStatus.setText("NOT CHARGING");
 					break;
 				default:
 					textStatus.setText("UNKNOWN");
